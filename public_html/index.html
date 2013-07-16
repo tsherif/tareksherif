@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<!---------------------------------------------------------------------------
+  tareksherif.ca: codebase for www.tareksherif.ca
+  Copyright (C) 2013  Tarek Sherif
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+------------------------------------------------------------------------------>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <link type="text/css" href="css/tareksherif.css" rel="stylesheet" />
+  <link type="text/css" href="css/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <script src="js/tareksherif.js"></script>
+  <title>Tarek Sherif</title>
+  <link rel="icon" type="image/png" href="img/cube_icon.png">
+</head>
+<body>
+  <div id="main">
+    <div id="header">
+      <h1 id="title">Tarek Sherif</h1>
+      <div id="webgl"></div>
+    </div>
+    <div id="main-menu" class="tabs">
+      <ul>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#about">About Me</a></li>
+      </ul>
+      <div id="projects" class="tab">
+        <h3 class="top-header">Major Projects</h3>
+        <p class="project">
+          <img class="menu-image" src="img/brainbrowser.png" />
+          <a href="https://brainbrowser.cbrain.mcgill.ca" target="_blank">BrainBrowser</a> is a real-time 3D neurogical data viewer written using HTML5 and related technologies such as WebGL and web workers. The application was originally written by a former colleague of mine, <a href="http://nickassis.net/" target="_blank">Nicolas Kassis</a>, for Google's now defunct O3D plugin. I took over the project in the last few months, ported the code to three.js, added web workers to parse data files in the background, as well as adding other features.
+        </p>
+        <p class="project">
+          <img class="menu-image" src="img/cbrain.jpg" />
+          <a href="http://cbrain.mcgill.ca" target="_blank">CBRAIN</a> is a distributed compute platform for neuroimaging research. CBRAIN provides researchers with access to high performance computing centers across Canada and globally, storage for their data as well as processing tools with which to analyze it, and a web front end allowing for a more intuitive experience than the comand-line interface these resources generally require. CBRAIN was written in Ruby on Rails with a MySQL database backend. The grid infrasctructure was built using custom wrappers around standard Unix tools such as rsync and ssh.
+        </p>
+        <h3>Games</h3>
+        <p class="project">
+          <img class="menu-image" src="img/redsquare.png" />
+          <a href="http://www.newgrounds.com/portal/view/598131" target="_blank">Red Square</a> was a smaller side project and my first foray into game design. I created it during the 2012 Québec student protests to express the atmosphere of the moment, in particular the feeling of an organized, organic chaos and the power dynamic between protesters and the police. Red Square was created using <a href="http://www.stencyl.com/" target="_blank">Stencyl</a>.
+        </p>
+      </div>
+      <div id="publications" class="tab">
+        <h3 class="top-header">Scientific</h3>
+        <h4>Papers</h4>
+        <p>
+          Tarek Sherif and Grzegorz Kondrak. 2007. <a href="docs/P07-1119.pdf" target="_blank">Substring-based Transliteration</a>. Proceedings of the 45th Annual Meeting of the ACL, pp. 944-951, Prague, Czech Republic, June 2007.
+        </p>
+        <p>
+          Tarek Sherif and Grzegorz Kondrak. <a href="docs/P07-1109.pdf" target="_blank">Bootstrapping a Stochastic Transducer for Arabic-English Transliteration Extraction</a>. Proceedings of ACL 2007, pp. 864-871, Prague, Czech Republic, June 2007.
+        </p>
+        <p>
+          Sittichai Jiampojamarn, Grzegorz Kondrak and Tarek Sherif. <a href="docs/N07-1047.pdf" target="_blank">Applying Many-to-Many Alignments and Hidden Markov Models to Letter-to-Phoneme Conversion</a>. Proceeding of NAACL HLT 2007, pp. 372-379, Rochester, New York, April 2007.
+        </p>
+        <p>
+          Grzegorz Kondrak and Tarek Sherif. <a href="docs/p43-kondrak.pdf" target="_blank">Evaluation of Several Phonetic Similarity Algorithms on the Task of Cognate Identification</a>. Proceedings of the COLING-ACL Workshop on Linguistic Distances, pp. 43-50, Sydney, Australia, July 2006.
+        </p>
+        <h4>Talks</h4>
+        <p>
+          Tarek Sherif. CBRAIN: An Integrated Web Platform for Neuroimaging. European Grid Infrastructure User Forum 2011, Vilnius, Lithuania, April 2011. 
+        </p>
+        <p>
+          Tarek Sherif. CBRAIN and GBRAIN: A Distributed Platform for Brain Imaging Research. Terena Networking Conference 2010, Vilnius, Lithuania, June 2010.
+        </p>
+        <h4>Posters</h4>
+        <p>
+          Tarek Sherif, Pierre Rioux, Nicolas Kassis, Tien Duc Nguyen, Marc Rousseau, Reza Adalat and Alan C. Evans. The Future of Computing in Medical Sciences: The CBRAIN Project Perspective. High Performance Computing Symposium 2011, Montreal, Canada, June 2011.
+        </p>
+        <p>
+          Tarek Sherif, Pierre Rioux, Nicolas Kassis, Tien Duc Nguyen, Marc Rousseau, Reza Adalat and Alan C. Evans. The Future of Computing in Medical Sciences: The CBRAIN Project Perspective. High Performance Computing Symposium 2011, Montreal, Canada, June 2011.
+        </p>
+        <p>
+          Marc Rousseau, Pierre Rioux, Tarek Sherif, Angela McCloskey, Nicolas Kassis, Reza Adalat and Alan Evans. CBRAIN/GBRAIN: A Distributed Platform for Brain Imaging Research. 16th Annual Meeting of the Organization for Human Brain Mapping, Barcelona, Spain, June 2010.
+        </p>
+        <h3>Literary</h3>
+        <h4>Essays</h4>
+        <p>
+            Tarek Sherif. <a href="http://howlarts.net/post/38461307833/intimate-distance-the-photography-of-thien-v" target="_blank">Intimate Distance: The Photography of Thien V.</a> howlarts.net, January 2013.
+        </p>
+        <h4>Translations</h4>
+        <p>
+          Tarek Sherif. City of Ghosts. Documenta Online Magazine (magazines.documenta.de), January 2008. Translation from the Arabic Madeenat Ashbah (Amkenah, No. 8, April 2007, Alexandria) by Haytham el-Wardany and Ahmad Farouq.
+        </p>
+        <p>
+          Tarek Sherif. Memory of Thalg. In Hester Aardse and Astrid van Baalen (Eds.), Findings on Ice, May 2007, The Pars Foundation, Amsterdam, The Netherlands. Translation from the Arabic Dhakira lil-Thalg by Iman Mersal.
+        </p>
+        <p>
+          Tarek Sherif. A Clutter of Words. Banipal, No. 28, Spring 2007, London. Translation from the Arabic Karakeeb al-Kalam (2006, Beirut) by Suzanne Alaywan.
+
+        </p>
+        <p>
+          Tarek Sherif. The State. Soundings, No. 35, Spring 2007, London. Translation from the Arabic al-Dawla (from the collection Jughrafia Badeela, 2006, Dar Sharqyat, Cairo) by Iman Mersal.
+        </p>
+        <p>
+          Tarek Sherif. A chapter from The Law of Inheritance. Banipal, No. 26, Summer 2006, London. Translation from the Arabic Qanoon al-Wiratha (2002, Merit, Cairo) by Yasser Abdel Latif.
+        </p>
+        <p>
+          Tarek Sherif. Alternative Geography. Banipal, No. 25, Spring 2006, London. Translation from the Arabic Jughrafia Badeela (2006, Dar Sharqyat, Cairo) by Iman Mersal.
+        </p>
+      </div>
+      <div id="about" class="tab">    
+        <p>
+          <img class="menu-image" src="img/tarek.jpg" />
+          I'm currently working in web development at the Montreal Neurological Institute of McGill University as a lead developer on 
+          <a href="https://brainbrowser.cbrain.mcgill.ca" target="_blank">BrainBrowser</a> and <a href="http://cbrain.mcgill.ca" target="_blank">CBRAIN</a>. My work tends to focus on the front end, using Ruby on Rails, HTML, JavaScript, CSS and jQuery, with some back end work on a MySQL database. For BrainBrowser, I've begun using <a href="http://threejs.org/" target="_blank">three.js</a> a lot for 3D rendering.
+        </p>
+        <p>
+          My current interests center around web development, 3D graphics and game design, though I'm really just getting started in the latter two. These days, I'm focusing on getting a better understanding of 3D graphics principles, in particular using <a href="http://www.khronos.org/webgl/" target="_blank">WebGL</a>, both through the raw API and through <a href="http://threejs.org/" target="_blank">three.js</a>.
+        </p>
+        <p>
+          My postgraduate studies were in Computational Linguistics, with a focus on machine learning algorithms for automated transliteration between Arabic and English.
+        </p>
+        <p>
+          More information can be found in my <a href="docs/TarekCV2013ForWeb.pdf" target="_blank">CV</a> or on my <a href="http://ca.linkedin.com/in/tareksherif/" target="_blank">LinkedIn page</a>.
+        </p>
+        <p>
+          I can be reached <a href="mailto:tsherif@gmail.com">here</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
