@@ -18,13 +18,13 @@
   
 $(function() {
   $(".tabs").tabs();
-  if (webgl_enabled()) {
+  if (webglEnabled()) {
     webglScripts();
   } else {
     displayImage();
   }
   
-  function webgl_enabled() { 
+  function webglEnabled() { 
     try { 
       return !!window.WebGLRenderingContext && !!document.createElement('canvas').getContext('experimental-webgl'); 
     } catch(e) { 
