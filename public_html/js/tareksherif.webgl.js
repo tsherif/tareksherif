@@ -82,7 +82,7 @@
       timer = performance;
     }
     
-  	requestAnimationFrame(render);
+    requestAnimationFrame(render);
     
     last_frame = current_frame || timestamp || timer.now();
     current_frame = timestamp || timer.now();
