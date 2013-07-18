@@ -562,7 +562,7 @@ THREE.TrackballControls = function ( object, domElement, touchElement ) {
 
 	}
 
-	this.domElement.addEventListener( 'contextmenu', function ( event ) { event.preventDefault(); }, false );
+	//this.domElement.addEventListener( 'contextmenu', function ( event ) { event.preventDefault(); }, false );
 
 	this.domElement.addEventListener( 'mouseover', mouseover, false );
 
