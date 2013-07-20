@@ -48,9 +48,7 @@
   
   camera.position.z = 5;
   light1.position.z = 5;
-  light2.position.x = 5;
-  light2.position.y = 5;
-  light2.position.z = 5;
+  light2.position.set(5, 5, 5);
   
   camera_controls = new THREE.TrackballControls(camera, document, $("#header")[0]);
   light_controls = new THREE.TrackballControls(light1, document, $("#header")[0]);
