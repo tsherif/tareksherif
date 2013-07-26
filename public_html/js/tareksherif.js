@@ -15,32 +15,26 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //////////////////////////////////////////////////////////////////////////////
-  
-$(function() {
-  $(".tabs").tabs();
-  if (webglEnabled()) {
-    webglScripts();
-  } else {
-    displayImage();
-  }
-  
-  function webglEnabled() { 
+
+(function () {
+  var libs_loaded = false;
+  var WEBGLENABLED = (function() {
     try { 
       return !!window.WebGLRenderingContext && !!document.createElement('canvas').getContext('experimental-webgl'); 
     } catch(e) { 
       return false; 
     } 
+  })();
+  
+  function webglScript() {
+    if (libs_loaded) {
+      $.get("js/tareksherif.webgl.js");
+    } else {
+      setTimeout(webglScript, 5);
+    }
   }
   
-  function webglScripts() {
-    $.get("js/three.min.js", function() {
-      $.get("js/TrackballControls.js", function() {
-        $.get("js/tareksherif.webgl.js");
-      });
-    });
-  }
-  
-  function webGLErrorMessage() {
+  function webglErrorMessage() {
     var el;
     var text = 'tareksherif.ca requires <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation">WebGL</a> to render some elements,<br/>';
     text += 'but it seems to be unavailable in your browser.<br/>';
@@ -59,4 +53,22 @@ $(function() {
     img.src = "img/" + shapes[s_index] + ".png";
     $("#webgl").append(img);
   }
-});
+  
+  if (WEBGLENABLED) {
+    $.get("js/three.min.js", function() {
+      $.get("js/TrackballControls.js", function() {
+        libs_loaded = true;
+      });
+    });
+  }
+
+  $(function() {
+    $(".tabs").tabs();
+    if (WEBGLENABLED) {
+      webglScript();
+    } else {
+      displayImage();
+    }
+  });
+})();
+
