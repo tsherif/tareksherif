@@ -18,7 +18,6 @@
 
 (function () {
   var libs_loaded = false;
-  var head = document.getElementsByTagName("head")[0];
   var WEBGLENABLED = (function() {
     try { 
       return !!window.WebGLRenderingContext && !!document.createElement('canvas').getContext('experimental-webgl'); 
@@ -34,7 +33,7 @@
     var script = document.createElement("script");
     script.src = url;
     script.onload = callback;
-    head.appendChild(script);
+    document.head.appendChild(script);
   }
   
   function webglScript() {
