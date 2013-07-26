@@ -18,6 +18,7 @@
 
 (function () {
   var libs_loaded = false;
+  var head = document.getElementsByTagName("head")[0];
   var WEBGLENABLED = (function() {
     try { 
       return !!window.WebGLRenderingContext && !!document.createElement('canvas').getContext('experimental-webgl'); 
@@ -26,9 +27,19 @@
     } 
   })();
   
+  // Have to load scripts using browser API because of bug
+  // in how jQuery handles "use strict" in ajax requests.
+  // http://bugs.jquery.com/ticket/14189
+  function loadScript(url, callback) {
+    var script = document.createElement("script");
+    script.src = url;
+    script.onload = callback;
+    head.appendChild(script);
+  }
+  
   function webglScript() {
     if (libs_loaded) {
-      $.get("js/tareksherif.webgl.js");
+      loadScript("js/tareksherif.webgl.js");
     } else {
       setTimeout(webglScript, 5);
     }
@@ -55,8 +66,8 @@
   }
   
   if (WEBGLENABLED) {
-    $.get("js/three.min.js", function() {
-      $.get("js/TrackballControls.js", function() {
+    loadScript("js/three.min.js", function() {
+      loadScript("js/TrackballControls.js", function() {
         libs_loaded = true;
       });
     });
