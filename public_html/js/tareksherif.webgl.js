@@ -59,11 +59,7 @@
     var Shape = options.Shape;
     var args  = options.args;
   
-    var geometry;
-    function Geometry() {}
-    Geometry.prototype = Shape.prototype;
-    
-    geometry = new Geometry();
+    var geometry = Object.create(Shape.prototype);
     geometry.constructor = Shape;
     
     Shape.apply(geometry, args);
