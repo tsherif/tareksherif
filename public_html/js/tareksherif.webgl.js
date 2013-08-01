@@ -33,7 +33,7 @@
                    
   var g_index = Math.floor(Math.random() * geometries.length);
   
-  var cube = new THREE.Mesh(createGeometry(geometries[g_index]), new THREE.MeshPhongMaterial({color: 0x1BBFE0}));
+  var shape = new THREE.Mesh(createGeometry(geometries[g_index]), new THREE.MeshPhongMaterial({color: 0x1BBFE0}));
    
   var last_frame;
   var current_frame;
@@ -53,13 +53,12 @@
   camera_controls = new THREE.TrackballControls(camera, document, $("#header")[0]);
   light_controls = new THREE.TrackballControls(light1, document, $("#header")[0]);
   
+  // For dynamic application of constructors.
   function createGeometry(options) {
     var Shape = options.Shape;
     var args  = options.args;
   
     var geometry = Object.create(Shape.prototype);
-    geometry.constructor = Shape;
-    
     Shape.apply(geometry, args);
     
     return geometry;
