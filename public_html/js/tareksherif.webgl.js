@@ -42,7 +42,7 @@
   renderer.setClearColor(0xFFFFFF)
   view_port.append(renderer.domElement);
                             
-  scene.add(cube);
+  scene.add(shape);
   scene.add(light1);
   scene.add(light2);
   
@@ -86,8 +86,8 @@
     delta = current_frame - last_frame;
     rotation = delta * 0.001;
   
-    cube.rotation.x += rotation;
-    cube.rotation.y += rotation;
+    shape.rotation.x += rotation;
+    shape.rotation.y += rotation;
   
     renderer.render(scene, camera);
   }
