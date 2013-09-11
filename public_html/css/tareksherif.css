@@ -133,3 +133,20 @@ a img {
   width: 38em;
   padding: 1em;
 }
+
+.experiment {
+  display: inline-block;
+  position: relative;
+}
+
+.experiment img {
+  display: block;
+}
+
+.experiment-title {
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  bottom: 5px;
+  right: 7px;
+}

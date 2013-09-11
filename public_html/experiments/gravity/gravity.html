@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<!---------------------------------------------------------------------------
+  tareksherif.ca: codebase for www.tareksherif.ca
+  Copyright (C) 2013  Tarek Sherif
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+------------------------------------------------------------------------------>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Gravity</title>
+    <link rel="icon" type="image/png" href="/img/cube_icon.png">
+    <meta name="description" content="A Canvas Experiment by Tarek Sherif">
+    <meta property="og:image" content="/image/gravity.png">
+    <style>
+      html {
+        height: 100%;
+        overflow: hidden;
+      }
+      
+      body {
+        background-color: #bbb;
+        height: 100%;
+        margin: 0;
+      }
+      
+      #canvas {
+        background-color: #000;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <script src="/experiments/js/oFactory.js"></script>
+    <script src="/experiments/js/utils.js"></script>
+    <script src="/experiments/js/ball.js"></script>
+    <script>
+      window.onload = function() {
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext("2d");
+        var mouse = utils.captureMouse(canvas);
+        var num_balls = 1000;
+        var explosion = 30;
+        var balls = [];
+        var i;
+        var mouse_gravity = 0.1;
+        
+        canvas.width = document.body.clientWidth;
+        canvas.height = document.body.clientHeight;
+        
+        for (i = 0; i < num_balls; i++) {
+          balls[i] = ball({
+            color: utils.randomColor(),
+            radius: Math.floor(Math.random() * 20) + 5,
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            lineWidth: 0,
+            vx: Math.random() * explosion - explosion / 2,
+            vy: Math.random() * explosion - explosion / 2,
+          });
+        }
+        
+        
+        (function drawFrame() {
+          
+        
+          window.requestAnimationFrame(drawFrame, canvas);
+          context.clearRect(0, 0, canvas.width, canvas.height);
+          
+          
+          balls.forEach(function(b) {
+            var dx = 0;
+            var dy = 0; 
+            var ax = 0; 
+            var ay = 0; 
+            var angle;
+            
+            dx = mouse.x - b.x;
+            dy = mouse.y - b.y;
+            angle = Math.atan2(dy, dx);
+            ax = Math.cos(angle) * mouse_gravity;
+            ay = Math.sin(angle) * mouse_gravity;
+            
+            b.vx += ax;
+            b.vy += ay
+            b.x += b.vx;
+            b.y += b.vy;
+            if (b.x + b.radius >= 0 && b.x - b.radius <= canvas.width &&
+                b.y + b.radius >= 0 && b.y - b.radius <= canvas.height) {
+              b.draw(context);
+            }
+          }); 
+          
+        })();
+      };
+    </script>
+  </body>
+</html>
