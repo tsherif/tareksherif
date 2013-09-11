@@ -58,15 +58,15 @@
     <script src="/experiments/js/utils.js"></script>
     <script src="/experiments/js/ball.js"></script>
     <script>
-      if (!document.createElement("canvas") || !window.requestAnimationFrame) {
-        (function() {
-           var warning = document.getElementById("compatibility-warning");
-           warning.style.display = "block";
-        })();
-        return;
-      }
-    
       window.onload = function() {
+        if (!document.createElement("canvas") || !window.requestAnimationFrame) {
+          (function() {
+             var warning = document.getElementById("compatibility-warning");
+             warning.style.display = "block";
+          })();
+          return;
+        }
+        
         var canvas = document.getElementById("canvas");
         var context = canvas.getContext("2d");
         var mouse = utils.captureMouse(canvas);
