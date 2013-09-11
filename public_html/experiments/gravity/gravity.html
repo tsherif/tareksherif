@@ -31,22 +31,41 @@
       }
       
       body {
-        background-color: #bbb;
+        background-color: white;
         height: 100%;
         margin: 0;
       }
       
       #canvas {
         background-color: #000;
+        width: 100%;
+        height: 100%;
+      }
+      
+      .warning {
+        color: red;
+        font-weight: bold;
       }
     </style>
   </head>
   <body>
+    <div id="compatibility-warning" class="warning" style="display:none">
+      Your browser does not seem to support functionality required for this experiment.<BR>
+      <a href="https://www.google.com/intl/en/chrome/browser/">Google Chrome</a> is recommended for best viewing.
+    </div>
     <canvas id="canvas"></canvas>
     <script src="/experiments/js/oFactory.js"></script>
     <script src="/experiments/js/utils.js"></script>
     <script src="/experiments/js/ball.js"></script>
     <script>
+      if (!document.createElement("canvas") || !window.requestAnimationFrame) {
+        (function() {
+           var warning = document.getElementById("compatibility-warning");
+           warning.style.display = "block";
+        })();
+        return;
+      }
+    
       window.onload = function() {
         var canvas = document.getElementById("canvas");
         var context = canvas.getContext("2d");
