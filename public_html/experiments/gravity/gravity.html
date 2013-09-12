@@ -81,6 +81,11 @@
         canvas.width = document.body.clientWidth;
         canvas.height = document.body.clientHeight;
         
+        window.onresize = function() {
+          canvas.width = document.body.clientWidth;
+          canvas.height = document.body.clientHeight;
+        };
+        
         for (i = 0; i < num_balls; i++) {
           v_initial = Math.random() * explosion;
           angle = Math.random() * 2 * Math.PI;
