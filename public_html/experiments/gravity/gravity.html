@@ -75,19 +75,23 @@
         var balls = [];
         var i;
         var mouse_gravity = 0.1;
+        var v_initial;
+        var angle;
         
         canvas.width = document.body.clientWidth;
         canvas.height = document.body.clientHeight;
         
         for (i = 0; i < num_balls; i++) {
+          v_initial = Math.random() * explosion;
+          angle = Math.random() * 2 * Math.PI;
           balls[i] = ball({
             color: utils.randomColor(),
             radius: Math.floor(Math.random() * 20) + 5,
             x: canvas.width / 2,
             y: canvas.height / 2,
             lineWidth: 0,
-            vx: Math.random() * explosion - explosion / 2,
-            vy: Math.random() * explosion - explosion / 2,
+            vx: Math.cos(angle) * v_initial,
+            vy: Math.sin(angle) * v_initial
           });
         }
         
