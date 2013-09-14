@@ -55,11 +55,12 @@
     </div>
     <canvas id="canvas"></canvas>
     <script src="/experiments/js/oFactory.js"></script>
+    <script src="/experiments/js/requestAnimationFrame.js"></script>
     <script src="/experiments/js/utils.js"></script>
     <script src="/experiments/js/ball.js"></script>
     <script>
       window.onload = function() {
-        if (!document.createElement("canvas") || !window.requestAnimationFrame) {
+        if (!document.createElement("canvas")) {
           (function() {
              var warning = document.getElementById("compatibility-warning");
              warning.style.display = "block";
