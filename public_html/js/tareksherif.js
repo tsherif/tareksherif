@@ -26,6 +26,8 @@
     } 
   })();
   
+  var CANVASAVAILABLE = !!document.createElement("canvas");
+  
   // Have to load scripts using browser API because of bug
   // in how jQuery handles "use strict" in ajax requests.
   // http://bugs.jquery.com/ticket/14189
@@ -71,9 +73,41 @@
       });
     });
   }
+  
 
   $(function() {
+    $(".button").button();
     $(".tabs").tabs();
+    
+    if (CANVASAVAILABLE) {
+        $("#graffiti-button").click(function() {
+        var button = $(this);
+        
+        function hideGraffiti() {
+          graffiti.hide();
+          button.find("span").text("Graffiti Mode");
+          $(document).unbind("keydown", escapeKeyHide);
+        }
+        
+        function escapeKeyHide(e) {
+          if (e.keyCode === 27) {
+            hideGraffiti();
+          }
+        }
+        
+        if (graffiti.isShowing()) {
+          hideGraffiti();
+        } else {
+          graffiti.show();
+          button.find("span").text("End Graffiti Mode");
+          $(document).keydown(escapeKeyHide);
+        }
+      });
+    } else {
+      $("#graffiti-button").hide();
+    }
+    
+    
     if (WEBGLENABLED) {
       webglScript();
     } else {
