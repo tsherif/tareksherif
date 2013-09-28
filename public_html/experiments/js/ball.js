@@ -16,16 +16,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //////////////////////////////////////////////////////////////////////////////
 
-var ball = oFactory().mixin({
-  radius: 40,
-  color: "#ff0000",
-  x: 0,
-  y: 0,
-  rotation: 0,
-  scaleX: 1,
-  scaleY: 1,
-  lineWidth: 1
-}).shared({
+var ball = oFactory({
   draw: function(context) {
     context.save();
     context.translate(this.x, this.y);
@@ -41,4 +32,13 @@ var ball = oFactory().mixin({
     }
     context.restore();
   }
+}).mixin({
+  radius: 40,
+  color: "#ff0000",
+  x: 0,
+  y: 0,
+  rotation: 0,
+  scaleX: 1,
+  scaleY: 1,
+  lineWidth: 1
 });

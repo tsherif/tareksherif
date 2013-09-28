@@ -22,7 +22,7 @@ utils = {
   captureMouse: function(canvas) {
     var mouse = {x: 0, y: 0};
     
-    canvas.addEventListener('mousemove', function(e) {
+    canvas.addEventListener("mousemove", function(e) {
       var x, y;
       
       if (e.pageX !== undefined) {
@@ -43,18 +43,44 @@ utils = {
     return mouse;
   },
   
-  drawDot: function(context, x, y, color) {
-    color = color || "#ff0000";
-    utils.withContext(context, function() {
-      context.fillStyle = color;
-      context.fillRect(x - 2, y - 2, 4, 4);
-    });
-  },
-  
-  withContext: function(context, callback) {
-    context.save();
-    callback();
-    context.restore();
+  // CaptureTouch code from Foundation HTML5 Animation with JavaScript
+  // by Billy Lamberta and Keith Peters
+  captureTouch: function(canvas) {
+    var touch = {x: null, y: null, touching: false};
+    
+    function touchPosition(event) {
+      var x, y;
+      var e = event.touches[0];
+      
+      if (e.pageX !== undefined) {
+        x = e.pageX;
+        y = e.pageY;
+      } else {
+        x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+        y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+      }
+      
+      x -= canvas.offsetLeft;
+      y -= canvas.offsetTop;
+      
+      touch.x = x;
+      touch.y = y;
+    }
+    
+    canvas.addEventListener("touchstart", function(e) {
+      touch.touching = true;
+      touchPosition(e);
+    }, false);
+    
+    canvas.addEventListener("touchend", function(e) {
+      touch.x = null;
+      touch.y = null;
+      touch.touching = false;
+    }, false);
+    
+    canvas.addEventListener("touchmove", touchPosition, false);
+    
+    return touch;
   },
   
   randomColor: function() {

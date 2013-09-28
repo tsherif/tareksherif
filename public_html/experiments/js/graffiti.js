@@ -17,36 +17,12 @@
 //////////////////////////////////////////////////////////////////////////////
 
 
-// Spray paint and captureMouse code taken from 
+// Spray paint code taken from 
 // Foundation HTML5 Animation with JavaScript
 // by Billy Lamberta and Keith Peters
 var graffiti = (function() {
   var canvas = null;
   var showing = false;
-  
-  function captureMouse(canvas) {
-    var mouse = {x: 0, y: 0};
-    
-    canvas.addEventListener('mousemove', function(e) {
-      var x, y;
-      
-      if (e.pageX !== undefined) {
-        x = e.pageX;
-        y = e.pageY;
-      } else {
-        x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-        y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-      }
-      
-      x -= canvas.offsetLeft;
-      y -= canvas.offsetTop;
-      
-      mouse.x = x;
-      mouse.y = y;
-    }, false);
-    
-    return mouse;
-  }
   
   function show() {
     if (showing) return;
@@ -57,16 +33,30 @@ var graffiti = (function() {
     canvas.width = document.body.clientWidth;
     canvas.height = document.body.clientHeight;
     var context = canvas.getContext("2d");
-    var mouse = captureMouse(canvas);
+    var mouse = utils.captureMouse(canvas);
+    var touch = utils.captureTouch(canvas);
+    var cursor;
     var image_data = context.getImageData(0, 0, canvas.width, canvas.height);
     var pixels = image_data.data;
     var brush_size;
     var brush_density = 500;
     var brush_color;
+    var new_spray = false;
+    
+    canvas.addEventListener("touchstart", function() {
+      new_spray = true;
+      spray();
+      canvas.addEventListener("touchmove", spray, false);
+    }, false);
+    
+    canvas.addEventListener("touchend", function() {
+      canvas.removeEventListener("touchmove", spray, false);
+    }, false);
     
     canvas.addEventListener("mousedown", function() {
-      brush_color = Math.floor(Math.random() * 0xFFFFFF);
-      brush_size = Math.random() * 90 + 10;
+      if (touch.touching) return;
+
+      new_spray = true;
       spray();
       canvas.addEventListener("mousemove", spray, false);
     }, false);
@@ -79,12 +69,18 @@ var graffiti = (function() {
     
     function spray() {
       var i, angle, radius, xpos, ypos, offset;
+      var cursor = touch.touching ? touch : mouse;
+      if (new_spray) {
+        brush_color = Math.floor(Math.random() * 0xFFFFFF);
+        brush_size = Math.random() * 90 + 10;
+        new_spray = false;
+      }
       
       for (i = 0; i < brush_density; i++) {
         angle = Math.random() * Math.PI * 2;
         radius = Math.random() * brush_size;
-        xpos = Math.floor(mouse.x + Math.cos(angle) * radius);
-        ypos = Math.floor(mouse.y + Math.sin(angle) * radius);
+        xpos = Math.floor(cursor.x + Math.cos(angle) * radius);
+        ypos = Math.floor(cursor.y + Math.sin(angle) * radius);
         offset = (ypos * image_data.width + xpos) * 4;
         
         pixels[offset] = brush_color >> 16;

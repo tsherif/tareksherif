@@ -54,10 +54,10 @@
       <a href="https://www.google.com/intl/en/chrome/browser/">Google Chrome</a> is recommended for best viewing.
     </div>
     <canvas id="canvas"></canvas>
-    <script src="/experiments/js/oFactory.js"></script>
-    <script src="/experiments/js/requestAnimationFrame.js"></script>
-    <script src="/experiments/js/utils.js"></script>
-    <script src="/experiments/js/ball.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/oFactory.js"></script>
+    <script src="../js/requestAnimationFrame.js"></script>
+    <script src="../js/ball.js"></script>
     <script>
       window.onload = function() {
         if (!document.createElement("canvas")) {
@@ -71,6 +71,7 @@
         var canvas = document.getElementById("canvas");
         var context = canvas.getContext("2d");
         var mouse = utils.captureMouse(canvas);
+        var touch = utils.captureTouch(canvas);
         var num_balls = 1000;
         var explosion = 25;
         var balls = [];
@@ -103,11 +104,9 @@
         
         
         (function drawFrame() {
-          
-        
           window.requestAnimationFrame(drawFrame, canvas);
           context.clearRect(0, 0, canvas.width, canvas.height);
-          
+          var cursor = touch.touching ? touch : mouse;
           
           balls.forEach(function(b) {
             var dx = 0;
@@ -116,8 +115,8 @@
             var ay = 0; 
             var angle;
             
-            dx = mouse.x - b.x;
-            dy = mouse.y - b.y;
+            dx = cursor.x - b.x;
+            dy = cursor.y - b.y;
             angle = Math.atan2(dy, dx);
             ax = Math.cos(angle) * mouse_gravity;
             ay = Math.sin(angle) * mouse_gravity;
