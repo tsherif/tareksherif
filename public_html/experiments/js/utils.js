@@ -52,6 +52,8 @@ utils = {
       var x, y;
       var e = event.touches[0];
       
+      event.preventDefault();
+      
       if (e.pageX !== undefined) {
         x = e.pageX;
         y = e.pageY;
@@ -68,11 +70,15 @@ utils = {
     }
     
     canvas.addEventListener("touchstart", function(e) {
+      e.preventDefault();
+      
       touch.touching = true;
       touchPosition(e);
     }, false);
     
     canvas.addEventListener("touchend", function(e) {
+      e.preventDefault();
+    
       touch.x = null;
       touch.y = null;
       touch.touching = false;
