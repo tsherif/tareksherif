@@ -43,21 +43,21 @@ var graffiti = (function() {
     var brush_color;
     var new_spray = false;
     
-    canvas.addEventListener("touchstart", function() {
+    canvas.addEventListener("touchstart", function(e) {
+      e.preventDefault();
       new_spray = true;
-      spray();
+      spray(e);
       canvas.addEventListener("touchmove", spray, false);
     }, false);
     
-    canvas.addEventListener("touchend", function() {
+    canvas.addEventListener("touchend", function(e) {
+      e.preventDefault();
       canvas.removeEventListener("touchmove", spray, false);
     }, false);
     
-    canvas.addEventListener("mousedown", function() {
-      if (touch.touching) return;
-
+    canvas.addEventListener("mousedown", function(e) {
       new_spray = true;
-      spray();
+      spray(e);
       canvas.addEventListener("mousemove", spray, false);
     }, false);
     
@@ -67,9 +67,12 @@ var graffiti = (function() {
     
     document.body.appendChild(canvas);
     
-    function spray() {
+    function spray(e) {
       var i, angle, radius, xpos, ypos, offset;
       var cursor = touch.touching ? touch : mouse;
+      
+      e.preventDefault();
+      
       if (new_spray) {
         brush_color = Math.floor(Math.random() * 0xFFFFFF);
         brush_size = Math.random() * 90 + 10;
