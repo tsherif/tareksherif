@@ -79,7 +79,7 @@
         var friction = 0.9;
         var drift_range = 1;
         var scale;
-        var timer = performance || Date;
+        var timer = window.performance || window.Date;
         var previous_time, current_time;
         
         snowflake.cacheImages(2, 7, {

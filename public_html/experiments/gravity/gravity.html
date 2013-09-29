@@ -79,7 +79,7 @@
         var mouse_gravity = 0.1;
         var v_initial;
         var angle;
-        var timer = performance || Date;
+        var timer = window.performance || window.Date;
         var previous_time, current_time;
         
         canvas.width = document.body.clientWidth;
