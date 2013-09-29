@@ -93,16 +93,6 @@ h3 {
   width: 25px;
 }
 
-#social a {
-  /* float: right; */
-  /* margin-top: 15px;
-  margin-left: 3px; */
-}
-
-/* #social a:first-child {
-  margin-right: 10px;
-} */
-
 a img {
   border: none;  /* For stupid IE */
 }
@@ -154,19 +144,35 @@ a img {
 
 .experiment {
   display: inline-block;
+  margin-left: 8px;
   position: relative;
 }
 
 .experiment img {
   display: block;
+  width: 140px;
+  height: 140px;
 }
 
 .experiment-title {
   color: white;
   font-weight: bold;
   position: absolute;
+}
+
+#gravity-title {
+  font-size: 14px;
+  letter-spacing: 4px;
   bottom: 5px;
   right: 7px;
+}
+
+#snowflakes-title {
+  font-size: 12px;
+  white-space: pre;
+  line-height: 1em;
+  top: 13px;
+  left: 76px;
 }
 
 #graffiti-canvas {

@@ -78,6 +78,11 @@
   $(function() {
     $(".button").button();
     $(".tabs").tabs();
+    $(".vertical-text").each(function() {
+      var el = $(this);
+      el.text(el.text().replace(/(.)/g, '$1\n'));
+    });
+
     
     if (CANVASAVAILABLE) {
         $("#graffiti-button").click(function() {
