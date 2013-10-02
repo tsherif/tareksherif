@@ -27,17 +27,17 @@ var organism = ball.share({
     var dx = this.tx - this.x;
     var dy = this.ty - this.y;
     var d = Math.sqrt(dx * dx + dy * dy);
-    var scale_factor = 0.8 * d / this.range
+    var scale_factor = 1 + utils.clamp(this.easing * d / 6, 0, 1);
     
-    if (Math.sqrt(dx * dx + dy * dy) < 0.5){
+    if (d < 0.5){
       this.newTarget();
                 
       dx = this.tx - this.x;
       dy = this.ty - this.y;
     }
         
-    this.scale_x = 1 + scale_factor;
-    this.scale_y = 1 - scale_factor;     
+    this.scale_x = 1 * scale_factor;
+    this.scale_y = 1 / scale_factor;     
     
     this.x += dx * this.easing * delta;
     this.y += dy * this.easing * delta;
