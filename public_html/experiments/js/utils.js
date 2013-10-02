@@ -48,11 +48,19 @@ utils = {
   captureTouch: function(canvas) {
     var touch = {x: null, y: null, touching: false};
     
-    function touchPosition(event) {
+    canvas.addEventListener("touchstart", function(e) {
+      touch.touching = true;
+    }, false);
+    
+    canvas.addEventListener("touchend", function(e) {
+      touch.x = null;
+      touch.y = null;
+      touch.touching = false;
+    }, false);
+    
+    canvas.addEventListener("touchmove", function(event) {
       var x, y;
       var e = event.touches[0];
-      
-      event.preventDefault();
       
       if (e.pageX !== undefined) {
         x = e.pageX;
@@ -67,26 +75,61 @@ utils = {
       
       touch.x = x;
       touch.y = y;
-    }
-    
-    canvas.addEventListener("touchstart", function(e) {
-      e.preventDefault();
-      
-      touch.touching = true;
-      touchPosition(e);
     }, false);
-    
-    canvas.addEventListener("touchend", function(e) {
-      e.preventDefault();
-    
-      touch.x = null;
-      touch.y = null;
-      touch.touching = false;
-    }, false);
-    
-    canvas.addEventListener("touchmove", touchPosition, false);
     
     return touch;
+  },
+  
+  clamp: function(value, min, max) {
+    return value < min ? min :
+           value > max ? max :
+           value;
+  },
+  
+  colorShift: function(color, shift_range) {
+    color = utils.parseColor(color, true);
+    shift_range = shift_range || 0;
+    
+    var r = color >> 16 & 0xFF;
+    var g = color >> 8 & 0xFF;
+    var b = color & 0xFF;
+            
+    r = utils.clamp(r + Math.floor(Math.random() * shift_range - shift_range / 2), 0, 255);
+    b = utils.clamp(b + Math.floor(Math.random() * shift_range - shift_range / 2), 0, 255);
+    g = utils.clamp(g + Math.floor(Math.random() * shift_range - shift_range / 2), 0, 255);
+    
+    return utils.parseColor(r << 16 | b << 8 | g);
+  },
+  
+  parseColor: function(color, to_number) {
+    if (to_number) {
+      if (typeof color === "number") {
+        return color |= 0;
+      }
+      if (typeof color === "string" && color[0] === "#") {
+        color = color.slice(1);
+      }
+      return parseInt(color, 16);
+    } else {
+      if (typeof color === "number") {
+        color = "#" + ("00000" + color.toString(16)).slice(-6);
+      }
+      return color;
+    }
+  },
+  
+  drawDot: function(context, x, y, color) {
+    color = color || "#ff0000";
+    utils.withContext(context, function() {
+      context.fillStyle = color;
+      context.fillRect(x - 2, y - 2, 4, 4);
+    });
+  },
+  
+  withContext: function(context, callback) {
+    context.save();
+    callback();
+    context.restore();
   },
   
   randomColor: function() {

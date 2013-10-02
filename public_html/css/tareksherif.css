@@ -155,13 +155,13 @@ a img {
 }
 
 .experiment-title {
+  font-size: 14px;
   color: white;
   font-weight: bold;
   position: absolute;
 }
 
 #gravity-title {
-  font-size: 14px;
   letter-spacing: 4px;
   bottom: 5px;
   right: 7px;
@@ -174,6 +174,42 @@ a img {
   top: 13px;
   left: 76px;
 }
+
+.evolve-title {
+  color: black;
+}
+
+#evolve-title-1 {
+  top: 13px;
+  left: 26px;
+}
+
+#evolve-title-2 {
+  top: 31px;
+  left: 58px;
+}
+
+#evolve-title-3 {
+  top: 55px;
+  left: 47px;
+}
+
+#evolve-title-4 {
+  top: 68px;
+  left: 76px;
+}
+
+#evolve-title-5 {
+  top: 82px;
+  left: 101px;
+}
+
+#evolve-title-6 {
+  top: 102px;
+  left: 121px;
+}
+
+
 
 #graffiti-canvas {
   position: absolute;

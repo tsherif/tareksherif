@@ -1,0 +1,79 @@
+var organism = ball.share({
+  move: function(delta) {
+    if (this.state === "dead") return;
+  
+    if (this.state === "dying") {
+      this.radius *= 0.9;
+      
+      if (this.radius < 1) {
+        this.state = "dead";
+      }
+      
+      return;
+    }
+    if (this.state === "born") {
+      this.scale_x *= 1.1;
+      this.scale_y *= 1.1;
+      
+      if (this.scale_x > 1) {
+        this.scale_x = 1;
+        this.scale_y = 1;
+        this.state = "alive";
+      }
+      
+      return;
+    }
+  
+    var dx = this.tx - this.x;
+    var dy = this.ty - this.y;
+    
+    if (Math.sqrt(dx * dx + dy * dy) < 0.5){
+      this.newTarget();
+                
+      dx = this.tx - this.x;
+      dy = this.ty - this.y;
+    }
+    
+    this.x += dx * this.easing * delta;
+    this.y += dy * this.easing * delta;
+  },
+  
+  newTarget: function() {
+    this.tx = this.x + Math.random() * this.range - this.range / 2;
+    this.ty = this.y + Math.random() * this.range - this.range / 2;
+    
+    this.tx = this.tx - this.radius < 0 ? this.radius :
+              this.tx + this.radius > canvas.width ? canvas.width - this.radius :
+              this.tx;
+              
+    this.ty = this.ty - this.radius < 0 ? this.radius :
+              this.ty + this.radius  > canvas.height ? canvas.height - this.radius  :
+              this.ty;
+  },
+  
+  reproduce: function() {
+    var parent = this;
+  
+    return organism(function() {
+      var radius_drift = parent.radius * 0.5;
+      var range_drift = parent.range * 0.5;
+      var easing_drift = parent.easing * 0.5;
+      var reproduction_drift = parent.reproduction * 0.5;
+      var death_drift = parent.death * 0.5;
+    
+      this.x = parent.x
+      this.y = parent.y;
+      this.color = utils.colorShift(parent.color, 75);
+      this.radius = utils.clamp(parent.radius + (Math.random() * radius_drift - radius_drift / 2), 1, 1000);
+      this.vx = 0;
+      this.vy = 0;
+      this.range = utils.clamp(parent.range + (Math.random() * range_drift - range_drift / 2), 10, 1000);
+      this.newTarget();
+      this.easing = utils.clamp(parent.easing + (Math.random() * easing_drift - easing_drift / 2), 0.001, 0.2);
+      this.reproduction = utils.clamp(parent.reproduction + (Math.random() * reproduction_drift - reproduction_drift / 2), 0.00001, 0.003);
+      this.death = utils.clamp(parent.death + (Math.random() * death_drift - death_drift / 2), 0.00001, 0.003);
+      this.state = "born";
+      this.scale_x = this.scale_y = 0.1;
+    });
+  }
+});

@@ -21,7 +21,7 @@ var ball = oFactory({
     context.save();
     context.translate(this.x, this.y);
     context.rotate(this.rotation);
-    context.scale(this.scaleX, this.scaleY);
+    context.scale(this.scale_x, this.scale_y);
     context.lineWidth = this.lineWidth;
     context.fillStyle = this.color;
     context.beginPath();
@@ -38,7 +38,7 @@ var ball = oFactory({
   x: 0,
   y: 0,
   rotation: 0,
-  scaleX: 1,
-  scaleY: 1,
-  lineWidth: 1
+  scale_x: 1,
+  scale_y: 1,
+  lineWidth: 0
 });
