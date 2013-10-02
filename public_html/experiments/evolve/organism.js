@@ -26,6 +26,8 @@ var organism = ball.share({
   
     var dx = this.tx - this.x;
     var dy = this.ty - this.y;
+    var d = Math.sqrt(dx * dx + dy * dy);
+    var scale_factor = 0.8 * d / this.range
     
     if (Math.sqrt(dx * dx + dy * dy) < 0.5){
       this.newTarget();
@@ -33,12 +35,18 @@ var organism = ball.share({
       dx = this.tx - this.x;
       dy = this.ty - this.y;
     }
+        
+    this.scale_x = 1 + scale_factor;
+    this.scale_y = 1 - scale_factor;     
     
     this.x += dx * this.easing * delta;
     this.y += dy * this.easing * delta;
   },
   
   newTarget: function() {
+    var dx;
+    var dy;
+    
     this.tx = this.x + Math.random() * this.range - this.range / 2;
     this.ty = this.y + Math.random() * this.range - this.range / 2;
     
@@ -49,6 +57,11 @@ var organism = ball.share({
     this.ty = this.ty - this.radius < 0 ? this.radius :
               this.ty + this.radius  > canvas.height ? canvas.height - this.radius  :
               this.ty;
+    
+    dx = this.tx - this.x;
+    dy = this.ty - this.y;
+    
+    this.rotation = Math.atan2(dy, dx);
   },
   
   reproduce: function() {
