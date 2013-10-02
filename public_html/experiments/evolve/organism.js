@@ -28,8 +28,7 @@ var organism = ball.share({
     var dy = this.ty - this.y;
     var d = Math.sqrt(dx * dx + dy * dy);
     var scale_factor = 1 + utils.clamp(this.easing * d / 6, 0, 1);
-    
-    if (d < 0.5){
+    if (d < 5){
       this.newTarget();
                 
       dx = this.tx - this.x;
@@ -60,6 +59,10 @@ var organism = ball.share({
     
     dx = this.tx - this.x;
     dy = this.ty - this.y;
+    
+    // 90 degree rotation seems not to work in Chrome.
+    if (Math.abs(dx) < 0.1) dx = 0.1;
+    if (Math.abs(dy) < 0.1) dy = 0.1;
     
     this.rotation = Math.atan2(dy, dx);
   },
