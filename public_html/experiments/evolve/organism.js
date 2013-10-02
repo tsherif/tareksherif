@@ -92,4 +92,4 @@ var organism = ball.share({
       this.scale_x = this.scale_y = 0.1;
     });
   }
-});
+}).mixin({alpha: 0.95});
