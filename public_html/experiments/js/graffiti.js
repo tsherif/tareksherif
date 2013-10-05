@@ -36,8 +36,6 @@ var graffiti = (function() {
     var mouse = utils.captureMouse(canvas);
     var touch = utils.captureTouch(canvas);
     var cursor;
-    var image_data = context.getImageData(0, 0, canvas.width, canvas.height);
-    var pixels = image_data.data;
     var brush_size;
     var brush_density = 500;
     var brush_color;
@@ -74,7 +72,7 @@ var graffiti = (function() {
       e.preventDefault();
       
       if (new_spray) {
-        brush_color = Math.floor(Math.random() * 0xFFFFFF);
+        brush_color = utils.randomColor();
         brush_size = Math.random() * 90 + 10;
         new_spray = false;
       }
@@ -84,15 +82,10 @@ var graffiti = (function() {
         radius = Math.random() * brush_size;
         xpos = Math.floor(cursor.x + Math.cos(angle) * radius);
         ypos = Math.floor(cursor.y + Math.sin(angle) * radius);
-        offset = (ypos * image_data.width + xpos) * 4;
         
-        pixels[offset] = brush_color >> 16;
-        pixels[offset+1] = (brush_color >> 8) & 0xFF;
-        pixels[offset+2] = brush_color & 0xFF;
-        pixels[offset+3] = 255;
+        context.fillStyle = brush_color;
+        context.fillRect(xpos, ypos, 1, 1);
       }
-      
-      context.putImageData(image_data, 0, 0);
     }
   }
   
