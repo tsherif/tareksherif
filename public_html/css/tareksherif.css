@@ -54,6 +54,15 @@ h3 {
   z-index: 10;
 }
 
+
+#graffiti-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: crosshair;
+  z-index: 5;
+}
+
 #title {
   vertical-align: middle;
   padding-top: 0.5em;
@@ -207,13 +216,4 @@ a img {
 #evolve-title-6 {
   top: 78px;
   left: 97px;
-}
-
-
-
-#graffiti-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  cursor: crosshair;
 }
