@@ -1,4 +1,4 @@
-/////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 // The MIT License (MIT)
 // 
 // Copyright (c) 2013 Tarek Sherif
@@ -19,14 +19,25 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-/////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
-var oFactory = (function() {
+(function(global) {
   "use strict";
   
   ///////////////////////////////////
   //  Private Functions
   ///////////////////////////////////
+  
+  var defaultSpecs = function(proto){
+    return {
+      proto: proto || {},      // Prototype
+      instance_modules: [],    // Function modifiers
+      instance_properties: {}, // Default properties
+      inits: [],               // Post-creation initialization functions
+      sealed: false,           // Will created objects be sealed?           
+      frozen: false            // Will created objects be frozen?
+    };
+  };
   
   // Extend an object by copying over attributes.
   // By default does a deep copy, but if the +shallow+
@@ -69,7 +80,7 @@ var oFactory = (function() {
       val.forEach(function(elem) {
         result.push(deepCopy(elem));
       });
-    } else if (typeof val === "object") {
+    } else if (val && typeof val === "object") {
       result = Object.create(Object.getPrototypeOf(val));
       Object.keys(val).forEach(function(key) {
         result[key] = deepCopy(val[key]);
@@ -85,9 +96,7 @@ var oFactory = (function() {
   //  oFactory Function
   ///////////////////////////////////
   
-  var oFactory = function(proto) {
-    var sealed = false;
-    var frozen = false;
+  var oFactory = global.oFactory = function(proto) {
   
     // The created factory function
     //
@@ -108,24 +117,19 @@ var oFactory = (function() {
         props.call(obj, obj);
       } else {
         objectExtend(obj, props, true);
-      }    
+      }
       
       moduleExtend(obj, specs.inits);
       
-      if (sealed) Object.seal(obj);
-      if (frozen) Object.freeze(obj);
+      if (specs.sealed) Object.seal(obj);
+      if (specs.frozen) Object.freeze(obj);
       
       return obj;
     };
     
     // Specs property holds description of 
     // how to create an object.
-    factory.specs = {
-      proto: proto || {},      // Prototype
-      instance_modules: [],    // Function modifiers
-      instance_properties: {}, // Default properties
-      inits: []                // Post-creation initialization functions
-    };
+    factory.specs = defaultSpecs(proto);
     
     ///////////////////////////////////
     //  Factory methods
@@ -172,25 +176,48 @@ var oFactory = (function() {
     
     // The factory will create frozen objects.
     factory.freeze = function() {
-      frozen = true;
+      this.specs.frozen = true;
       
       return this;
-    }
+    };
    
     // The factory will create sealed objects.
     factory.seal = function() {
-      sealed = true;
+      this.specs.sealed = true;
       
       return this;
-    }
+    };
+    
+    // Clone a factory
+    // Objects created by the cloned factory will
+    // be identical in behaviour but not linked in 
+    // any real way to those created by the original
+    // factory.
+    factory.clone = function() {
+      var clone = oFactory.compose(this);
+      clone.specs.sealed = this.specs.sealed;
+      clone.specs.frozen = this.specs.frozen;
+    
+      return clone;
+    };
+    
+    // Create a factory that uses a prototype
+    // for object creation that inherits from 
+    // the prototype used by the original factory.
+    factory.beget = function() {
+      var child = this.clone();
+      child.specs.proto = Object.create(this.specs.proto);
+    
+      return child;
+    };
     
     // Compose this factory with another.
     // Wrapper around oFactory.compose()
     factory.compose = function() {
       var factories = [this].concat(Array.prototype.slice.call(arguments));
       
-      return oFactory.compose.apply(oFactory, factories)
-    }
+      return oFactory.compose.apply(oFactory, factories);
+    };
     
     return factory;
   };
@@ -201,16 +228,11 @@ var oFactory = (function() {
   // are given priority.
   oFactory.compose = function() {
     var comp = oFactory();
-    comp.specs = {
-      proto: {},
-      instance_modules: [],
-      instance_properties: {},
-      inits: []
-    }
+    comp.specs = defaultSpecs();
     
     Array.prototype.slice.call(arguments).forEach(function(f) {
       objectExtend(comp.specs.proto, f.specs.proto);
-      objectExtend(comp.specs.instance_properties, f.specs.instance_properties)
+      objectExtend(comp.specs.instance_properties, f.specs.instance_properties);
       Array.prototype.push.apply(comp.specs.instance_modules, f.specs.instance_modules);
       Array.prototype.push.apply(comp.specs.inits, f.specs.inits);
     });
@@ -218,6 +240,5 @@ var oFactory = (function() {
     return comp;
   };
   
-  return oFactory;
-})();
+})(this);
 

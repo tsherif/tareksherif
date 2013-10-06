@@ -1,4 +1,4 @@
-var organism = ball.share({
+var organism = ball.clone().share({
   move: function(delta) {
     if (this.state === "dead") return;
   
