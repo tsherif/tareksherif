@@ -58,6 +58,7 @@ var lightning = oFactory().share(function(proto) {
     context.globalAlpha = this.alpha;
     context.lineCap = "round";
     context.translate(this.x, this.y);
+    context.scale(this.scale_x, this.scale_y);
     
     this.segments.forEach(function(s) {
       context.save();
@@ -83,6 +84,8 @@ var lightning = oFactory().share(function(proto) {
   alpha: 1,
   angle_range: Math.PI,
   branching_prob: 0.2,
+  scale_x: 1,
+  scale_y: 1,
   reduceWidth: function(width) {
     return (Math.random() * 0.2 + 0.7) * width;
   }

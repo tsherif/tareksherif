@@ -84,9 +84,11 @@
         window.onresize = function() {
           canvas.width = document.body.clientWidth;
           canvas.height = document.body.clientHeight;
+          
+          scale = canvas.height / 1080;
         };
         
-        var floor_width = canvas.height / 12;
+        var scale = canvas.height / 1080;
         
         while(num_trees--) {
           trees.push(
@@ -94,9 +96,9 @@
               x: Math.random() * canvas.width,
               y: canvas.height,
               alpha: Math.random() * 0.3 + 0.7,
-              min_length: 60 * canvas.height / 1000,
-              length_range: 40 * canvas.height / 1000,
-              starting_width: Math.random() * canvas.width / 150,
+              min_length: 60,
+              length_range: 40,
+              starting_width: Math.random() * 15,
               min_angle: Math.PI,
               angle_range: Math.PI,
               branching_prob: 0.4,
@@ -122,11 +124,12 @@
           
           previous_time = current_time;
           
-          cur_brightness = total_segments / (200  * canvas.width / 1500);
+          cur_brightness = total_segments / 150;
           var brightness = cur_brightness > prev_brightness ? 
                            cur_brightness : 
                            Math.max(prev_brightness - 0.04, cur_brightness);
           var foreground_color = "#000000";
+          var floor_width = 80 * scale;
           
           brightness = Math.min(brightness, 1.0)
           prev_brightness = brightness;
@@ -141,6 +144,7 @@
           
           trees.forEach(function(t) {
             t.y = canvas.height - floor_width;
+            t.scale_x = t.scale_y = scale;
             t.color = foreground_color;
             t.draw(context);
           });
@@ -151,16 +155,16 @@
           bolts = bolts.filter(function(b) { return b.hasNext(); });     
           
           (function() {
-            if (Math.random() < 0.04) {
+            if (Math.random() < 0.05) {
               bolts.push(
                 lightning({
                   x: Math.random() * canvas.width,
                   y: 0,
                   alpha: Math.random() * 0.3 + 0.7,
                   color: "#AAB3BD",
-                  min_length: 60 * canvas.height / 1000,
-                  length_range: 40 * canvas.height / 1000,
-                  starting_width: Math.random() * canvas.width / 150
+                  min_length: 60,
+                  length_range: 40,
+                  starting_width: Math.random() * 15
                 })
               );
             }
@@ -169,6 +173,7 @@
           
           bolts.forEach(function(b) {
             b.next();
+            b.scale_x = b.scale_y = scale;
             total_segments += b.segments.length;
             b.draw(context);
           });
