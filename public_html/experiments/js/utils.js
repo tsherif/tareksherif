@@ -136,5 +136,13 @@ utils = {
     return "rgb(" + Math.floor(Math.random() * 255) + ","
                   + Math.floor(Math.random() * 255) + ","
                   + Math.floor(Math.random() * 255) + ")";
+  },
+  
+  colorToRGB: function(r, g, b, a) {
+    a = a === undefined ? 1.0 : a;
+    return "rgba(" + r + ","
+                   + g + ","
+                   + b + ","
+                   + a +")";
   }
 };

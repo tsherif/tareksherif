@@ -217,3 +217,9 @@ a img {
   top: 78px;
   left: 97px;
 }
+
+#storm-title {
+  letter-spacing: 4px;
+  top: 20px;
+  left: 40px;
+}
