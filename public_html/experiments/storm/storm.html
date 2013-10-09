@@ -114,7 +114,7 @@
         (function drawFrame() {  
           window.requestAnimationFrame(drawFrame, canvas);
           
-          cur_brightness = total_segments / 200;
+          cur_brightness = total_segments / (200  * canvas.width / 1500);
           var brightness = cur_brightness > prev_brightness ? 
                            cur_brightness : 
                            Math.max(prev_brightness - 0.04, cur_brightness);
