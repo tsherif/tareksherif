@@ -55,7 +55,7 @@ var lightning = oFactory().share(function(proto) {
     context.save();
     
     context.strokeStyle = this.color;
-    context.globalAlpha = this.alpha;
+    //context.globalAlpha = this.alpha;
     context.lineCap = "round";
     context.translate(this.x, this.y);
     
