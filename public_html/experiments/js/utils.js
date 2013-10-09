@@ -144,5 +144,14 @@ utils = {
                    + g + ","
                    + b + ","
                    + a +")";
+  },
+  
+  multiplyColor: function(color, alpha) {
+    color = utils.parseColor(color, true);
+    var r = Math.floor(alpha * (color >> 16 & 0xFF));
+    var g = Math.floor(alpha * (color >> 8 & 0xFF));
+    var b = Math.floor(alpha * (color & 0xFF));
+    
+    return utils.parseColor(r << 16 | g << 8 | b);
   }
 };
