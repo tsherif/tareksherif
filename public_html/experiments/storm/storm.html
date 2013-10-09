@@ -128,7 +128,8 @@
           
           context.save();
           context.clearRect(0, 0, canvas.width, canvas.height);
-          context.fillStyle = utils.colorToRGB(170, 179, 189, brightness);
+          context.fillStyle = "#AAB3BD";
+          context.globalAlpha = brightness;
           context.fillRect(0, 0, canvas.width, canvas.height);
           context.restore();
           
