@@ -75,6 +75,8 @@
         var total_segments = 0;
         var cur_brightness = 0;
         var prev_brightness = 0;
+        var timer = window.performance || window.Date;
+        var previous_time, current_time;
                 
         canvas.width = document.body.clientWidth;
         canvas.height = document.body.clientHeight;   
@@ -111,8 +113,14 @@
           }
         });
       
+        previous_time = timer.now();
         (function drawFrame() {  
           window.requestAnimationFrame(drawFrame, canvas);
+          
+          current_time = timer.now();
+          if (current_time - previous_time < 20) return;
+          
+          previous_time = current_time;
           
           cur_brightness = total_segments / (200  * canvas.width / 1500);
           var brightness = cur_brightness > prev_brightness ? 
