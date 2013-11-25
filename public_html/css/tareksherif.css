@@ -223,3 +223,19 @@ a img {
   top: 20px;
   left: 40px;
 }
+
+.robot-arm-title {
+  font-size: 12px;
+  white-space: pre;
+  line-height: 1em;
+  right: 18px;
+}
+
+#robot-arm-title-1 {
+  top: 33px;
+}
+
+#robot-arm-title-2 {
+  top: 100px;
+  letter-spacing: 2px;
+}

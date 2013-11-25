@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<!---------------------------------------------------------------------------
+  tareksherif.ca: codebase for www.tareksherif.ca
+  Copyright (C) 2013  Tarek Sherif
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+------------------------------------------------------------------------------>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Title</title>
+    <!--
+    <link rel="icon" type="image/png" href="/img/cube_icon.png">
+    <meta name="description" content="A Canvas Experiment by Tarek Sherif">
+    <meta property="og:image" content="">
+    <meta property="og:image:secure_url" content="">
+    -->
+    <style>
+      html {
+        height: 100%;
+        overflow: hidden;
+      }
+      
+      body {
+        height: 100%;
+        margin: 0;
+      }
+      
+      #canvas {
+        background-color: #CCCCCC;
+        width: 100%;
+        height: 100%;
+      }
+      
+      .warning {
+        color: red;
+        font-weight: bold;
+      }
+
+      #instructions {
+        position: absolute;
+        top: 25px;
+        left: 15px;
+        background-color: white;
+        padding: 10px;
+        border-radius: 10px;
+        font-size: 18px;
+      }
+
+      #instruction-header {
+        font-weight: bold;
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      #instructions p {
+        margin-top: 2px;
+        margin-bottom: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="compatibility-warning" class="warning" style="display:none">
+      Your browser does not seem to support functionality required for this experiment.<BR>
+      <a href="https://www.google.com/intl/en/chrome/browser/">Google Chrome</a> is recommended for best viewing.
+    </div>
+    <div id="instructions">
+      <div id="instruction-header">Controls:</div>
+      <p>Upper arm: Mouse
+      <p>Lower arm: ASDF
+      <p>Hand: Arrow keys
+      <p>Fingers: HJKL
+    </div>
+    <canvas id="webgl"></canvas>
+    <script src="../js/gl-matrix.js"></script>
+    <script src="../js/gl-utils.js"></script>
+    <script id="vertex-shader" type="x-vertex-shader">
+      attribute vec4 aPosition;
+      attribute vec4 aNormal;
+      attribute vec4 aColor;
+      uniform mat4 uModelMatrix;
+      uniform mat4 uMVP;
+      uniform mat4 uNormalMatrix;
+      varying vec3 vPosition;
+      varying vec3 vNormal;
+      varying vec4 vColor;
+      void main() {
+        gl_Position = uMVP * aPosition;
+
+        vPosition = vec3(uModelMatrix * aPosition);
+        vNormal = vec3(uNormalMatrix * aNormal);
+        vColor = aColor;
+      }
+    </script>
+    <script id="fragment-shader" type="x-fragment-shader">
+      precision mediump float;
+      uniform vec3 uLightColor;
+      uniform vec3 uLightPosition;
+      uniform vec3 uAmbientLight;
+      uniform vec3 uEyePosition;
+      uniform float uShininess;
+      varying vec3 vPosition;
+      varying vec3 vNormal;
+      varying vec4 vColor;
+      void main() {
+        vec3 normal = normalize(vNormal);
+        vec3 eyeDirection = normalize(uEyePosition - vPosition);
+        vec3 lightDirection = normalize(uLightPosition - vPosition);
+        vec3 reflectionDirection = reflect(-lightDirection, normal);
+        float nDotL = max(dot(lightDirection, normal), 0.0);
+        vec3 diffuse = uLightColor* nDotL;
+        vec3 ambient = uAmbientLight;
+        vec3 specular = uLightColor * pow(max(dot(reflectionDirection, eyeDirection), 0.0), uShininess);
+        gl_FragColor = vec4((ambient + diffuse + specular) * vec3(vColor), vColor.a);
+      }
+    </script> 
+    <script>
+      window.onload = function() {
+        if (!(window.WebGLRenderingContext && document.createElement('canvas').getContext('experimental-webgl'))) {
+          (function() {
+            document.getElementById("instructions").style.display = "none";
+            document.getElementById("compatibility-warning").style.display = "block";
+          })();
+          return;
+        }
+
+        var canvas = document.getElementById("webgl");
+        canvas.width = document.body.clientWidth;
+        canvas.height = document.body.clientHeight;
+        
+        var gl = gl_utils.getGL(canvas);
+
+        var upper_arm = gl_utils.createBox({
+          position: [-2.5, 0, -2.5],
+          dimensions: [5, 10, 5], 
+          color: [1.0, 0, 0, 1.0]
+        });
+
+        var lower_arm = gl_utils.createBox({
+          position: [-2, 0, -2],
+          dimensions: [4, 10, 4], 
+          color: [0, 0, 1, 1.0]
+        });
+
+        var hand = gl_utils.createBox({
+          position: [-1, 0, -2],
+          dimensions: [2, 2, 4], 
+          color: [0, 1, 0, 1.0]
+        });
+
+        var finger1 = gl_utils.createBox({
+          position: [-0.5, 0, -0.5],
+          dimensions: [1, 3, 1], 
+          color: [1, 1, 0, 1.0]
+        });
+
+        var finger2 = gl_utils.createBox({
+          position: [-0.5, 0, -0.5],
+          dimensions: [1, 3, 1], 
+          color: [1, 1, 0, 1.0]
+        });
+
+
+        var eye = {
+          x: 5,
+          y: -10,
+          z: 40
+        };
+        var at = {
+          x: 0,
+          y: -10,
+          z: 0
+        };
+
+        upper_arm.translation = {
+          x: 0,
+          y: 0,
+          z: 0
+        };
+        upper_arm.rotation = {
+          x: Math.PI / 4,
+          y: 0,
+          z: Math.PI * 0.8
+        };
+
+        lower_arm.translation = {
+          x: 0,
+          y: 10,
+          z: 0
+        };
+        lower_arm.rotation = {
+          x: Math.PI / 2,
+          y: 0,
+          z: 0
+        };
+
+        hand.translation = {
+          x: 0,
+          y: 10,
+          z: 0
+        };
+        hand.rotation = {
+          x: 0,
+          y: 0,
+          z: 0
+        };
+
+        finger1.translation = {
+          x: 0,
+          y: 2,
+          z: -1
+        };
+        finger1.rotation = {
+          x: 0,
+          y: 0,
+          z: 0
+        };
+
+        finger2.translation = {
+          x: 0,
+          y: 2,
+          z: 1
+        };
+        finger2.rotation = {
+          x: 0,
+          y: 0,
+          z: 0
+        };
+
+        var light_position = vec3.fromValues(0, 0, 20);
+        var shininess = 35;
+        var proj_matrix = mat4.create();
+        var view_matrix = mat4.create();
+        mat4.perspective(proj_matrix, Math.PI / 3, canvas.width / canvas.height, 0.1, 1000);
+        mat4.lookAt(view_matrix, 
+          vec3.fromValues(eye.x, eye.y, eye.z),
+          vec3.fromValues(at.x, at.y, at.z),
+          vec3.fromValues(0, 1, 0)
+        );
+        
+        function drawSegment(segment, base_matrix) {
+          base_matrix = base_matrix || mat4.create();
+
+          var model_matrix = mat4.create();
+          var norm_matrix = mat4.create();
+          var mvp_matrix = mat4.create();
+          var translation_matrix = mat4.create();
+          var rotation_matrix = mat4.create();
+          var t = segment.translation;
+          var r = segment.rotation;
+
+          mat4.translate(translation_matrix, translation_matrix, vec3.fromValues(t.x, t.y, t.z));
+          mat4.rotateX(rotation_matrix, rotation_matrix, r.x);
+          mat4.rotateY(rotation_matrix, rotation_matrix, r.y);
+          mat4.rotateZ(rotation_matrix, rotation_matrix, r.z);
+          
+          mat4.multiply(model_matrix, translation_matrix, rotation_matrix);
+          mat4.multiply(model_matrix, base_matrix, model_matrix);
+          gl.uniformMatrix4fv(gl_vars.uModelMatrix, false, model_matrix);
+          mat4.invert(norm_matrix, model_matrix);
+          mat4.transpose(norm_matrix, norm_matrix);
+          mat4.multiply(mvp_matrix, view_matrix, model_matrix);
+          mat4.multiply(mvp_matrix, proj_matrix, mvp_matrix);
+
+          gl.uniformMatrix4fv(gl_vars.uMVP, false, mvp_matrix);
+          gl.uniformMatrix4fv(gl_vars.uNormalMatrix, false, norm_matrix);
+
+          gl_utils.setBuffer(gl, gl_vars.aPosition, segment.vertices, 3);
+          gl_utils.setBuffer(gl, gl_vars.aColor, segment.colors, 4);
+          gl_utils.setBuffer(gl, gl_vars.aNormal, segment.normals, 3);
+          
+          gl.drawArrays(gl.TRIANGLES, 0, segment.vertices.length / 3);
+
+          return model_matrix;
+        }
+
+        function drawScene() {
+          var model_matrix = mat4.create();
+
+          mat4.lookAt(view_matrix, 
+            vec3.fromValues(eye.x, eye.y, eye.z),
+            vec3.fromValues(at.x, at.y, at.z),
+            vec3.fromValues(0, 1, 0)
+          );
+
+          gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+          gl.uniform3f(gl_vars.uEyePosition, eye.x, eye.y, eye.z);
+
+          model_matrix = drawSegment(upper_arm, model_matrix);
+          model_matrix = drawSegment(lower_arm, model_matrix);
+          model_matrix = drawSegment(hand, model_matrix);
+          drawSegment(finger1, model_matrix);
+          drawSegment(finger2, model_matrix);
+        }
+
+        var gl_vars = gl_utils.getGLVars(gl, {
+          attributes: ["aPosition", "aNormal", "aColor"],
+          uniforms: ["uMVP", "uModelMatrix", "uNormalMatrix", "uLightPosition", "uLightColor", "uAmbientLight", "uShininess", "uEyePosition"]
+        });
+
+        gl.uniform3f(gl_vars.uLightColor, 0.7, 0.7, 0.7);
+        gl.uniform3fv(gl_vars.uLightPosition, light_position);
+        gl.uniform3f(gl_vars.uAmbientLight, 0.2, 0.2, 0.2);
+        gl.uniform1f(gl_vars.uShininess, shininess);
+        
+
+        var last_mouse_x;
+        var last_mouse_y;
+
+        canvas.addEventListener("mousemove", function(e) {
+          var x, y;
+          var dx = 0;
+          var dy = 0;
+          
+          if (e.pageX !== undefined) {
+            x = e.pageX;
+            y = e.pageY;
+          } else {
+            x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+            y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+          }
+          
+          x -= canvas.offsetLeft;
+          y -= canvas.offsetTop;
+          
+          x -= canvas.width / 2;
+          y -= canvas.height / 2;
+
+          if (last_mouse_x !== undefined){
+            dx = -(x - last_mouse_x) * 0.01;
+            dy = (y - last_mouse_y) * 0.01;
+          }
+
+          upper_arm.rotation.x -= dy;
+          upper_arm.rotation.y += dx;
+
+          last_mouse_x = x;
+          last_mouse_y = y;
+          
+          drawScene();
+        }, false);
+
+        document.addEventListener("keydown", function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          var key = e.keyCode;
+          var dx = 0
+          var dy = 0;
+          var keys = {
+            37: function() { hand.rotation.y -= 0.1;  },
+            38: function() { 
+              if (hand.rotation.z < Math.PI / 2) {
+                hand.rotation.z += 0.1;  
+              }              
+            },
+            39: function() { hand.rotation.y += 0.1;  },
+            40: function() { 
+              if (hand.rotation.z > -Math.PI / 2) {
+                hand.rotation.z -= 0.1;  
+              }              
+            },
+            65: function() { lower_arm.rotation.y -= 0.1; },
+            68: function() { lower_arm.rotation.y += 0.1; },
+            83: function() { 
+              if (lower_arm.rotation.x > 0.2) {
+                lower_arm.rotation.x -= 0.1;  
+              }              
+            },
+            87: function() { 
+              if (lower_arm.rotation.x < Math.PI - 0.7) {
+                lower_arm.rotation.x += 0.1;  
+              }              
+            },
+            72: function() { 
+              if (finger1.rotation.z > 0) {
+                finger1.rotation.z -= 0.1;  
+              }              
+            },
+            74: function() { 
+              if (finger1.rotation.z < Math.PI / 2) {
+                finger1.rotation.z += 0.1;  
+              }              
+            },
+            75: function() { 
+              if (finger2.rotation.z > 0) {
+                finger2.rotation.z -= 0.1;  
+              }              
+            },
+            76: function() { 
+              if (finger2.rotation.z < Math.PI / 2) {
+                finger2.rotation.z += 0.1;  
+              }              
+            },
+          };
+
+          keys[key] && keys[key]();
+
+          drawScene();
+        }, false);
+
+        window.onresize = function() {
+          canvas.width = document.body.clientWidth;
+          canvas.height = document.body.clientHeight;
+          gl.viewport(0, 0, canvas.width, canvas.height);
+          mat4.perspective(proj_matrix, Math.PI / 3, canvas.width / canvas.height, 0.1, 1000);
+        }
+
+        gl.clearColor(0.0, 0.0, 0.0, 1.0);
+        gl.enable(gl.DEPTH_TEST);
+        gl.depthFunc(gl.LEQUAL);
+        
+        drawScene();  
+      };
+    </script>
+  </body>
+</html>
