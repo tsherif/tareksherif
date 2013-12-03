@@ -151,6 +151,10 @@ a img {
   padding: 1em;
 }
 
+.image-link {
+  text-decoration: none;
+}
+
 .experiment {
   display: inline-block;
   margin-left: 8px;

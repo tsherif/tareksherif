@@ -22,6 +22,10 @@ var gl_utils = {
     gl.attachShader(program, fshader);
     gl.linkProgram(program);
 
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      console.error(gl.getProgramInfoLog(program));
+    }
+
     gl.useProgram(program);
     gl.program = program;
 
