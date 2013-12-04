@@ -143,8 +143,8 @@
             angle = spiral.angle;
 
             spiral.radius = (Math.sin(angle) + 1) / 2 * spiral.orig_radius;
-            spiral.center_x += Math.cos(angle) + Math.random() / 10;
-            spiral.center_y += Math.sin(angle / 2)  + Math.random() / 10;
+            spiral.center_x += Math.cos(angle) + (Math.random() * 2 - 1) / 10;
+            spiral.center_y += Math.sin(angle / 2)  + (Math.random() * 2 - 1) / 10;
             spiral.center_x = Math.max(-50, Math.min(canvas.width + 50, spiral.center_x));
             spiral.center_y = Math.max(-50, Math.min(canvas.height + 50, spiral.center_y));
 
