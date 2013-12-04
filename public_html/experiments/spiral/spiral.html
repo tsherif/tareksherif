@@ -134,8 +134,7 @@
           window.requestAnimationFrame(drawFrame, canvas);
 
           context.save();
-          context.globalAlpha = 0.01;
-          context.fillStyle = "#333333";
+          context.fillStyle = "rgba(0,0,0,0.05)";
           context.fillRect(0, 0, canvas.width, canvas.height);
           context.restore();
 
