@@ -91,7 +91,9 @@
             center_y: Math.random() * canvas.height,
             color: utils.randomColor(),
             angle_step: Math.random() / 50,
-            num_arms: Math.floor(Math.random() * 12 + 3)
+            num_arms: Math.floor(Math.random() * 12 + 3),
+            angle_multiplier_x: Math.random() * 5,
+            angle_multiplier_y: Math.random() * 5
           });
         }
 
@@ -143,8 +145,8 @@
             angle = spiral.angle;
 
             spiral.radius = (Math.sin(angle) + 1) / 2 * spiral.orig_radius;
-            spiral.center_x += Math.cos(angle) + (Math.random() * 2 - 1) / 10;
-            spiral.center_y += Math.sin(angle / 2)  + (Math.random() * 2 - 1) / 10;
+            spiral.center_x += Math.cos(angle * spiral.angle_multiplier_x) + (Math.random() * 2 - 1) / 10;
+            spiral.center_y += Math.sin(angle * spiral.angle_multiplier_y)  + (Math.random() * 2 - 1) / 10;
             spiral.center_x = Math.max(-50, Math.min(canvas.width + 50, spiral.center_x));
             spiral.center_y = Math.max(-50, Math.min(canvas.height + 50, spiral.center_y));
 
