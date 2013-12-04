@@ -243,3 +243,9 @@ a img {
   top: 100px;
   letter-spacing: 2px;
 }
+
+#spiral-title {
+  letter-spacing: 4px;
+  top: 55px;
+  right: 5px;
+}
