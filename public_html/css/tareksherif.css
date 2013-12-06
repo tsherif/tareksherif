@@ -161,6 +161,10 @@ a img {
   position: relative;
 }
 
+.experiment a {
+  text-decoration: none;
+}
+
 .experiment img {
   display: block;
   width: 140px;
@@ -172,6 +176,7 @@ a img {
   color: white;
   font-weight: bold;
   position: absolute;
+  text-decoration: none;
 }
 
 #gravity-title {
