@@ -117,8 +117,7 @@
         canvas.width = document.body.clientWidth;
         canvas.height = document.body.clientHeight;
 
-        var timer = performance || Date;
-
+        var timer = window.performance || window.Date;
         var gl = gl_utils.getGL(canvas);
         var gl_vars = gl_utils.getGLVars(gl, gl.program, {
           attributes: ["aPosition"],
