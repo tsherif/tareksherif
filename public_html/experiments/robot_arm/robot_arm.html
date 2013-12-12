@@ -303,7 +303,7 @@
           drawSegment(finger2, model_matrix);
         }
 
-        var gl_vars = gl_utils.getGLVars(gl, {
+        var gl_vars = gl_utils.getGLVars(gl, gl.program, {
           attributes: ["aPosition", "aNormal", "aColor"],
           uniforms: ["uMVP", "uModelMatrix", "uNormalMatrix", "uLightPosition", "uLightColor", "uAmbientLight", "uShininess", "uEyePosition"]
         });

@@ -1,3 +1,21 @@
+//////////////////////////////////////////////////////////////////////////////
+//  tareksherif.ca: codebase for www.tareksherif.ca
+//  Copyright (C) 2013  Tarek Sherif
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Affero General Public License as
+//  published by the Free Software Foundation, either version 3 of the
+//  License, or (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Affero General Public License for more details.
+//
+//  You should have received a copy of the GNU Affero General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//////////////////////////////////////////////////////////////////////////////
+
 var gl_utils = {
   getGL: function getGL(canvas) {
     var gl = canvas.getContext("experimental-webgl");
@@ -139,26 +157,117 @@ var gl_utils = {
 
   },
 
-  getGLVars: function getGLVars(gl, vars) {
+  createSphere: function(options) {
+    var position = options.position || [0, 0, 0]
+    var long_bands = options.long_bands || 10;
+    var lat_bands = options.lat_bands || 10;
+    var radius = options.radius || 5;
+    var color = options.color || [1, 1, 1, 1]
+    var lat_step = Math.PI / lat_bands;
+    var long_step = 2 * Math.PI / long_bands;
+    var num_vertices = long_bands * lat_bands * 6;
+    var lat_angle, long_angle;
+    var vertices = new Float32Array(num_vertices * 3);
+    var normals = new Float32Array(num_vertices * 3);
+    var ox = position[0];
+    var oy = position[1];
+    var oz = position[2];
+    var x1, x2, x3, x4,
+        y1, y2,
+        z1, z2, z3, z4;
+    var i, j;
+    var k = 0;
+    var l;
+    var vi, ci;
+
+    for (i = 0; i < lat_bands; i++) {
+      lat_angle = i * lat_step;
+      y1 = Math.cos(lat_angle);
+      y2 = Math.cos(lat_angle + lat_step);
+      for (j = 0; j < long_bands; j++) {
+        long_angle = j * long_step;
+        x1 = Math.sin(lat_angle) * Math.cos(long_angle);
+        x2 = Math.sin(lat_angle) * Math.cos(long_angle + long_step);
+        x3 = Math.sin(lat_angle + lat_step) * Math.cos(long_angle);
+        x4 = Math.sin(lat_angle + lat_step) * Math.cos(long_angle + long_step);
+        z1 = Math.sin(lat_angle) * Math.sin(long_angle);
+        z2 = Math.sin(lat_angle) * Math.sin(long_angle + long_step);
+        z3 = Math.sin(lat_angle + lat_step) * Math.sin(long_angle);
+        z4 = Math.sin(lat_angle + lat_step) * Math.sin(long_angle + long_step);
+
+        vi = k * 3;
+        ci = k * 4;
+
+        vertices[vi] = x1 * radius + ox; 
+        vertices[vi+1] = y1 * radius + oy; 
+        vertices[vi+2] = z1 * radius + oz;
+        vertices[vi+3] = x3 * radius + ox; 
+        vertices[vi+4] = y2 * radius + oy; 
+        vertices[vi+5] = z3 * radius + oz;
+        vertices[vi+6] = x2 * radius + ox; 
+        vertices[vi+7] = y1 * radius + oy; 
+        vertices[vi+8] = z2 * radius + oz;
+        vertices[vi+9] = x3 * radius + ox; 
+        vertices[vi+10] = y2 * radius + oy; 
+        vertices[vi+11] = z3 * radius + oz;
+        vertices[vi+12] = x4 * radius + ox; 
+        vertices[vi+13] = y2 * radius + oy; 
+        vertices[vi+14] = z4 * radius + oz;
+        vertices[vi+15] = x2 * radius + ox; 
+        vertices[vi+16] = y1 * radius + oy; 
+        vertices[vi+17] = z2 * radius + oz;
+
+        normals[vi] = x1; 
+        normals[vi+1] = y1; 
+        normals[vi+2] = z1;
+        normals[vi+3] = x3; 
+        normals[vi+4] = y2; 
+        normals[vi+5] = z3;
+        normals[vi+6] = x2; 
+        normals[vi+7] = y1; 
+        normals[vi+8] = z2;
+        normals[vi+9] = x3; 
+        normals[vi+10] = y2; 
+        normals[vi+11] = z3;
+        normals[vi+12] = x4; 
+        normals[vi+13] = y2; 
+        normals[vi+14] = z4;
+        normals[vi+15] = x2; 
+        normals[vi+16] = y1; 
+        normals[vi+17] = z2;
+
+        k += 6;
+      }
+    }
+
+    return {
+      vertices: vertices,
+      normals: normals,
+      color: color
+    }
+  },
+
+  getGLVars: function getGLVars(gl, program, vars) {
     var gl_vars = {};
     var attributes = vars.attributes || [];
     var uniforms = vars.uniforms || [];
     attributes.forEach(function(att) {
-      gl_vars[att] = gl.getAttribLocation(gl.program, att);
+      gl_vars[att] = gl.getAttribLocation(program, att);
     });
     uniforms.forEach(function(u) {
-      gl_vars[u] = gl.getUniformLocation(gl.program, u);
+      gl_vars[u] = gl.getUniformLocation(program, u);
     });
 
     return gl_vars;
   },
 
-  setBuffer: function setBuffer(gl, attribute, data, item_size) {
+  setBuffer: function setBuffer(gl, attribute, data, item_size, type) {
+    type = type || gl.FLOAT;
     var buffer = gl.createBuffer();
 
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
     gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
-    gl.vertexAttribPointer(attribute, item_size, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(attribute, item_size, type, false, 0, 0);
     gl.enableVertexAttribArray(attribute);
   }
 
