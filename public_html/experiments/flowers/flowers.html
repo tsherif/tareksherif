@@ -75,7 +75,7 @@
 
         vec4 color = vec4(uColor, 1.0);
         vec2 position = gl_FragCoord.xy / uResolution.xy;
-        float time = uTime / 600.0;
+        float time = uTime;
 
 
         position = position * 2.0 - 1.0;
@@ -128,7 +128,6 @@
         var max_radius = Math.random() * 0.3 + 0.7;
 
         var timer = window.performance || window.Date;
-        var start = timer.now();
 
         gl_utils.setBuffer(gl, gl_vars.aPosition, new Float32Array([
           -1,  1,
@@ -159,7 +158,8 @@
           requestAnimationFrame(drawScene);
 
           gl.clear(gl.COLOR_BUFFER_BIT);
-          gl.uniform1f(gl_vars.uTime, timer.now() - start);
+          
+          gl.uniform1f(gl_vars.uTime, (timer.now() / 600) % (1000 * Math.PI));
           
           gl.drawArrays(gl.TRIANGLES, 0, 6);
 
