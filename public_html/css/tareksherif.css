@@ -266,3 +266,17 @@ a img {
   top: 45px;
   right: 2px;
 }
+
+.liquidglass-title {
+  letter-spacing: 4px; 
+}
+
+#liquidglass-title-1 {
+  top: 22px;
+  left: 12px; 
+}
+
+#liquidglass-title-2 {
+  top: 44px;
+  right: 6px; 
+}

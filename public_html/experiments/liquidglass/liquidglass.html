@@ -19,11 +19,11 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Flowers</title>
+    <title>Liquid Glass</title>
     <link rel="icon" type="image/png" href="/img/cube_icon.png">
     <meta name="description" content="A WebGL Experiment by Tarek Sherif">
-    <meta property="og:image" content="http://tareksherif.ca/img/flowers.png">
-    <meta property="og:image:secure_url" content="https://tareksherif.ca/img/flowers.png">
+    <meta property="og:image" content="http://tareksherif.ca/img/liquidglass.png">
+    <meta property="og:image:secure_url" content="https://tareksherif.ca/img/liquidglass.png">
     <style>
       html {
         height: 100%;
@@ -67,38 +67,54 @@
 
       uniform vec2 uResolution;
       uniform float uTime;
-      uniform vec3 uColor;
-      uniform float uInnerRadius;
-      uniform float uMaxRadius;
+      uniform vec3 uColor1;
+      uniform vec3 uColor2;
+      uniform float uXFrequency;
+      uniform float uYFrequency;
+      uniform float uRFrequency;
+      uniform float uAFrequency;
+
+      float noise(vec2 p) {
+        return abs(fract(1009.0 * sin(cos(11.0 * p.x) + 7.0 * p.y)));
+      }
+
+      float smoothNoise(vec2 p) {
+         float n = noise(p);
+         n += noise(p - 0.1); 
+         n += noise(p + 0.1);
+         n += noise(p + vec2(0.1, -0.1));
+         n += noise(p - vec2(0.1, -0.1));
+         n += noise(p + vec2(0.0, 0.1));
+         n += noise(p - vec2(0.0, 0.1));
+         n += noise(p + vec2(0.1, 0.0));
+         n += noise(p - vec2(0.1, 0.0));
+         return n / 9.0;
+      }
 
       void main() {
-        vec4 color = vec4(uColor, 1.0);
         vec2 position = gl_FragCoord.xy / uResolution.xy;
-        float time = uTime;
 
-        position = position * 2.0 - 1.0;
+        vec2 p = position * 2.0 - 1.0;
+        p.x *= uResolution.x / uResolution.y;
 
-        float r = length(position);
-        float a = atan(position.y, position.x);
-        float pi = 3.14159;
+        float r = length(p);
+        float a = atan(p.y, p.x);
 
-        a += pow(sin(time / 10.0), 3.0);
-        r += 0.1 * sin(10.0 * a);
+        float color = 0.0;
+        
+        float n = smoothNoise(p) * 2.0 - 1.0;
 
-        if (r > uMaxRadius) {
-          discard;
-        } else {
-          float colorValue = sin(a * 10.0);
+        color =  sin(p.x * uXFrequency + cos(uTime / 7.0) * 7.0);
+        color += sin(p.y * uYFrequency + cos(uTime / 11.0 + 0.5) * 11.0);
+        color += sin(r * uRFrequency - uTime);
+        color += sin(a * uAFrequency);
+        color += n;
+        color /= 4.0;
 
-          color *= vec4(colorValue, colorValue, colorValue, colorValue);
+        vec3 colorSource = color > 0.0 ? uColor1 : uColor2;
+        color = abs(color);
 
-          if (r > uInnerRadius) {
-            colorValue = sin(300.0 * r - time * 5.0);
-            color *= vec4(colorValue, colorValue, colorValue, colorValue);
-          }
-
-          gl_FragColor = color;
-        }
+        gl_FragColor = vec4(color * colorSource, 1.0 );
       }
     </script> 
     <script>
@@ -117,7 +133,7 @@
         var gl = gl_utils.getGL(canvas);
         var gl_vars = gl_utils.getGLVars(gl, gl.program, {
           attributes: ["aPosition"],
-          uniforms: ["uResolution", "uTime", "uColor", "uMaxRadius", "uInnerRadius"]
+          uniforms: ["uResolution", "uTime", "uColor1", "uColor2", "uXFrequency", "uYFrequency", "uRFrequency", "uAFrequency"]
         });
 
         var inner_radius = Math.random() * 0.7;
@@ -134,10 +150,23 @@
           -1,  1,
         ]), 2);
 
+        var colors = [
+          [1, 0, 0],
+          [0, 1, 0],
+          [0, 0, 1],
+          [1, 1, 0],
+          [1, 0, 1],
+          [0, 1, 1],
+          [1, 1, 1]
+        ];
+
         gl.uniform2f(gl_vars.uResolution, canvas.width, canvas.height);
-        gl.uniform3f(gl_vars.uColor, Math.random(), Math.random(), Math.random());
-        gl.uniform1f(gl_vars.uInnerRadius, inner_radius);
-        gl.uniform1f(gl_vars.uMaxRadius, max_radius);
+        gl.uniform3fv(gl_vars.uColor1, colors.splice(Math.floor(Math.random() * colors.length), 1)[0]);
+        gl.uniform3fv(gl_vars.uColor2, colors.splice(Math.floor(Math.random() * colors.length), 1)[0]);
+        gl.uniform1f(gl_vars.uXFrequency, Math.random() * 12 + 6);
+        gl.uniform1f(gl_vars.uYFrequency, Math.random() * 12 + 6);
+        gl.uniform1f(gl_vars.uRFrequency, Math.random() * 16 + 16);
+        gl.uniform1f(gl_vars.uAFrequency, Math.floor(Math.random() * 8 + 4));
 
         window.onresize = function() {
           canvas.width = document.body.clientWidth;
@@ -158,7 +187,6 @@
           gl.uniform1f(gl_vars.uTime, (timer.now() / 600) % (1000 * Math.PI));
           
           gl.drawArrays(gl.TRIANGLES, 0, 6);
-
         })();  
       };
     </script>
