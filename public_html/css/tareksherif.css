@@ -108,6 +108,7 @@ a img {
 
 #main {
   width: 80%;
+  min-width: 56em;
   margin-top: 1em;
   margin-left: auto;
   margin-right: auto;
