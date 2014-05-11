@@ -281,3 +281,9 @@ a img {
   top: 44px;
   right: 6px; 
 }
+
+#moons-title {
+  letter-spacing: 4px; 
+  top: 14px;
+  left: 13px;
+}
