@@ -458,14 +458,11 @@
           return mvp_matrix;
         }
 
-        var DEPTH_DEBUG = false;
         function drawScene() {
           requestAnimationFrame(drawScene);
 
           gl.useProgram(gl.shadow_program);
-          if (!DEPTH_DEBUG) {
-            gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
-          }
+          gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
           gl.viewport(0, 0, offscreen.x, offscreen.y);
 
           gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -480,35 +477,32 @@
           var planet_shadow_mvp = drawObject(planet, shadow_vars);
           moons.forEach(drawMoonShadow);
 
-          if (!DEPTH_DEBUG) {
-            gl.useProgram(gl.program);
-            gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+          gl.useProgram(gl.program);
+          gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 
-            gl.viewport(0, 0, canvas.width, canvas.height);
-            
-            gl.uniform3f(main_vars.uLightColor, 0.7, 0.7, 0.7);
-            gl.uniform3fv(main_vars.uLightPosition, light_position);
-            gl.uniform3f(main_vars.uAmbientLight, 0.2, 0.2, 0.2);
-            gl.uniform1f(main_vars.uShininess, shininess);
-            gl.uniform1f(main_vars.uTime, (Date.now() / 600) % (1000 * Math.PI));
-            
-            mat4.perspective(proj_matrix, Math.PI / 3, canvas.width / canvas.height, 1, 100);
-            mat4.lookAt(view_matrix, 
-              vec3.fromValues(eye.x, eye.y, eye.z),
-              vec3.fromValues(0, 0, 0),
-              vec3.fromValues(0, 1, 0)
-            );
+          gl.viewport(0, 0, canvas.width, canvas.height);
+          
+          gl.uniform3f(main_vars.uLightColor, 0.7, 0.7, 0.7);
+          gl.uniform3fv(main_vars.uLightPosition, light_position);
+          gl.uniform3f(main_vars.uAmbientLight, 0.2, 0.2, 0.2);
+          gl.uniform1f(main_vars.uShininess, shininess);
+          gl.uniform1f(main_vars.uTime, (Date.now() / 600) % (1000 * Math.PI));
+          
+          mat4.perspective(proj_matrix, Math.PI / 3, canvas.width / canvas.height, 1, 100);
+          mat4.lookAt(view_matrix, 
+            vec3.fromValues(eye.x, eye.y, eye.z),
+            vec3.fromValues(0, 0, 0),
+            vec3.fromValues(0, 1, 0)
+          );
 
-            gl.uniform1i(main_vars.uShadowMap, 0);
+          gl.uniform1i(main_vars.uShadowMap, 0);
 
-            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+          gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-            gl.uniformMatrix4fv(main_vars.uMVPFromLight, false, planet_shadow_mvp);
-            drawObject(planet, main_vars);
+          gl.uniformMatrix4fv(main_vars.uMVPFromLight, false, planet_shadow_mvp);
+          drawObject(planet, main_vars);
 
-            moons.forEach(drawMoonMain);
-          }
-
+          moons.forEach(drawMoonMain);
         }
 
         window.onresize = function() {
