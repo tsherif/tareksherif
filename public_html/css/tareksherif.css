@@ -129,13 +129,13 @@ a img {
 }
 
 #main-menu .tab .project {
-  min-height: 95px;
+  min-height: 112px;
 }
 
 .menu-image {
   float:left;
   margin-right: 1em;
-  width: 140px;
+  width: 120px;
 }
 
 #webgl-replacement {
