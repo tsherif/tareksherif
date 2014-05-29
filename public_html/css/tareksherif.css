@@ -16,120 +16,98 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* End CSS reset */
+
+* {
+  box-sizing: border-box;
+}
+
 html {
-  height: 100%;
+  height: 6000px;
+  overflow-x: hidden;
   margin: 0;
 }
 
 body {
   height: 100%;
-  margin: 0;
-  background-color: #999999;
-  font-family: Verdana, Arial, sans-serif;
-  font-size: 15px;
-}
-
-h3 {
-  margin-top: 1.8em;
-}
-
-#header {
   position: relative;
-  min-height: 110px;
+  overflow-x: hidden;
+  margin: 0;
+  background-color: #F0F0F0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 18px;
 }
 
-.top-header {
-  margin-top: 0.5em;
+header {
+  height: 150px;
+  background-color: #00A4CF;
+  color: #F0F0F0;
+  text-align: center;
+
+  padding-top: 1.8em;
+  font-weight: bold;
 }
 
-.header-cell {
-  display: table-cell;
+header h1 {
+  font-size: 4em;
+  /*font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;*/
+/*font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;*/
+/*font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;*/
+  font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
+}
+.content {
+  width: 800px;
+  position: relative;
+  margin: 0 auto;
 }
 
-#graffiti-button {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
-  font-size: 12px;
-  z-index: 10;
-}
-
-
-#graffiti-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  cursor: crosshair;
-  z-index: 5;
-}
-
-#title {
-  vertical-align: middle;
-  padding-top: 0.5em;
-  padding-left: 0.2em;
-}
-
-#subtitle {
-  font-size: 0.5em;
-  font-weight: normal;
-  color: #7A7A7A;
-}
-
-#subtitle a {
-  color: #7A7A7A;
-}
-
-#subtitle a:hover {
-  color: #1BBFE0;
-}
-
-#webgl {
-  vertical-align: middle;
-  padding-top: 0.5em;
-  padding-left: 1em;
-  height: 60px;
-  width: 60px;
-}
-
-#social {
- position: absolute;
- right: 10px;
- top: 15px;
-}
-
-#social img {
-  height: 25px;
-  width: 25px;
-}
-
-a img {
-  border: none;  /* For stupid IE */
-}
-
-#main {
-  width: 80%;
-  min-width: 56em;
-  margin-top: 1em;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: white;
-  padding: 0.1em 1em 1em 1em;
-  border-radius: 1em;
-}
-
-#main-menu .tab {
-  height: 38em;
-  overflow-y: auto;
-}
-
-@media (orientation: portrait) {
-  #main-menu .tab {
-    height: 50em;
-  }
-}
-
-#main-menu .tab .project {
-  min-height: 112px;
+section a {
+  color: #00A4CF;
+  text-decoration: none;
 }
 
 .menu-image {
@@ -138,28 +116,94 @@ a img {
   width: 120px;
 }
 
-#webgl-replacement {
-  width: 50px;
-  height: 50px;
+.scroller {
+  position: absolute;
+  width: 600px;
 }
 
-#webgl-error {
-  border: 2px solid red;
-  font-size: 0.7em;
-  text-align: center;
+.scroller.scroll-header {
+  padding-top: 30px;
+  width: auto;
+  max-width: 800px;
+  font-size: 2em;
   font-weight: bold;
-  width: 38em;
-  padding: 1em;
 }
 
-.image-link {
-  text-decoration: none;
+.scroller.scroll-header.banner {
+  color: white;
 }
 
-.experiment {
-  display: inline-block;
-  margin-left: 8px;
-  position: relative;
+.scroller.column {
+  width: 385px;
+}
+
+#graffiti-note1, #graffiti-note2 {
+  width: 240px;
+}
+
+.enter {
+  transition: 0.9s;
+}
+
+.down-arrow {
+  width: 40px;
+  margin: 20px auto;
+}
+
+#intro {
+  top: 50px;
+  left: -2000px;
+  font-size: 2em;
+}
+
+#intro.enter {
+  left: 0;
+}
+
+#follow {
+  top: -500px;
+  right: 0;
+  font-size: 2em;
+  z-index: -5;
+}
+
+#follow.enter {
+  top: 250px;
+}
+
+.header-background {
+  position: absolute;
+  background-color: #00A4CF;
+  width: 100%;
+}
+
+#projects-background, #experiments-background {
+  height: 87px;
+}
+
+#games-background, #libraries-background, #mistakes-background {
+  height: 61px;
+}
+
+#graffiti-button {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  font-size: 12px;
+  z-index: 10;
+}
+
+
+#graffiti-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  cursor: crosshair;
+  z-index: 5;
+}
+
+.scroller.experiment {
+  width: auto;
 }
 
 .experiment a {
@@ -178,6 +222,10 @@ a img {
   font-weight: bold;
   position: absolute;
   text-decoration: none;
+}
+
+#cbrain img {
+  border: 2px solid #000000;
 }
 
 #gravity-title {

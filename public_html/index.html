@@ -20,14 +20,8 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <link type="text/css" href="/css/tareksherif.css" rel="stylesheet" />
-  <link type="text/css" href="/css/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" />
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-  <script src="/experiments/js/utils.js"></script>
-  <script src="/experiments/js/graffiti.js"></script>
-  <script src="/js/tareksherif.js"></script>
-  <link rel="icon" type="image/png" href="/img/cube_icon.png">
+  <link type="text/css" href="css/tareksherif.css" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="img/cube_icon.png">
   <title>Tarek Sherif  - Web Developer</title>
   <meta name="description" content="Hi! Welcome to my website where I keep my HTML5 and WebGL experiments as well as information about my various projects.">
   <meta name="twitter:card" content="summary">
@@ -37,222 +31,184 @@
   <meta name="twitter:image" content="http://tareksherif.ca/img/tarek.jpg">
 </head>
 <body>
-  <div id="main">
-    <div id="header">
-      <div id="social">
-        <a href="https://twitter.com/thsherif" target="_blank"><img src="/img/social/twitter.png" /></a>
-        <a href="https://www.linkedin.com/in/tareksherif" target="_blank"><img src="/img/social/linkedin.png" /></a>
-        <a href="https://github.com/tsherif" target="_blank"><img src="/img/social/github_alt.png" /></a>
-        <a href="http://stackoverflow.com/users/1308624/tsherif" target="_blank"><img src="/img/social/stackoverflow.png" /></a>  
-      </div>
-      <h1 id="title" class="header-cell">Tarek Sherif<div id="subtitle">(Visit my <a href="http://tsherif.wordpress.com/">blog</a>)</div></h1>
-      <div id="webgl" class="header-cell"></div>
-      <div id="graffiti-button" class="button">Graffiti Mode</div>
-    </div>    
-    <div id="main-menu" class="tabs">
-      <ul>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#experiments">Experiments</a></li>
-        <li><a href="#mistakes">Beautiful Mistakes</a></li>
-        <li><a href="#publications">Publications</a></li>
-        <li><a href="#about">About Me</a></li>
-      </ul>
-      <div id="projects" class="tab">
-        <h3 class="top-header">Major Projects</h3>
-        <p class="project">
-          <a href="https://brainbrowser.cbrain.mcgill.ca" target="_blank"><img class="menu-image" src="/img/brainbrowser.png" /></a>
-          <a href="https://brainbrowser.cbrain.mcgill.ca" target="_blank">BrainBrowser</a> is a JavaScript library for inserting a neurological data viewer into a standard web page. Written using HTML5 and related technologies such as WebGL and web workers, BrainBrowser allows researchers to visualize and distribute their data in ways that were previously impossible. The BrainBrowser library includes the <em>Surface Viewer</em>, a WebGL-based viewer for surface data in a variety of formats, and the <em>Volume Viewer</em>, an HTML5 Canvas-based viewer for volumetric MINC data. The source code for BrainBrowser is available on <a href="https://github.com/aces/brainbrowser" target="_blank">GitHub</a>
-        </p>
-        <p class="project">
-          <a href="http://cbrain.mcgill.ca" target="_blank"><img class="menu-image" src="/img/cbrain.jpg" /></a>
-          <a href="http://cbrain.mcgill.ca" target="_blank">CBRAIN</a> is a distributed compute platform for neuroimaging research. CBRAIN provides researchers with access to high performance computing centers across Canada and globally, storage for their data as well as processing tools with which to analyze it, and a web front end allowing for a more intuitive experience than the comand-line interface these resources generally require. CBRAIN was written in Ruby on Rails with a MySQL database backend. The grid infrasctructure was built using custom wrappers around standard Unix tools such as rsync and ssh.
-        </p>
-        <h3>Games</h3>
-        <p class="project">
-          <a href="http://www.newgrounds.com/portal/view/633735" target="_blank"><img class="menu-image" src="/img/climb.png" /></a>
-          <a href="http://www.newgrounds.com/portal/view/633735" target="_blank">Climb</a> is an HTML5 minimalist vertical platformer featuring music by <a href="http://nadirbellahmer.bandcamp.com/" target="_blank">Nadir Bellahmer</a>. The concept behind its development was the creation of a stripped down experience playing on themes of solitude, isolation and hope. The vertical flow of the game was inspired by titles such as <a href="http://thetalltreesgames.co.uk/CastlesInTheSky/" target="_blank">Castles in the Sky</a> and <a href="http://eriksvedang.com/blueberrygarden/" target="_blank">Blueberry Garden</a>, while the aesthetics were inspired by titles such as <a href="http://game140.com/" target="_blank">140</a> and <a href="http://www.mikebithellgames.com/thomaswasalone/" target="_blank">Thomas Was Alone</a>. Climb was created using the <a href="https://github.com/tsherif/tgame" target="_blank">tgame</a> and <a href="https://github.com/tsherif/oFactory" target="_blank">oFactory</a> libraries, and it is available to play on <a href="http://www.newgrounds.com/portal/view/633735" target="_blank">Newgrounds</a> and <a href="http://www.kongregate.com/games/tsherif/climb" target="_blank">Kongregate</a>. The source code for Climb is available on <a href="https://github.com/tsherif/climb" target="_blank">GitHub</a>.
-        </p>
-        <p class="project">
-          <a href="http://www.newgrounds.com/portal/view/598131" target="_blank"><img class="menu-image" src="/img/redsquare.png" /></a>
-          <a href="http://www.newgrounds.com/portal/view/598131" target="_blank">Red Square</a> was my first foray into game design. I created it during the 2012 Québec student protests to express the atmosphere of the moment, in particular the feeling of an organized, organic chaos and the power dynamic between protesters and the police. Red Square was created using <a href="http://www.stencyl.com/" target="_blank">Stencyl</a>, <a href="http://www.gimp.org/" target="_blank">GIMP</a>, <a href="http://paintbrush.sourceforge.net/" target="_blank">Paintbrush</a> and <a href="http://audacity.sourceforge.net/" target="_blank">Audacity</a>, and it is available to play on <a href="http://www.newgrounds.com/portal/view/598131" target="_blank">Newgrounds</a>.
-        </p>
-        <h3>Libraries</h3>
-        <p class="project">
-          <a href="https://github.com/tsherif/oFactory" target="_blank"><img class="menu-image" src="/img/ofactory.png" /></a>
-          <a href="https://github.com/tsherif/oFactory" target="_blank">oFactory</a> is a JavaScript library for building factory functions. Emerging from an <a href="/blog/2013/08/constructors-are-bad-for-javascript/" target="_blank">analysis I wrote</a> about the problems with using JavaScript constructors, oFactory was essentially conceived as a simplified version of <a href="http://ericleads.com/" target="_blank">Eric Elliot</a>'s <a href="https://github.com/dilvie/stampit" target="_blank">stampit</a> library, from which it draws heavy inspiration. 
-        </p>
-        <p class="project">
-          <a href="https://github.com/tsherif/tgame" target="_blank"><img class="menu-image" src="/img/tgame.png" /></a>
-          <a href="https://github.com/tsherif/tgame" target="_blank">tgame</a> is a simple JavaScript game engine providing a flexible state machine, asset loaders and helpers for basic collision detection, mouse and keyboard binding, and special effects.
-        </p>
-      </div>
-      <div id="experiments" class="tab">
-        <div class="experiment">
-          <a href="experiments/moons/moons.html">
-            <img src="/img/moons.png" />
-            <div id="moons-title"  class="experiment-title">Moons</div>
-          </a>
-        </div>
-        <div class="experiment">
-          <a href="experiments/liquidglass/liquidglass.html">
-            <img src="/img/liquidglass.png" />
-            <div id="liquidglass-title-1"  class="experiment-title liquidglass-title">Liquid</div>
-            <div id="liquidglass-title-2"  class="experiment-title liquidglass-title">Glass</div>
-          </a>
-        </div>
-        <div class="experiment">
-          <a href="experiments/flowers/flowers.html">
-            <img src="/img/flowers.png" />
-            <div id="flowers-title"  class="experiment-title">Flowers</div>
-          </a>
-        </div>
-        <div class="experiment">
-          <a href="experiments/remains/remains.html">
-            <img src="/img/remains.png" />
-            <div id="remains-title" class="experiment-title">Remains</div>
-          </a>
-        </div>
-        <div class="experiment">
-          <a href="experiments/spiral/spiral.html">
-            <img src="/img/spiral.png" />
-            <div id="spiral-title" class="experiment-title">Spiral</div>
-          </a>
-        </div>
-        <div class="experiment">
-          <a href="experiments/storm/storm.html">
-            <img src="/img/storm.png" />
-            <div id="storm-title" class="experiment-title">Storm</div>
-          </a>
-        </div>
-        <div class="experiment">
-          <a href="experiments/evolve/evolve.html">
-            <img src="/img/evolve.png" />
-            <div id="evolve-title-1"  class="experiment-title evolve-title">E</div>
-            <div id="evolve-title-3"  class="experiment-title evolve-title">o</div>
-            <div id="evolve-title-4"  class="experiment-title evolve-title">l</div>
-            <div id="evolve-title-5"  class="experiment-title evolve-title">v</div>
-            <div id="evolve-title-6"  class="experiment-title evolve-title">e</div>
-          </a>
-        </div>
-        <div class="experiment">
-          <a href="experiments/snowflakes/snowflakes.html">
-            <img src="/img/snowflakes.png" />
-            <div id="snowflakes-title"  class="experiment-title vertical-text">Snowflakes</div>
-          </a>
-        </div>
-        <div class="experiment">
-          <a href="experiments/gravity/gravity.html">
-            <img src="/img/gravity.png" />
-            <div id="gravity-title" class="experiment-title">Gravity</div>
-          </a>
-        </div>
-      </div>
-      <div id="mistakes" class="tab">
-        <a class="image-link" href="/img/mistakes/mistake1.png" target="_blank">
-          <img src="/img/mistakes/mistake1-small.png" />
-        </a>
-        <a class="image-link" href="/img/mistakes/mistake2.png" target="_blank">
-          <img src="/img/mistakes/mistake2-small.png" />
-        </a>
-        <a class="image-link" href="/img/mistakes/mistake3.png" target="_blank">
-          <img src="/img/mistakes/mistake3-small.png" />
-        </a>
-        <a class="image-link" href="/img/mistakes/mistake4.png" target="_blank">
-          <img src="/img/mistakes/mistake4-small.png" />
-        </a>
-        <a class="image-link" href="/img/mistakes/mistake5.png" target="_blank">
-          <img src="/img/mistakes/mistake5-small.png" />
-        </a>
-        <a class="image-link" href="/img/mistakes/mistake6.png" target="_blank">
-          <img src="/img/mistakes/mistake6-small.png" />
-        </a>
-        <a class="image-link" href="/img/mistakes/mistake7.png" target="_blank">
-          <img src="/img/mistakes/mistake7-small.png" />
-        </a>
-        <a class="image-link" href="/img/mistakes/mistake8.png" target="_blank">
-          <img src="/img/mistakes/mistake8-small.png" />
-        </a>
-      </div>
-      <div id="publications" class="tab">
-        <h3 class="top-header">Scientific</h3>
-        <h4>Papers</h4>
-        <p>
-          Tarek Sherif and Grzegorz Kondrak. 2007. <a href="/docs/P07-1119.pdf" target="_blank">Substring-based Transliteration</a>. Proceedings of the 45th Annual Meeting of the ACL, pp. 944-951, Prague, Czech Republic, June 2007.
-        </p>
-        <p>
-          Tarek Sherif and Grzegorz Kondrak. <a href="/docs/P07-1109.pdf" target="_blank">Bootstrapping a Stochastic Transducer for Arabic-English Transliteration Extraction</a>. Proceedings of ACL 2007, pp. 864-871, Prague, Czech Republic, June 2007.
-        </p>
-        <p>
-          Sittichai Jiampojamarn, Grzegorz Kondrak and Tarek Sherif. <a href="/docs/N07-1047.pdf" target="_blank">Applying Many-to-Many Alignments and Hidden Markov Models to Letter-to-Phoneme Conversion</a>. Proceeding of NAACL HLT 2007, pp. 372-379, Rochester, New York, April 2007.
-        </p>
-        <p>
-          Grzegorz Kondrak and Tarek Sherif. <a href="/docs/p43-kondrak.pdf" target="_blank">Evaluation of Several Phonetic Similarity Algorithms on the Task of Cognate Identification</a>. Proceedings of the COLING-ACL Workshop on Linguistic Distances, pp. 43-50, Sydney, Australia, July 2006.
-        </p>
-        <h4>Talks</h4>
-        <p>
-          Tarek Sherif. CBRAIN: An Integrated Web Platform for Neuroimaging. European Grid Infrastructure User Forum 2011, Vilnius, Lithuania, April 2011. 
-        </p>
-        <p>
-          Tarek Sherif. CBRAIN and GBRAIN: A Distributed Platform for Brain Imaging Research. Terena Networking Conference 2010, Vilnius, Lithuania, June 2010.
-        </p>
-        <h4>Posters</h4>
-        <p>
-          Tarek Sherif, Pierre Rioux, Nicolas Kassis, Tien Duc Nguyen, Marc Rousseau, Reza Adalat and Alan C. Evans. The Future of Computing in Medical Sciences: The CBRAIN Project Perspective. High Performance Computing Symposium 2011, Montreal, Canada, June 2011.
-        </p>
-        <p>
-          Marc Rousseau, Pierre Rioux, Tarek Sherif, Angela McCloskey, Nicolas Kassis, Reza Adalat and Alan Evans. CBRAIN/GBRAIN: A Distributed Platform for Brain Imaging Research. 16th Annual Meeting of the Organization for Human Brain Mapping, Barcelona, Spain, June 2010.
-        </p>
-        <h3>Literary</h3>
-        <h4>Essays</h4>
-        <p>
-            Tarek Sherif. <a href="http://howlarts.net/post/38461307833/intimate-distance-the-photography-of-thien-v" target="_blank">Intimate Distance: The Photography of Thien V.</a> howlarts.net, January 2013.
-        </p>
-        <h4>Translations</h4>
-        <p>
-          Tarek Sherif. City of Ghosts. Documenta Online Magazine (magazines.documenta.de), January 2008. Translation from the Arabic Madeenat Ashbah (Amkenah, No. 8, April 2007, Alexandria) by Haytham el-Wardany and Ahmad Farouq.
-        </p>
-        <p>
-          Tarek Sherif. Memory of Thalg. In Hester Aardse and Astrid van Baalen (Eds.), Findings on Ice, May 2007, The Pars Foundation, Amsterdam, The Netherlands. Translation from the Arabic Dhakira lil-Thalg by Iman Mersal.
-        </p>
-        <p>
-          Tarek Sherif. A Clutter of Words. Banipal, No. 28, Spring 2007, London. Translation from the Arabic Karakeeb al-Kalam (2006, Beirut) by Suzanne Alaywan.
-        </p>
-        <p>
-          Tarek Sherif. The State. Soundings, No. 35, Spring 2007, London. Translation from the Arabic al-Dawla (from the collection Jughrafia Badeela, 2006, Dar Sharqyat, Cairo) by Iman Mersal.
-        </p>
-        <p>
-          Tarek Sherif. A chapter from The Law of Inheritance. Banipal, No. 26, Summer 2006, London. Translation from the Arabic Qanoon al-Wiratha (2002, Merit, Cairo) by Yasser Abdel Latif.
-        </p>
-        <p>
-          Tarek Sherif. Alternative Geography. Banipal, No. 25, Spring 2006, London. Translation from the Arabic Jughrafia Badeela (2006, Dar Sharqyat, Cairo) by Iman Mersal.
-        </p>
-      </div>
-      <div id="about" class="tab">    
-        <p>
-          <img class="menu-image" src="/img/tarek.jpg" />
-          I'm currently working in web development at the Montreal Neurological Institute of McGill University as a lead developer on 
-          <a href="https://brainbrowser.cbrain.mcgill.ca" target="_blank">BrainBrowser</a> and <a href="http://cbrain.mcgill.ca" target="_blank">CBRAIN</a>. My work tends to focus on the front end, using Ruby on Rails, HTML, JavaScript, CSS and jQuery, with some back end work on a MySQL database. For BrainBrowser, I've begun using <a href="http://threejs.org/" target="_blank">three.js</a> a lot for 3D rendering.
-        </p>
-        <p>
-          My current interests center around web development, 3D graphics and game design, though I'm really just getting started in the latter two. These days, I'm focusing on getting a better understanding of 3D graphics principles, in particular using <a href="http://www.khronos.org/webgl/" target="_blank">WebGL</a>, both through the raw API and through <a href="http://threejs.org/" target="_blank">three.js</a>.
-        </p>
-        <p>
-          My postgraduate studies were in Computational Linguistics, with a focus on machine learning algorithms for automated transliteration between Arabic and English.
-        </p>
-        <p>
-          For more information, consult my 
-          <a href="/docs/TarekCV2013ForWeb.pdf" target="_blank">CV</a>.
-        </p>
-        <p>
-          The code for this website can be found 
-          <a href="https://github.com/tsherif/tareksherif" target="_blank">here</a>.
-        </p>
-        <p>
-          Social media icons used for this site created by 
-          <a href="http://1024jp.deviantart.com/art/20px-social-icons-272331007" target="_blank">1024jp</a>.
-        </p>
-      </div>
-    </div>
+  <header>
+    <h1 id="title" class="header-cell">Tarek Sherif</h1>
+    <div>(This is my website)</div>
+    <div id="graffiti-button" class="button">Graffiti Mode</div>
+  </header> 
+  <div id="projects-background" class="header-background"></div>   
+  <div id="games-background" class="header-background"></div>   
+  <div id="experiments-background" class="header-background"></div>   
+  <div id="libraries-background" class="header-background"></div> 
+  <div id="mistakes-background" class="header-background"></div>     
+  <div class="content">
+    <section id="intro" class="scroller scroll-header">
+      Hello and welcome!
+    </section>
+    <section id="follow" class="scroller scroll-header">
+      Right this way please <div class="down-arrow">&#8595;</div>
+    </section>
+    <section id="graffiti-note1" class="scroller">
+      Note the <strong>Graffiti Mode</strong> button
+    </section>
+    <section id="graffiti-note2" class="scroller">
+      (in case you get bored).
+    </section>
+    <section id="about-me" class="scroller scroll-header">
+      A bit about me...
+    </section>
+    <section id="projects-intro" class="scroller scroll-header banner">
+      I'm working on two neuroinformatics projects at McGill University...
+    </section>
+    <section id="brainbrowser" class="scroller">
+      <a href="https://brainbrowser.cbrain.mcgill.ca" target="_blank"><img class="menu-image" src="img/brainbrowser.png" /></a>
+      <a href="https://brainbrowser.cbrain.mcgill.ca" target="_blank">BrainBrowser</a> is a WebGL-based JavaScript library for 3D neurological data visualization. The source code for BrainBrowser is available on <a href="https://github.com/aces/brainbrowser" target="_blank">GitHub</a>.
+    </section>
+    <section id="cbrain" class="scroller">
+      <a href="http://cbrain.mcgill.ca" target="_blank"><img class="menu-image" src="img/cbrain.jpg" /></a>
+      <a href="http://cbrain.mcgill.ca" target="_blank">CBRAIN</a> is a distributed compute platform providing connecting neuroimaging researchers to high performance computing centers across Canada and globally.
+    </section>
+    <section id="games-intro" class="scroller scroll-header banner">
+      I've made a couple of games...
+    </section>
+    <section id="climb" class="scroller">
+      <a href="http://www.newgrounds.com/portal/view/633735" target="_blank"><img class="menu-image" src="img/climb.png" /></a>
+      <a href="http://www.newgrounds.com/portal/view/633735" target="_blank">Climb</a> is an HTML5 minimalist vertical platformer featuring music by <a href="http://nadirbellahmer.bandcamp.com/" target="_blank">Nadir Bellahmer</a>. Climb is available to play on <a href="http://www.newgrounds.com/portal/view/633735" target="_blank">Newgrounds</a> and <a href="http://www.kongregate.com/games/tsherif/climb" target="_blank">Kongregate</a>. The source code for Climb is available on <a href="https://github.com/tsherif/climb" target="_blank">GitHub</a>.
+    </section>
+    <section id="redsquare" class="scroller">
+      <a href="http://www.newgrounds.com/portal/view/598131" target="_blank"><img class="menu-image" src="img/redsquare.png" /></a>
+      <a href="http://www.newgrounds.com/portal/view/598131" target="_blank">Red Square</a> was created during the 2012 Québec student protests to express the feeling of an organized, organic chaos and the power dynamic between protesters and the police. It is available to play on <a href="http://www.newgrounds.com/portal/view/598131" target="_blank">Newgrounds</a>.
+    </section>
+    <section id="experiments-intro" class="scroller scroll-header banner">
+      A few WebGL and HTML5 Canvas animation experiments...
+    </section>
+    <section id="moons" class="experiment scroller">
+      <a href="experiments/moons/moons.html">
+        <img src="img/moons.png" />
+        <div id="moons-title"  class="experiment-title">Moons</div>
+      </a>
+    </section>
+    <section id="liquidglass" class="experiment scroller">
+      <a href="experiments/liquidglass/liquidglass.html">
+        <img src="img/liquidglass.png" />
+        <div id="liquidglass-title-1"  class="experiment-title liquidglass-title">Liquid</div>
+        <div id="liquidglass-title-2"  class="experiment-title liquidglass-title">Glass</div>
+      </a>
+    </section>
+    <section id="flowers" class="experiment scroller">
+      <a href="experiments/flowers/flowers.html">
+        <img src="img/flowers.png" />
+        <div id="flowers-title"  class="experiment-title">Flowers</div>
+      </a>
+    </section>
+    <section id="remains" class="experiment scroller">
+      <a href="experiments/remains/remains.html">
+        <img src="img/remains.png" />
+        <div id="remains-title" class="experiment-title">Remains</div>
+      </a>
+    </section>
+    <section id="spiral" class="experiment scroller">
+      <a href="experiments/spiral/spiral.html">
+        <img src="img/spiral.png" />
+        <div id="spiral-title" class="experiment-title">Spiral</div>
+      </a>
+    </section>
+    <section id="storm" class="experiment scroller">
+      <a href="experiments/storm/storm.html">
+        <img src="img/storm.png" />
+        <div id="storm-title" class="experiment-title">Storm</div>
+      </a>
+    </section>
+    <section id="evolve" class="experiment scroller">
+      <a href="experiments/evolve/evolve.html">
+        <img src="img/evolve.png" />
+        <div id="evolve-title-1"  class="experiment-title evolve-title">E</div>
+        <div id="evolve-title-3"  class="experiment-title evolve-title">o</div>
+        <div id="evolve-title-4"  class="experiment-title evolve-title">l</div>
+        <div id="evolve-title-5"  class="experiment-title evolve-title">v</div>
+        <div id="evolve-title-6"  class="experiment-title evolve-title">e</div>
+      </a>
+    </section>
+    <section id="snowflakes" class="experiment scroller">
+      <a href="experiments/snowflakes/snowflakes.html">
+        <img src="img/snowflakes.png" />
+        <div id="snowflakes-title"  class="experiment-title vertical-text">Snowflakes</div>
+      </a>
+    </section>
+    <section id="gravity" class="experiment scroller">
+      <a href="experiments/gravity/gravity.html">
+        <img src="img/gravity.png" />
+        <div id="gravity-title" class="experiment-title">Gravity</div>
+      </a>
+    </section>
+    <section id="libraries-intro" class="scroller scroll-header banner">
+      Some JavaScript libraries...
+    </section>
+    <section id="ofactory" class="scroller column">
+      <a href="https://github.com/tsherif/oFactory" target="_blank"><img class="menu-image" src="img/ofactory.png" /></a>
+      <a href="https://github.com/tsherif/oFactory" target="_blank">oFactory</a> is a JavaScript library for building factory functions. 
+    </section>
+    <section id="tgame" class="scroller column">
+      <a href="https://github.com/tsherif/tgame" target="_blank"><img class="menu-image" src="img/tgame.png" /></a>
+      <a href="https://github.com/tsherif/tgame" target="_blank">tgame</a> is a simple JavaScript game engine.
+    </section>
+    <section id="mistakes-intro" class="scroller scroll-header banner">
+      And some interesting mistakes...
+    </section>
+    <section id="mistake1" class="scroller experiment">
+      <a class="image-link" href="img/mistakes/mistake1.png" target="_blank">
+        <img src="img/mistakes/mistake1-small.png" />
+      </a>
+    </section>
+    <section id="mistake2" class="scroller experiment">
+      <a class="image-link" href="img/mistakes/mistake2.png" target="_blank">
+        <img src="img/mistakes/mistake2-small.png" />
+      </a>
+    </section>
+    <section id="mistake3" class="scroller experiment">
+      <a class="image-link" href="img/mistakes/mistake3.png" target="_blank">
+        <img src="img/mistakes/mistake3-small.png" />
+      </a>
+    </section>
+    <section id="mistake4" class="scroller experiment">
+      <a class="image-link" href="img/mistakes/mistake4.png" target="_blank">
+        <img src="img/mistakes/mistake4-small.png" />
+      </a>
+    </section>
+    <section id="mistake5" class="scroller experiment">
+      <a class="image-link" href="img/mistakes/mistake5.png" target="_blank">
+        <img src="img/mistakes/mistake5-small.png" />
+      </a>
+    </section>
+    <section id="mistake6" class="scroller experiment">
+      <a class="image-link" href="img/mistakes/mistake6.png" target="_blank">
+        <img src="img/mistakes/mistake6-small.png" />
+      </a>
+    </section>
+    <section id="mistake7" class="scroller experiment">
+      <a class="image-link" href="img/mistakes/mistake7.png" target="_blank">
+        <img src="img/mistakes/mistake7-small.png" />
+      </a>
+    </section>
+    <section id="mistake8" class="scroller experiment">
+      <a class="image-link" href="img/mistakes/mistake8.png" target="_blank">
+        <img src="img/mistakes/mistake8-small.png" />
+      </a>
+    </section>
+    <section id="thats-all" class="scroller scroll-header">
+      That's about it...
+    </section>
+    <section id="thanks" class="scroller scroll-header">
+      Thanks for visiting!
+    </section>
+    <section id="contact" class="scroller scroll-header">
+      For more info, get in touch!
+    </section>
   </div>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+  <script src="experiments/js/utils.js"></script>
+  <script src="experiments/js/graffiti.js"></script>
+  <script src="js/scrollem.js"></script>
+  <script src="js/tareksherif.js"></script>
 </body>
 </html>

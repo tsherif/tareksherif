@@ -17,107 +17,624 @@
 //////////////////////////////////////////////////////////////////////////////
 
 (function () {
-  var libs_loaded = false;
-  var WEBGLENABLED = (function() {
-    try { 
-      return !!window.WebGLRenderingContext && !!document.createElement('canvas').getContext('experimental-webgl'); 
-    } catch(e) { 
-      return false; 
-    } 
-  })();
-  
-  var CANVASAVAILABLE = !!document.createElement("canvas");
-  
-  // Have to load scripts using browser API because of bug
-  // in how jQuery handles "use strict" in ajax requests.
-  // http://bugs.jquery.com/ticket/14189
-  function loadScript(url, callback) {
-    var script = document.createElement("script");
-    script.src = url;
-    script.onload = callback;
-    document.head.appendChild(script);
-  }
-  
-  function webglScript() {
-    if (libs_loaded) {
-      loadScript("js/tareksherif.webgl.js");
-    } else {
-      setTimeout(webglScript, 5);
-    }
-  }
-  
-  function webglErrorMessage() {
-    var el;
-    var text = 'tareksherif.ca requires <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation">WebGL</a> to render some elements,<br/>';
-    text += 'but it seems to be unavailable in your browser.<br/>';
-  	text += 'tareksherif.ca recommends <a href="https://www.mozilla.org/firefox" target="_blank">Mozilla Firefox</a> for optimal viewing.';
-  	
-    el = $('<div id="webgl-error">' + text + '</div>').appendTo($("#webgl"));
-  }
-  
-  function displayImage() {
-    var img = new Image();
-    var shapes = ["hoop", "sphere", "cube"];
-    var s_index = Math.floor(Math.random() * shapes.length);
-    
-    img.id = "webgl-replacement";
-    
-    img.src = "img/" + shapes[s_index] + ".png";
-    $("#webgl").append(img);
-  }
-  
-  if (WEBGLENABLED) {
-    loadScript("js/three.min.js", function() {
-      loadScript("js/TrackballControls.js", function() {
-        libs_loaded = true;
-      });
-    });
-  }
-  
+  "use strict";
 
-  $(function() {
-    $(".button").button();
-    $(".tabs").tabs();
-    $(".vertical-text").each(function() {
-      var el = $(this);
-      el.text(el.text().replace(/(.)/g, '$1\n'));
-    });
+  var yoffset = 0;
+  var scroll_start = 0;
 
-    
-    if (CANVASAVAILABLE) {
-        $("#graffiti-button").click(function() {
-        var button = $(this);
-        
-        function hideGraffiti() {
-          graffiti.hide();
-          button.find("span").text("Graffiti Mode");
-          $(document).unbind("keydown", escapeKeyHide);
-        }
-        
-        function escapeKeyHide(e) {
-          if (e.keyCode === 27) {
-            hideGraffiti();
-          }
-        }
-        
-        if (graffiti.isShowing()) {
-          hideGraffiti();
-        } else {
-          graffiti.show();
-          button.find("span").text("End Graffiti Mode");
-          $(document).keydown(escapeKeyHide);
-        }
-      });
-    } else {
-      $("#graffiti-button").hide();
-    }
-    
-    
-    if (WEBGLENABLED) {
-      webglScript();
-    } else {
-      displayImage();
+  $(".vertical-text").each(function() {
+    var el = $(this);
+    el.text(el.text().replace(/(.)/g, '$1\n'));
+  });
+
+  $("#intro").addClass("enter");
+
+  setTimeout(function() {
+    $("#follow").addClass("enter");
+  }, 500);
+
+
+  yoffset += 450;
+
+  ScrollEm.setScrollRange(200);
+
+  ScrollEm.add(document.getElementById("graffiti-note1"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset
+      },
+      left: {
+        start: -2000,
+        end: 158
+      }
     }
   });
+
+  scroll_start += 100;
+
+  ScrollEm.add(document.getElementById("graffiti-note2"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset
+      },
+      right: {
+        start: -2000,
+        end: 158
+      }
+    }
+  });
+
+  yoffset += 130;
+  scroll_start += 100;
+
+  ScrollEm.add(document.getElementById("about-me"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset
+      },
+      left: {
+        start: -2000,
+        end: 0,
+      }
+    }
+  });
+
+  yoffset += 130;
+  scroll_start += 200;
+
+  ScrollEm.add(document.getElementById("projects-intro"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset
+      },
+      right: {
+        start: -2000,
+        end: 0,
+      }
+    }
+  });
+
+  ScrollEm.add(document.getElementById("projects-background"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset + 175
+      },
+      right: {
+        start: 4000,
+        end: (document.body.clientWidth - 800) / 2,
+      }
+    }
+  });
+
+  yoffset += 170;
+
+  ScrollEm.add(document.getElementById("brainbrowser"), {
+    start: scroll_start,
+    end: scroll_start + 300,
+    css: {
+      top: {
+        start: yoffset
+      },
+      left: {
+        start: 4000,
+        end: 0,
+      }
+    }
+  });
+
+  yoffset += 160;
+  scroll_start += 100;
+
+  ScrollEm.add(document.getElementById("cbrain"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset
+      },
+      left: {
+        start: -2000,
+        end: 0
+      }
+    }
+  });
+
+  yoffset += 210;
+  scroll_start += 300;
+
+  ScrollEm.add(document.getElementById("games-intro"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset
+      },
+      left: {
+        start: -2000,
+        end: 25
+      }
+    }
+  });
+
+  ScrollEm.add(document.getElementById("games-background"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset + 170
+      },
+      left: {
+        start: 4000,
+        end: (document.body.clientWidth - 800) / 2,
+      }
+    }
+  });
+
+  yoffset += 170;
+  scroll_start += 100;
+
+  ScrollEm.add(document.getElementById("climb"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset
+      },
+      left: {
+        start: -2000,
+        end: 0
+      }
+    }
+  });
+
+  yoffset += 160;
+  scroll_start -= 100;
+
+  ScrollEm.add(document.getElementById("redsquare"), {
+    start: scroll_start,
+    end: scroll_start + 300,
+    css: {
+      top: {
+        start: yoffset
+      },
+      left: {
+        start: 4000,
+        end: 0
+      }
+    }
+  });
+
+  yoffset += 210;
+  scroll_start += 400;
+
+  ScrollEm.add(document.getElementById("experiments-intro"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset
+      },
+      right: {
+        start: -2000,
+        end: 0
+      }
+    }
+  });
+
+  ScrollEm.add(document.getElementById("experiments-background"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset + 175
+      },
+      right: {
+        start: 4000,
+        end: (document.body.clientWidth - 800) / 2,
+      }
+    }
+  });
+
+  yoffset += 170;
+  scroll_start += 150;
+
+  ScrollEm.add(document.getElementById("liquidglass"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset + 2000,
+        end: yoffset
+      },
+      left: {
+        start: 0,
+        end: 255
+      }
+    }
+  });
+
+
+  ScrollEm.add(document.getElementById("flowers"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset + 2000,
+        end: yoffset
+      },
+      right: {
+        start: 0,
+        end: 255
+      }
+    }
+  });
+
+  scroll_start += 50;
+
+  ScrollEm.add(document.getElementById("moons"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset + 2000,
+        end: yoffset
+      },
+      left: {
+        start: -200,
+        end: 105
+      }
+    }
+  });
+
+
+  ScrollEm.add(document.getElementById("remains"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset + 2000,
+        end: yoffset
+      },
+      right: {
+        start: -200,
+        end: 105
+      }
+    }
+  });
+
+  yoffset += 150;
+  scroll_start += 50;
+
+  ScrollEm.add(document.getElementById("storm"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset,
+        end: yoffset
+      },
+      left: {
+        start: -2000,
+        end: 255
+      }
+    }
+  });
+
+
+  ScrollEm.add(document.getElementById("evolve"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset,
+        end: yoffset
+      },
+      right: {
+        start: -2000,
+        end: 255
+      }
+    }
+  });
+  
+  scroll_start += 50;
+
+  ScrollEm.add(document.getElementById("spiral"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset - 750,
+        end: yoffset
+      },
+      left: {
+        start: -2000,
+        end: 105
+      }
+    }
+  });
+
+
+  ScrollEm.add(document.getElementById("snowflakes"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset - 750,
+        end: yoffset
+      },
+      right: {
+        start: -2000,
+        end: 105
+      }
+    }
+  });
+
+  yoffset += 150;
+
+  ScrollEm.add(document.getElementById("gravity"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset + 2000,
+        end: yoffset
+      },
+      left: {
+        start: 325
+      }
+    }
+  });
+
+  yoffset += 210;
+  scroll_start += 400;
+
+  ScrollEm.add(document.getElementById("libraries-intro"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset
+      },
+      left: {
+        start: -2000,
+        end: 25
+      }
+    }
+  });
+
+  ScrollEm.add(document.getElementById("libraries-background"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset + 170
+      },
+      left: {
+        start: 4000,
+        end: (document.body.clientWidth - 800) / 2,
+      }
+    }
+  });
+
+  scroll_start -= 100;
+  yoffset += 130;
+
+  ScrollEm.add(document.getElementById("ofactory"), {
+    start: scroll_start,
+    end: scroll_start + 450,
+    css: {
+      top: {
+        start: yoffset
+      },
+      left: {
+        start: -2000,
+        end: 0
+      }
+    }
+  });
+
+
+  ScrollEm.add(document.getElementById("tgame"), {
+    start: scroll_start,
+    end: scroll_start + 450,
+    css: {
+      top: {
+        start: yoffset
+      },
+      right: {
+        start: -2000,
+        end: 0
+      }
+    }
+  });
+
+  yoffset += 210;
+  scroll_start += 400;
+
+  ScrollEm.add(document.getElementById("mistakes-intro"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset
+      },
+      right: {
+        start: -2000,
+        end: 25
+      }
+    }
+  });
+
+  ScrollEm.add(document.getElementById("mistakes-background"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset + 175
+      },
+      right: {
+        start: 4000,
+        end: (document.body.clientWidth - 800) / 2,
+      }
+    }
+  });
+
+  yoffset += 170;
+  scroll_start += 150;
+
+  ScrollEm.add(document.getElementById("mistake1"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset
+      },
+      left: {
+        start: -2000,
+        end: 255
+      }
+    }
+  });
+
+
+  ScrollEm.add(document.getElementById("mistake2"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset
+      },
+      right: {
+        start: -2000,
+        end: 255
+      }
+    }
+  });
+  
+  scroll_start += 50;
+
+  ScrollEm.add(document.getElementById("mistake3"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset - 500,
+        end: yoffset
+      },
+      left: {
+        start: -2000,
+        end: 105
+      }
+    }
+  });
+
+
+  ScrollEm.add(document.getElementById("mistake4"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset - 500,
+        end: yoffset
+      },
+      right: {
+        start: -2000,
+        end: 105
+      }
+    }
+  });
+
+  yoffset += 150;
+  scroll_start += 50;
+
+  ScrollEm.add(document.getElementById("mistake5"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset
+      },
+      left: {
+        start: -2000,
+        end: 255
+      }
+    }
+  });
+
+
+  ScrollEm.add(document.getElementById("mistake6"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset
+      },
+      right: {
+        start: -2000,
+        end: 255
+      }
+    }
+  });
+
+  scroll_start += 50;
+
+  ScrollEm.add(document.getElementById("mistake7"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset + 2000,
+        end: yoffset
+      },
+      left: {
+        start: 0,
+        end: 105
+      }
+    }
+  });
+
+
+  ScrollEm.add(document.getElementById("mistake8"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset + 2000,
+        end: yoffset
+      },
+      right: {
+        start: 0,
+        end: 105
+      }
+    }
+  });
+
+  yoffset += 600;
+  scroll_start += 600;
+
+  ScrollEm.add(document.getElementById("thats-all"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset
+      },
+      left: {
+        start: -2000,
+        end: 0,
+      }
+    }
+  });
+
+  yoffset += 300;
+  scroll_start += 300;
+
+  ScrollEm.add(document.getElementById("thanks"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset
+      },
+      right: {
+        start: -2000,
+        end: 0,
+      }
+    }
+  });
+
+  yoffset += 300;
+  scroll_start += 300;
+
+  ScrollEm.add(document.getElementById("contact"), {
+    start: scroll_start,
+    css: {
+      top: {
+        start: yoffset
+      },
+      left: {
+        start: -2000,
+        end: 0,
+      }
+    }
+  });
+
+
 })();
 
