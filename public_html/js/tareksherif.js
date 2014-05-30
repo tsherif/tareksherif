@@ -20,14 +20,11 @@
   "use strict";
 
   var yoffset = 0;
-  var scroll_start = 0;
 
   $(".vertical-text").each(function() {
     var el = $(this);
     el.text(el.text().replace(/(.)/g, '$1\n'));
   });
-
-  $("#intro").addClass("enter");
 
   setTimeout(function() {
     $("#follow").addClass("enter");
@@ -36,212 +33,197 @@
 
   yoffset += 450;
 
-  ScrollEm.setScrollRange(200);
+  ScrollEm.setContainer(document.getElementById("content"));
+  ScrollEm.setPageHeight(6000);
+  ScrollEm.setDefaultScrollRange(175);
 
   ScrollEm.add(document.getElementById("graffiti-note1"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset
       },
       left: {
-        start: -2000,
+        start: "-WINDOW_WIDTH",
         end: 158
       }
     }
   });
 
-  scroll_start += 100;
+  ScrollEm.forward(100);
 
   ScrollEm.add(document.getElementById("graffiti-note2"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset
       },
       right: {
-        start: -2000,
+        start: "-WINDOW_WIDTH",
         end: 158
       }
     }
   });
 
   yoffset += 130;
-  scroll_start += 100;
+  ScrollEm.forward(100);
 
   ScrollEm.add(document.getElementById("about-me"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset
       },
       left: {
-        start: -2000,
-        end: 0,
+        start: "-WINDOW_WIDTH",
+        end: 100,
       }
     }
   });
 
   yoffset += 130;
-  scroll_start += 200;
+  ScrollEm.forward(300);
 
   ScrollEm.add(document.getElementById("projects-intro"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset
       },
       right: {
-        start: -2000,
-        end: 0,
+        start: "-WINDOW_WIDTH",
+        end: 100,
       }
     }
   });
 
   ScrollEm.add(document.getElementById("projects-background"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset + 175
       },
       right: {
-        start: 4000,
-        end: (document.body.clientWidth - 800) / 2,
+        start: "WINDOW_WIDTH",
+        end: "MARGIN_RIGHT + 85",
       }
     }
   });
 
   yoffset += 170;
+  ScrollEm.forward(150);
 
   ScrollEm.add(document.getElementById("brainbrowser"), {
-    start: scroll_start,
-    end: scroll_start + 300,
     css: {
       top: {
         start: yoffset
       },
       left: {
-        start: 4000,
-        end: 0,
+        start: "WINDOW_WIDTH",
+        end: 50,
       }
     }
   });
 
   yoffset += 160;
-  scroll_start += 100;
 
   ScrollEm.add(document.getElementById("cbrain"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset
       },
       left: {
-        start: -2000,
-        end: 0
+        start: "-WINDOW_WIDTH",
+        end: 50
       }
     }
   });
 
   yoffset += 210;
-  scroll_start += 300;
+  ScrollEm.forward(300);
 
   ScrollEm.add(document.getElementById("games-intro"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset
       },
       left: {
-        start: -2000,
-        end: 25
+        start: "-WINDOW_WIDTH",
+        end: 100
       }
     }
   });
 
   ScrollEm.add(document.getElementById("games-background"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset + 170
       },
       left: {
-        start: 4000,
-        end: (document.body.clientWidth - 800) / 2,
+        start: "WINDOW_WIDTH",
+        end: "MARGIN_LEFT + 85",
       }
     }
   });
 
   yoffset += 170;
-  scroll_start += 100;
+  ScrollEm.forward(100);
 
   ScrollEm.add(document.getElementById("climb"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset
       },
       left: {
-        start: -2000,
-        end: 0
+        start: "-WINDOW_WIDTH",
+        end: 25
       }
     }
   });
 
   yoffset += 160;
-  scroll_start -= 100;
 
   ScrollEm.add(document.getElementById("redsquare"), {
-    start: scroll_start,
-    end: scroll_start + 300,
     css: {
       top: {
         start: yoffset
       },
       left: {
-        start: 4000,
-        end: 0
+        start: "WINDOW_WIDTH",
+        end: 25
       }
     }
   });
 
   yoffset += 210;
-  scroll_start += 400;
+  ScrollEm.forward(250);
 
   ScrollEm.add(document.getElementById("experiments-intro"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset
       },
       right: {
-        start: -2000,
-        end: 0
+        start: "-WINDOW_WIDTH",
+        end: 100
       }
     }
   });
 
   ScrollEm.add(document.getElementById("experiments-background"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset + 175
       },
       right: {
-        start: 4000,
-        end: (document.body.clientWidth - 800) / 2,
+        start: "WINDOW_WIDTH",
+        end: "MARGIN_RIGHT + 85",
       }
     }
   });
 
   yoffset += 170;
-  scroll_start += 150;
+  ScrollEm.forward(150);
 
   ScrollEm.add(document.getElementById("liquidglass"), {
-    start: scroll_start,
     css: {
       top: {
-        start: yoffset + 2000,
+        start: yoffset + " + WINDOW_HEIGHT",
         end: yoffset
       },
       left: {
@@ -253,10 +235,9 @@
 
 
   ScrollEm.add(document.getElementById("flowers"), {
-    start: scroll_start,
     css: {
       top: {
-        start: yoffset + 2000,
+        start: yoffset + " + WINDOW_HEIGHT",
         end: yoffset
       },
       right: {
@@ -266,13 +247,12 @@
     }
   });
 
-  scroll_start += 50;
+  ScrollEm.forward(50);
 
   ScrollEm.add(document.getElementById("moons"), {
-    start: scroll_start,
     css: {
       top: {
-        start: yoffset + 2000,
+        start: yoffset + " + WINDOW_HEIGHT",
         end: yoffset
       },
       left: {
@@ -284,10 +264,9 @@
 
 
   ScrollEm.add(document.getElementById("remains"), {
-    start: scroll_start,
     css: {
       top: {
-        start: yoffset + 2000,
+        start: yoffset + " + WINDOW_HEIGHT",
         end: yoffset
       },
       right: {
@@ -298,17 +277,16 @@
   });
 
   yoffset += 150;
-  scroll_start += 50;
+  ScrollEm.forward(50);
 
   ScrollEm.add(document.getElementById("storm"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset,
         end: yoffset
       },
       left: {
-        start: -2000,
+        start: "-WINDOW_WIDTH",
         end: 255
       }
     }
@@ -316,30 +294,28 @@
 
 
   ScrollEm.add(document.getElementById("evolve"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset,
         end: yoffset
       },
       right: {
-        start: -2000,
+        start: "-WINDOW_WIDTH",
         end: 255
       }
     }
   });
   
-  scroll_start += 50;
+  ScrollEm.forward(50);
 
   ScrollEm.add(document.getElementById("spiral"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset - 750,
         end: yoffset
       },
       left: {
-        start: -2000,
+        start: "-WINDOW_WIDTH",
         end: 105
       }
     }
@@ -347,14 +323,13 @@
 
 
   ScrollEm.add(document.getElementById("snowflakes"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset - 750,
         end: yoffset
       },
       right: {
-        start: -2000,
+        start: "-WINDOW_WIDTH",
         end: 105
       }
     }
@@ -363,10 +338,9 @@
   yoffset += 150;
 
   ScrollEm.add(document.getElementById("gravity"), {
-    start: scroll_start,
     css: {
       top: {
-        start: yoffset + 2000,
+        start: yoffset + " + WINDOW_HEIGHT",
         end: yoffset
       },
       left: {
@@ -376,106 +350,98 @@
   });
 
   yoffset += 210;
-  scroll_start += 400;
+  ScrollEm.forward(300);
 
   ScrollEm.add(document.getElementById("libraries-intro"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset
       },
       left: {
-        start: -2000,
-        end: 25
+        start: "-WINDOW_WIDTH",
+        end: 100
       }
     }
   });
 
   ScrollEm.add(document.getElementById("libraries-background"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset + 170
       },
       left: {
-        start: 4000,
-        end: (document.body.clientWidth - 800) / 2,
+        start: "WINDOW_WIDTH",
+        end: "MARGIN_LEFT + 85",
       }
     }
   });
 
-  scroll_start -= 100;
+  ScrollEm.forward(150);
   yoffset += 130;
 
+
   ScrollEm.add(document.getElementById("ofactory"), {
-    start: scroll_start,
-    end: scroll_start + 450,
     css: {
       top: {
         start: yoffset
       },
       left: {
-        start: -2000,
-        end: 0
+        start: "-WINDOW_WIDTH",
+        end: 50
       }
     }
   });
 
 
   ScrollEm.add(document.getElementById("tgame"), {
-    start: scroll_start,
-    end: scroll_start + 450,
     css: {
       top: {
         start: yoffset
       },
       right: {
-        start: -2000,
-        end: 0
+        start: "-WINDOW_WIDTH",
+        end: 50
       }
     }
   });
 
   yoffset += 210;
-  scroll_start += 400;
+  ScrollEm.forward(250);
 
   ScrollEm.add(document.getElementById("mistakes-intro"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset
       },
       right: {
-        start: -2000,
-        end: 25
+        start: "-WINDOW_WIDTH",
+        end: 100
       }
     }
   });
 
   ScrollEm.add(document.getElementById("mistakes-background"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset + 175
       },
       right: {
-        start: 4000,
-        end: (document.body.clientWidth - 800) / 2,
+        start: "WINDOW_WIDTH",
+        end: (document.body.clientWidth - 800) / 2 + 85,
       }
     }
   });
 
   yoffset += 170;
-  scroll_start += 150;
+  ScrollEm.forward(150);
 
   ScrollEm.add(document.getElementById("mistake1"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset
       },
       left: {
-        start: -2000,
+        start: "-WINDOW_WIDTH",
         end: 255
       }
     }
@@ -483,29 +449,27 @@
 
 
   ScrollEm.add(document.getElementById("mistake2"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset
       },
       right: {
-        start: -2000,
+        start: "-WINDOW_WIDTH",
         end: 255
       }
     }
   });
   
-  scroll_start += 50;
+  ScrollEm.forward(50);
 
   ScrollEm.add(document.getElementById("mistake3"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset - 500,
         end: yoffset
       },
       left: {
-        start: -2000,
+        start: "-WINDOW_WIDTH",
         end: 105
       }
     }
@@ -513,30 +477,28 @@
 
 
   ScrollEm.add(document.getElementById("mistake4"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset - 500,
         end: yoffset
       },
       right: {
-        start: -2000,
+        start: "-WINDOW_WIDTH",
         end: 105
       }
     }
   });
 
   yoffset += 150;
-  scroll_start += 50;
+  ScrollEm.forward(50);
 
   ScrollEm.add(document.getElementById("mistake5"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset
       },
       left: {
-        start: -2000,
+        start: "-WINDOW_WIDTH",
         end: 255
       }
     }
@@ -544,25 +506,23 @@
 
 
   ScrollEm.add(document.getElementById("mistake6"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset
       },
       right: {
-        start: -2000,
+        start: "-WINDOW_WIDTH",
         end: 255
       }
     }
   });
 
-  scroll_start += 50;
+  ScrollEm.forward(50);
 
   ScrollEm.add(document.getElementById("mistake7"), {
-    start: scroll_start,
     css: {
       top: {
-        start: yoffset + 2000,
+        start: yoffset + " + WINDOW_HEIGHT",
         end: yoffset
       },
       left: {
@@ -574,10 +534,9 @@
 
 
   ScrollEm.add(document.getElementById("mistake8"), {
-    start: scroll_start,
     css: {
       top: {
-        start: yoffset + 2000,
+        start: yoffset + " + WINDOW_HEIGHT",
         end: yoffset
       },
       right: {
@@ -587,50 +546,47 @@
     }
   });
 
-  yoffset += 600;
-  scroll_start += 600;
+  yoffset += 500;
+  ScrollEm.forward(600);
 
   ScrollEm.add(document.getElementById("thats-all"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset
       },
       left: {
-        start: -2000,
-        end: 0,
+        start: "-WINDOW_WIDTH",
+        end: 100,
       }
     }
   });
 
   yoffset += 300;
-  scroll_start += 300;
+  ScrollEm.forward(300);
 
   ScrollEm.add(document.getElementById("thanks"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset
       },
       right: {
-        start: -2000,
-        end: 0,
+        start: "-WINDOW_WIDTH",
+        end: 100,
       }
     }
   });
 
   yoffset += 300;
-  scroll_start += 300;
+  ScrollEm.forward(300);
 
   ScrollEm.add(document.getElementById("contact"), {
-    start: scroll_start,
     css: {
       top: {
         start: yoffset
       },
       left: {
-        start: -2000,
-        end: 0,
+        start: "-WINDOW_WIDTH",
+        end: 100,
       }
     }
   });

@@ -67,15 +67,10 @@ table {
 }
 
 html {
-  height: 6000px;
-  overflow-x: hidden;
   margin: 0;
 }
 
 body {
-  height: 100%;
-  position: relative;
-  overflow-x: hidden;
   margin: 0;
   background-color: #F0F0F0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -99,7 +94,7 @@ header h1 {
 /*font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;*/
   font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
 }
-.content {
+#content {
   width: 800px;
   position: relative;
   margin: 0 auto;
@@ -124,7 +119,7 @@ section a {
 .scroller.scroll-header {
   padding-top: 30px;
   width: auto;
-  max-width: 800px;
+  max-width: 650px;
   font-size: 2em;
   font-weight: bold;
 }
@@ -134,15 +129,11 @@ section a {
 }
 
 .scroller.column {
-  width: 385px;
+  width: 330px;
 }
 
 #graffiti-note1, #graffiti-note2 {
   width: 240px;
-}
-
-.enter {
-  transition: 0.9s;
 }
 
 .down-arrow {
@@ -152,23 +143,20 @@ section a {
 
 #intro {
   top: 50px;
-  left: -2000px;
+  left: 100px;
   font-size: 2em;
-}
-
-#intro.enter {
-  left: 0;
 }
 
 #follow {
   top: -500px;
-  right: 0;
+  right: 100px;
   font-size: 2em;
   z-index: -5;
 }
 
 #follow.enter {
   top: 250px;
+  transition: 0.9s;
 }
 
 .header-background {
