@@ -20,6 +20,21 @@
   "use strict";
 
   var yoffset = 0;
+  var navigation = $(".skip-ahead");
+
+  $(document).scroll(function() {
+    if (window.pageYOffset > 102) {
+      navigation.css({
+        position: "fixed",
+        top: "0px"
+      });
+    } else {
+      navigation.css({
+        position: "absolute",
+        top: "102px"
+      });
+    }
+  });
 
   $(".vertical-text").each(function() {
     var el = $(this);
@@ -31,10 +46,10 @@
   }, 500);
 
 
-  yoffset += 450;
+  yoffset += 480;
 
   ScrollEm.setContainer(document.getElementById("content"));
-  ScrollEm.setPageHeight(6000);
+  ScrollEm.setPageHeight(9000);
   ScrollEm.setDefaultScrollRange(175);
 
   ScrollEm.add(document.getElementById("graffiti-note1"), {
@@ -78,8 +93,9 @@
     }
   });
 
-  yoffset += 130;
-  ScrollEm.forward(300);
+  yoffset += 180;
+  ScrollEm.forward(350);
+  ScrollEm.addAnchor("projects", yoffset + 62);
 
   ScrollEm.add(document.getElementById("projects-intro"), {
     css: {
@@ -96,7 +112,7 @@
   ScrollEm.add(document.getElementById("projects-background"), {
     css: {
       top: {
-        start: yoffset + 175
+        start: yoffset + 127
       },
       right: {
         start: "WINDOW_WIDTH",
@@ -106,7 +122,7 @@
   });
 
   yoffset += 170;
-  ScrollEm.forward(150);
+  ScrollEm.forward(100);
 
   ScrollEm.add(document.getElementById("brainbrowser"), {
     css: {
@@ -134,8 +150,9 @@
     }
   });
 
-  yoffset += 210;
-  ScrollEm.forward(300);
+  yoffset += 310;
+  ScrollEm.forward(400);
+  ScrollEm.addAnchor("games", yoffset + 62);
 
   ScrollEm.add(document.getElementById("games-intro"), {
     css: {
@@ -152,7 +169,7 @@
   ScrollEm.add(document.getElementById("games-background"), {
     css: {
       top: {
-        start: yoffset + 170
+        start: yoffset + 122
       },
       left: {
         start: "WINDOW_WIDTH",
@@ -190,8 +207,9 @@
     }
   });
 
-  yoffset += 210;
-  ScrollEm.forward(250);
+  yoffset += 310;
+  ScrollEm.forward(400);
+  ScrollEm.addAnchor("experiments", yoffset + 62);
 
   ScrollEm.add(document.getElementById("experiments-intro"), {
     css: {
@@ -208,7 +226,7 @@
   ScrollEm.add(document.getElementById("experiments-background"), {
     css: {
       top: {
-        start: yoffset + 175
+        start: yoffset + 127
       },
       right: {
         start: "WINDOW_WIDTH",
@@ -349,8 +367,9 @@
     }
   });
 
-  yoffset += 210;
-  ScrollEm.forward(300);
+  yoffset += 310;
+  ScrollEm.forward(400);
+  ScrollEm.addAnchor("libraries", yoffset + 62);
 
   ScrollEm.add(document.getElementById("libraries-intro"), {
     css: {
@@ -367,7 +386,7 @@
   ScrollEm.add(document.getElementById("libraries-background"), {
     css: {
       top: {
-        start: yoffset + 170
+        start: yoffset + 122
       },
       left: {
         start: "WINDOW_WIDTH",
@@ -405,8 +424,9 @@
     }
   });
 
-  yoffset += 210;
-  ScrollEm.forward(250);
+  yoffset += 410;
+  ScrollEm.forward(550);
+  ScrollEm.addAnchor("mistakes", yoffset + 62);
 
   ScrollEm.add(document.getElementById("mistakes-intro"), {
     css: {
@@ -423,7 +443,7 @@
   ScrollEm.add(document.getElementById("mistakes-background"), {
     css: {
       top: {
-        start: yoffset + 175
+        start: yoffset + 127
       },
       right: {
         start: "WINDOW_WIDTH",
@@ -578,6 +598,7 @@
 
   yoffset += 300;
   ScrollEm.forward(300);
+  ScrollEm.addAnchor("contact-info", yoffset + 72);
 
   ScrollEm.add(document.getElementById("contact"), {
     css: {
@@ -591,6 +612,136 @@
     }
   });
 
+  yoffset += 100;
+  ScrollEm.forward(30);
+
+  ScrollEm.add(document.getElementById("email"), {
+    css: {
+      top: {
+        start: yoffset
+      },
+      left: {
+        start: "WINDOW_WIDTH",
+        end: 100,
+      }
+    }
+  });
+
+  ScrollEm.forward(30);
+
+  ScrollEm.add(document.getElementById("twitter"), {
+    css: {
+      top: {
+        start: yoffset
+      },
+      left: {
+        start: "WINDOW_WIDTH",
+        end: 200,
+      }
+    }
+  });
+
+  ScrollEm.forward(30);
+
+  ScrollEm.add(document.getElementById("linkedin"), {
+    css: {
+      top: {
+        start: yoffset
+      },
+      left: {
+        start: "WINDOW_WIDTH",
+        end: 300,
+      }
+    }
+  });
+
+  ScrollEm.forward(30);
+
+  ScrollEm.add(document.getElementById("github"), {
+    css: {
+      top: {
+        start: yoffset
+      },
+      left: {
+        start: "WINDOW_WIDTH",
+        end: 400,
+      }
+    }
+  });
+
+  ScrollEm.forward(30);
+
+  ScrollEm.add(document.getElementById("wordpress"), {
+    css: {
+      top: {
+        start: yoffset
+      },
+      left: {
+        start: "WINDOW_WIDTH",
+        end: 500,
+      }
+    }
+  });
+
+  yoffset += 300;
+  ScrollEm.forward(400);
+
+  ScrollEm.add(document.getElementById("bye"), {
+    css: {
+      top: {
+        start: yoffset
+      },
+      left: {
+        start: "-WINDOW_WIDTH",
+        end: 350,
+      }
+    }
+  });
+
+  yoffset += 1000;
+  ScrollEm.forward(1000);
+
+  ScrollEm.add(document.getElementById("seriously"), {
+    css: {
+      top: {
+        start: yoffset
+      },
+      left: {
+        start: "-WINDOW_WIDTH",
+        end: 100,
+      }
+    }
+  });
+
+  yoffset += 1000;
+  ScrollEm.forward(1000);
+
+  ScrollEm.add(document.getElementById("go-now"), {
+    css: {
+      top: {
+        start: yoffset
+      },
+      right: {
+        start: "-WINDOW_WIDTH",
+        end: 100,
+      }
+    }
+  });
+
+  yoffset += 1000;
+  ScrollEm.forward(1000);
+
+  ScrollEm.add(document.getElementById("im-out"), {
+    css: {
+      top: {
+        start: yoffset
+      },
+      left: {
+        start: "-WINDOW_WIDTH",
+        end: 100,
+      }
+    }
+  });
 
 })();
 

@@ -86,6 +86,19 @@
 
     setDefaultScrollRange: function(range) {
       scroll_range = range;
+    },
+
+    addAnchor: function(id, scroll_position, units) {
+      scroll_position = scroll_position === undefined ? recording_position : scroll_position;
+      units =  units === undefined ? "px" : units;
+
+      var anchor = document.createElement("div");
+
+      anchor.id = id;
+      anchor.style.position = "absolute";
+      anchor.style.top = scroll_position + units;
+
+      BODY.appendChild(anchor);
     }
   };
 
