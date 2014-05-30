@@ -111,7 +111,7 @@
       },
       left: {
         start: "-WINDOW_WIDTH",
-        end: 100,
+        end: 100
       }
     }
   });
@@ -127,7 +127,7 @@
       },
       right: {
         start: "-WINDOW_WIDTH",
-        end: 100,
+        end: 100
       }
     }
   });
@@ -154,7 +154,7 @@
       },
       left: {
         start: "WINDOW_WIDTH",
-        end: 50,
+        end: 50
       }
     }
   });
@@ -237,7 +237,7 @@
   ScrollEm.add(document.getElementById("experiments-intro"), {
     css: {
       top: {
-        start: yoffset
+        start: yoffset + 4
       },
       right: {
         start: "-WINDOW_WIDTH",
@@ -454,7 +454,7 @@
   ScrollEm.add(document.getElementById("mistakes-intro"), {
     css: {
       top: {
-        start: yoffset
+        start: yoffset + 8
       },
       right: {
         start: "-WINDOW_WIDTH",
@@ -599,7 +599,7 @@
       },
       left: {
         start: "-WINDOW_WIDTH",
-        end: 100,
+        end: 100
       }
     }
   });
@@ -614,7 +614,7 @@
       },
       right: {
         start: "-WINDOW_WIDTH",
-        end: 100,
+        end: 100
       }
     }
   });
@@ -630,7 +630,7 @@
       },
       left: {
         start: "-WINDOW_WIDTH",
-        end: 100,
+        end: 100
       }
     }
   });
@@ -645,7 +645,7 @@
       },
       left: {
         start: "WINDOW_WIDTH",
-        end: 110,
+        end: 110
       }
     }
   });
@@ -659,7 +659,7 @@
       },
       left: {
         start: "WINDOW_WIDTH",
-        end: 202,
+        end: 202
       }
     }
   });
@@ -673,7 +673,7 @@
       },
       left: {
         start: "WINDOW_WIDTH",
-        end: 294,
+        end: 294
       }
     }
   });
@@ -687,7 +687,7 @@
       },
       left: {
         start: "WINDOW_WIDTH",
-        end: 386,
+        end: 386
       }
     }
   });
@@ -701,7 +701,7 @@
       },
       left: {
         start: "WINDOW_WIDTH",
-        end: 480,
+        end: 480
       }
     }
   });
@@ -716,7 +716,7 @@
       },
       left: {
         start: "-WINDOW_WIDTH",
-        end: 350,
+        end: 350
       }
     }
   });
@@ -731,7 +731,7 @@
       },
       left: {
         start: "-WINDOW_WIDTH",
-        end: 350,
+        end: 330
       }
     }
   });
@@ -746,7 +746,7 @@
       },
       right: {
         start: "-WINDOW_WIDTH",
-        end: 350,
+        end: 345
       }
     }
   });
@@ -761,7 +761,7 @@
       },
       left: {
         start: "-WINDOW_WIDTH",
-        end: 350,
+        end: 250
       }
     }
   });
@@ -776,7 +776,7 @@
       },
       left: {
         start: "-WINDOW_WIDTH",
-        end: 180,
+        end: 180
       }
     }
   });
@@ -788,7 +788,7 @@
       },
       right: {
         start: "-WINDOW_WIDTH",
-        end: 180,
+        end: 180
       }
     }
   });
