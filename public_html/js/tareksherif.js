@@ -20,7 +20,8 @@
   "use strict";
 
   var yoffset = 0;
-  var navigation = $(".skip-ahead");
+  var navigation = $(".navigation");
+  var graffiti_canvas;
 
   $(document).scroll(function() {
     if (window.pageYOffset > 102) {
@@ -36,6 +37,28 @@
     }
   });
 
+  $("#graffiti-button").click(function() {
+    var button = $(this);
+    graffiti_canvas = graffiti_canvas || $(graffiti.get("graffiti-canvas"));
+
+    function escapeKeyHide(e) {
+      if (e.keyCode === 27) {
+        hideGraffiti();
+      }
+    }
+    
+    if (graffiti_canvas.is(":visible")) {
+      graffiti_canvas.hide();
+      button.text("Graffiti Mode");
+      $(document).unbind("keydown", escapeKeyHide);
+    } else {
+      graffiti_canvas.show();
+      button.text("End Graffiti Mode");
+      $(document).keydown(escapeKeyHide);
+    }
+  });
+
+
   $(".vertical-text").each(function() {
     var el = $(this);
     el.text(el.text().replace(/(.)/g, '$1\n'));
@@ -49,7 +72,7 @@
   yoffset += 480;
 
   ScrollEm.setContainer(document.getElementById("content"));
-  ScrollEm.setPageHeight(9000);
+  ScrollEm.setPageHeight(11500);
   ScrollEm.setDefaultScrollRange(175);
 
   ScrollEm.add(document.getElementById("graffiti-note1"), {
@@ -78,8 +101,8 @@
     }
   });
 
-  yoffset += 130;
-  ScrollEm.forward(100);
+  yoffset += 180;
+  ScrollEm.forward(150);
 
   ScrollEm.add(document.getElementById("about-me"), {
     css: {
@@ -94,7 +117,7 @@
   });
 
   yoffset += 180;
-  ScrollEm.forward(350);
+  ScrollEm.forward(250);
   ScrollEm.addAnchor("projects", yoffset + 62);
 
   ScrollEm.add(document.getElementById("projects-intro"), {
@@ -151,7 +174,7 @@
   });
 
   yoffset += 310;
-  ScrollEm.forward(400);
+  ScrollEm.forward(500);
   ScrollEm.addAnchor("games", yoffset + 62);
 
   ScrollEm.add(document.getElementById("games-intro"), {
@@ -208,7 +231,7 @@
   });
 
   yoffset += 310;
-  ScrollEm.forward(400);
+  ScrollEm.forward(500);
   ScrollEm.addAnchor("experiments", yoffset + 62);
 
   ScrollEm.add(document.getElementById("experiments-intro"), {
@@ -368,7 +391,7 @@
   });
 
   yoffset += 310;
-  ScrollEm.forward(400);
+  ScrollEm.forward(500);
   ScrollEm.addAnchor("libraries", yoffset + 62);
 
   ScrollEm.add(document.getElementById("libraries-intro"), {
@@ -425,7 +448,7 @@
   });
 
   yoffset += 410;
-  ScrollEm.forward(550);
+  ScrollEm.forward(350);
   ScrollEm.addAnchor("mistakes", yoffset + 62);
 
   ScrollEm.add(document.getElementById("mistakes-intro"), {
@@ -622,7 +645,7 @@
       },
       left: {
         start: "WINDOW_WIDTH",
-        end: 100,
+        end: 110,
       }
     }
   });
@@ -636,7 +659,7 @@
       },
       left: {
         start: "WINDOW_WIDTH",
-        end: 200,
+        end: 202,
       }
     }
   });
@@ -650,7 +673,7 @@
       },
       left: {
         start: "WINDOW_WIDTH",
-        end: 300,
+        end: 294,
       }
     }
   });
@@ -664,7 +687,7 @@
       },
       left: {
         start: "WINDOW_WIDTH",
-        end: 400,
+        end: 386,
       }
     }
   });
@@ -678,15 +701,30 @@
       },
       left: {
         start: "WINDOW_WIDTH",
-        end: 500,
+        end: 480,
       }
     }
   });
 
-  yoffset += 300;
-  ScrollEm.forward(400);
+  yoffset += 500;
+  ScrollEm.forward(450);
 
   ScrollEm.add(document.getElementById("bye"), {
+    css: {
+      top: {
+        start: yoffset
+      },
+      left: {
+        start: "-WINDOW_WIDTH",
+        end: 350,
+      }
+    }
+  });
+
+  yoffset += 900;
+  ScrollEm.forward(800);
+
+  ScrollEm.add(document.getElementById("seriously"), {
     css: {
       top: {
         start: yoffset
@@ -701,21 +739,6 @@
   yoffset += 1000;
   ScrollEm.forward(1000);
 
-  ScrollEm.add(document.getElementById("seriously"), {
-    css: {
-      top: {
-        start: yoffset
-      },
-      left: {
-        start: "-WINDOW_WIDTH",
-        end: 100,
-      }
-    }
-  });
-
-  yoffset += 1000;
-  ScrollEm.forward(1000);
-
   ScrollEm.add(document.getElementById("go-now"), {
     css: {
       top: {
@@ -723,12 +746,12 @@
       },
       right: {
         start: "-WINDOW_WIDTH",
-        end: 100,
+        end: 350,
       }
     }
   });
 
-  yoffset += 1000;
+  yoffset += 950;
   ScrollEm.forward(1000);
 
   ScrollEm.add(document.getElementById("im-out"), {
@@ -738,7 +761,34 @@
       },
       left: {
         start: "-WINDOW_WIDTH",
-        end: 100,
+        end: 350,
+      }
+    }
+  });
+
+  yoffset += 1000;
+  ScrollEm.forward(1000);
+
+  ScrollEm.add(document.getElementById("puppy-text"), {
+    css: {
+      top: {
+        start: yoffset
+      },
+      left: {
+        start: "-WINDOW_WIDTH",
+        end: 180,
+      }
+    }
+  });
+
+  ScrollEm.add(document.getElementById("puppy-image"), {
+    css: {
+      top: {
+        start: yoffset - 100
+      },
+      right: {
+        start: "-WINDOW_WIDTH",
+        end: 180,
       }
     }
   });

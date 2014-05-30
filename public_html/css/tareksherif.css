@@ -16,6 +16,11 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+@font-face {
+  font-family: AlexBrush;
+  src: url("../fonts/AlexBrush-Regular.woff");
+}
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -78,11 +83,13 @@ body {
 }
 
 header {
+  position: relative;
   height: 102px;
   background-color: #00A4CF;
   color: #F0F0F0;
   text-align: center;
   padding-top: 0.9em;
+  z-index: 99;
 }
 
 header h1 {
@@ -92,7 +99,17 @@ header h1 {
   margin-bottom: -0.1em;
 }
 
-.skip-ahead {
+footer {
+  width: 100%;
+  text-align: center;
+  font-family: AlexBrush;
+  font-size: 5em;
+  padding: 35px;
+  position: absolute;
+  bottom: 0;
+}
+
+.navigation {
   position: absolute;
   top: 102px;
   left: 0;
@@ -101,16 +118,16 @@ header h1 {
   width: 100%;
   padding: 8px;
   text-align: center;
-  z-index: 9;
+  z-index: 99;
 }
 
-.skip-ahead a {
+.navigation a {
   color: #F0F0F0;
   font-weight: bold;
   display: inline-block;
   text-decoration: none;
   padding: 0.1em;
-  margin: 0.1em 0;
+  margin: 0.1em;
 }
 
 #content {
@@ -162,7 +179,7 @@ section a {
 
 .down-arrow {
   width: 40px;
-  margin: 20px auto;
+  margin: 10px auto;
 }
 
 #intro {
@@ -201,21 +218,36 @@ section a {
   height: 61px;
 }
 
+#puppy-image img {
+  width: 200px;
+}
+
 #graffiti-button {
-  position: fixed;
-  right: 10px;
-  bottom: 10px;
-  font-size: 12px;
-  z-index: 10;
+  display: block;
+  position: absolute;
+  right: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0.2em 0.4em;
+}
+
+#graffiti-button:hover {
+  background-color: #20C4EF;
+}
+
+#graffiti-button:active {
+  color: #00A4CF;
+  background-color: #F0F0F0;
 }
 
 
 #graffiti-canvas {
-  position: fixed;
+  display: none;
+  position: absolute;
   top: 0;
   left: 0;
   cursor: crosshair;
-  z-index: 5;
+  z-index: 9;
 }
 
 .scroller.experiment {

@@ -20,90 +20,71 @@
 // Spray paint code taken from 
 // Foundation HTML5 Animation with JavaScript
 // by Billy Lamberta and Keith Peters
-var graffiti = (function() {
-  var canvas = null;
-  var showing = false;
-  
-  function show() {
-    if (showing) return;
-    showing = true;
-    
-    canvas = document.createElement("canvas");
-    canvas.id = "graffiti-canvas";
-    canvas.width = document.body.clientWidth;
-    canvas.height = document.body.clientHeight;
-    var context = canvas.getContext("2d");
-    var mouse = utils.captureMouse(canvas);
-    var touch = utils.captureTouch(canvas);
-    var cursor;
-    var brush_size;
-    var brush_density = 500;
-    var brush_color;
-    var new_spray = false;
-    
-    canvas.addEventListener("touchstart", function(e) {
-      e.preventDefault();
-      new_spray = true;
-      spray(e);
-      canvas.addEventListener("touchmove", spray, false);
-    }, false);
-    
-    canvas.addEventListener("touchend", function(e) {
-      e.preventDefault();
-      canvas.removeEventListener("touchmove", spray, false);
-    }, false);
-    
-    canvas.addEventListener("mousedown", function(e) {
-      new_spray = true;
-      spray(e);
-      canvas.addEventListener("mousemove", spray, false);
-    }, false);
-    
-    canvas.addEventListener("mouseup", function() {
-      canvas.removeEventListener("mousemove", spray, false);
-    }, false);
-    
-    document.body.appendChild(canvas);
-    
-    function spray(e) {
-      var i, angle, radius, xpos, ypos, offset;
-      var cursor = touch.touching ? touch : mouse;
-      
-      e.preventDefault();
-      
-      if (new_spray) {
-        brush_color = utils.randomColor();
-        brush_size = Math.random() * 90 + 10;
-        new_spray = false;
-      }
-      
-      for (i = 0; i < brush_density; i++) {
-        angle = Math.random() * Math.PI * 2;
-        radius = Math.random() * brush_size;
-        xpos = Math.floor(cursor.x + Math.cos(angle) * radius);
-        ypos = Math.floor(cursor.y + Math.sin(angle) * radius);
-        
-        context.fillStyle = brush_color;
-        context.fillRect(xpos, ypos, 1, 1);
-      }
-    }
-  }
-  
-  function hide() {
-    if (!showing) return;
-  
-    document.body.removeChild(canvas);
-    canvas = null;
-    showing = false;
-  }
-  
-  function isShowing() {
-    return showing;
-  }
 
-  return {
-    show: show,
-    hide: hide,
-    isShowing: isShowing
+(function() {
+  window.graffiti = {
+    get: function(id) {
+      var canvas = document.getElementById(id);
+      canvas.width = document.body.offsetWidth;
+      canvas.height = document.body.offsetHeight;
+
+      var context = canvas.getContext("2d");
+      var mouse = utils.captureMouse(canvas);
+      var touch = utils.captureTouch(canvas);
+      var cursor;
+      var brush_size;
+      var brush_density = 500;
+      var brush_color;
+      var new_spray = false;
+      
+      canvas.addEventListener("touchstart", function(e) {
+        e.preventDefault();
+        new_spray = true;
+        spray(e);
+        canvas.addEventListener("touchmove", spray, false);
+      }, false);
+      
+      canvas.addEventListener("touchend", function(e) {
+        e.preventDefault();
+        canvas.removeEventListener("touchmove", spray, false);
+      }, false);
+      
+      canvas.addEventListener("mousedown", function(e) {
+        new_spray = true;
+        spray(e);
+        canvas.addEventListener("mousemove", spray, false);
+      }, false);
+      
+      canvas.addEventListener("mouseup", function() {
+        canvas.removeEventListener("mousemove", spray, false);
+      }, false);
+        
+      function spray(e) {
+        var i, angle, radius, xpos, ypos, offset;
+        var cursor = touch.touching ? touch : mouse;
+        e.preventDefault();
+        
+        if (new_spray) {
+          brush_color = utils.randomColor();
+          brush_size = Math.random() * 90 + 10;
+          new_spray = false;
+        }
+      
+        for (i = 0; i < brush_density; i++) {
+          angle = Math.random() * Math.PI * 2;
+          radius = Math.random() * brush_size;
+          xpos = Math.floor(cursor.x + Math.cos(angle) * radius);
+          ypos = Math.floor(cursor.y + Math.sin(angle) * radius);
+          
+          context.fillStyle = brush_color;
+          context.fillRect(xpos, ypos, 1, 1);
+        }
+      }
+
+      return canvas;
+    }
+
   };
 })();
+
+

@@ -31,12 +31,12 @@
   <meta name="twitter:image" content="http://tareksherif.ca/img/tarek.jpg">
 </head>
 <body>
+  <canvas id="graffiti-canvas"></canvas>
   <header>
     <h1 id="title" class="header-cell">Tarek Sherif</h1>
-    <div id="graffiti-button" class="button">Graffiti Mode</div>
   </header> 
-  <nav class="skip-ahead">
-    Skip to: 
+  <nav class="navigation">
+    <a id="graffiti-button">Graffiti Mode</a>
     <a href="#projects">Projects</a>
     <a href="#games">Games</a>
     <a href="#experiments">Experiments</a>
@@ -54,7 +54,7 @@
       Hello and welcome!
     </section>
     <section id="follow" class="scroller scroll-header">
-      Right this way please <div class="down-arrow">&#8595;</div>
+      This way please <div class="down-arrow">&#8595;</div>
     </section>
     <section id="graffiti-note1" class="scroller">
       Note the <strong>Graffiti Mode</strong> button
@@ -247,9 +247,18 @@
       You can go now.
     </section>
     <section id="im-out" class="scroller ending">
-      Ok, stay if you want, but I'm outta here.
+      Stay if you want. I'm outta here.
+    </section>
+    <section id="puppy-text" class="scroller ending">
+      Ok, fine. Here's a puppy.
+    </section>
+    <section id="puppy-image" class="scroller ending">
+      <img src="img/puppy.png">
     </section>
   </div>
+  <footer>
+    Fin
+  </footer>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
   <script src="experiments/js/utils.js"></script>
   <script src="experiments/js/graffiti.js"></script>
