@@ -64,12 +64,9 @@
     el.text(el.text().replace(/(.)/g, '$1\n'));
   });
 
-  setTimeout(function() {
-    $("#follow").addClass("enter");
-  }, 500);
 
-
-  yoffset += 480;
+  yoffset += 680;
+  ScrollEm.forward(200);
 
   ScrollEm.setContainer(document.getElementById("content"));
   ScrollEm.setPageHeight(11500);

@@ -33,10 +33,9 @@
 
   resetDimensions();
 
-  HTML.style["overflow-x"] = "hidden";
-  BODY.style["overflow"] = "hidden";
-  BODY.style["position"] = "relative";
-  BODY.style["height"] = "100%";
+  BODY.style.overflowX = "hidden";
+  BODY.style.position = "relative";
+  BODY.style.height = "100%";
 
   window.ScrollEm = {
     add: function(element, options) {
@@ -81,7 +80,7 @@
     },
 
     setPageHeight: function(height, units) {
-      HTML.style["height"] = height + (units || "px");
+      HTML.style.height = height + (units || "px");
     },
 
     setDefaultScrollRange: function(range) {
