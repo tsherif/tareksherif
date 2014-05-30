@@ -93,7 +93,7 @@
       },
       right: {
         start: "-WINDOW_WIDTH",
-        end: 158
+        end: 159
       }
     }
   });

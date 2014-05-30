@@ -87,6 +87,10 @@ body {
   font-size: 18px;
 }
 
+strong {
+  font-weight: bold;
+}
+
 header {
   position: relative;
   height: 102px;
