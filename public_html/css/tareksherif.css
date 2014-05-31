@@ -159,12 +159,12 @@ section a {
 .scroller {
   position: absolute;
   width: 600px;
+  top: -1000px;
 }
 
 .scroller.scroll-header {
   padding-top: 30px;
   width: auto;
-  max-width: 650px;
   font-size: 2em;
   font-weight: bold;
 }

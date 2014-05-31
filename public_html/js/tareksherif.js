@@ -79,7 +79,7 @@
       },
       right: {
         start: "WINDOW_WIDTH",
-        end: 400
+        end: 398
       }
     }
   });
@@ -93,7 +93,7 @@
       },
       left: {
         start: "WINDOW_WIDTH",
-        end: 400
+        end: 398
       }
     }
   });
@@ -124,7 +124,7 @@
       },
       right: {
         start: "-WINDOW_WIDTH",
-        end: 100
+        end: 108
       }
     }
   });
@@ -238,7 +238,7 @@
       },
       right: {
         start: "-WINDOW_WIDTH",
-        end: 30
+        end: 106
       }
     }
   });
