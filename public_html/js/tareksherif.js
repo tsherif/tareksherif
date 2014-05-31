@@ -71,7 +71,8 @@
 
     function escapeKeyHide(e) {
       if (e.keyCode === 27) {
-        hideGraffiti();
+        graffiti_canvas.hide();
+        button.text("Graffiti Mode");
       }
     }
     

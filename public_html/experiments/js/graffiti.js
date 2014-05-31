@@ -37,6 +37,11 @@
       var brush_color;
       var new_spray = false;
       
+      window.addEventListener("resize", function() {
+        canvas.width = document.body.offsetWidth;
+        canvas.height = document.body.offsetHeight;
+      });
+
       canvas.addEventListener("touchstart", function(e) {
         e.preventDefault();
         new_spray = true;
