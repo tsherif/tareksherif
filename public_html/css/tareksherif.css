@@ -125,13 +125,14 @@ footer {
   color: #F0F0F0;
   background-color: #00A4CF;
   width: 100%;
-  padding: 8px;
+  padding: 6px;
   text-align: center;
   z-index: 99;
 }
 
 .navigation a {
   color: #F0F0F0;
+  font-size: 0.95em;
   font-weight: bold;
   display: inline-block;
   text-decoration: none;
@@ -230,7 +231,7 @@ section a {
 #graffiti-button {
   display: block;
   position: absolute;
-  bottom: 6px;
+  bottom: 4px;
   right: 8px;
   font-weight: bold;
   cursor: pointer;
@@ -417,7 +418,7 @@ section a {
     top: 0;
     left: 0;
     width: 100%;
-    padding: 8px;
+    padding: 2px;
     text-align: center;
     z-index: 99;
   }

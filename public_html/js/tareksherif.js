@@ -24,7 +24,7 @@
   var graffiti_canvas;
 
   function navUpdate() {
-    if (document.documentElement.clientWidth < 550) {
+    if (window.innerWidth < 550) {
       if (window.pageYOffset > 46) {
         navigation.css({
           position: "fixed",
@@ -36,7 +36,7 @@
           top: "46px"
         });
       }
-    } else if (document.documentElement.clientWidth < 800) {
+    } else if (window.innerWidth < 800) {
       if (window.pageYOffset > 64) {
         navigation.css({
           position: "fixed",
@@ -267,7 +267,7 @@
       },
       right: {
         start: "-WINDOW_WIDTH",
-        end: 106
+        end: 116
       }
     }
   });

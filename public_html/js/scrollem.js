@@ -26,8 +26,8 @@
   var scroll_range = 200;
   var recording_position = 0;
   var container = null;
-  var min_width = HTML.clientWidth;
-  var css_page_height = document.documentElement.clientHeight + "px";
+  var min_width = window.innerWidth;
+  var css_page_height = window.innerHeight + "px";
   var default_css_page_height = document.documentElement.style.height;
 
   var WINDOW_WIDTH, WINDOW_HEIGHT;
@@ -55,7 +55,7 @@
         var units = scroll_element.css[property].units = scroll_element.css[property].units === undefined ? "px" : scroll_element.css[property].units;
         scroll_element.css[property].default = element.style[property];
 
-        if (HTML.clientWidth >= min_width) {
+        if (window.innerWidth >= min_width) {
           element.style[property] = parseValue(start) + units;
         }
       });
@@ -131,7 +131,7 @@
       proportion = Math.max(0, Math.min(proportion, 1));
 
       Object.keys(scroll_element.css).forEach(function(property) {
-        if (HTML.clientWidth < min_width) {
+        if (window.innerWidth < min_width) {
           scroll_element.element.style[property] = scroll_element.css[property].default;
           return;
         }
@@ -148,8 +148,8 @@
   }
 
   function resetDimensions() {
-    WINDOW_WIDTH = CONTAINER_WIDTH = HTML.clientWidth;
-    WINDOW_HEIGHT = HTML.clientHeight;
+    WINDOW_WIDTH = CONTAINER_WIDTH = window.innerWidth;
+    WINDOW_HEIGHT = window.innerHeight;
     MARGIN_LEFT = MARGIN_RIGHT = 0;
 
     if (container) {
@@ -158,7 +158,7 @@
       MARGIN_RIGHT = WINDOW_WIDTH - (MARGIN_LEFT + CONTAINER_WIDTH);
     }
 
-    if (HTML.clientWidth < min_width) {
+    if (window.innerWidth < min_width) {
       HTML.style.height = default_css_page_height;
       HTML.style.overflowX = default_css_page_overflow_x;
       BODY.style.overflowX = default_css_body_overflow_x;
