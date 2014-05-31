@@ -77,9 +77,9 @@
       top: {
         start: yoffset
       },
-      left: {
-        start: "-WINDOW_WIDTH",
-        end: 158
+      right: {
+        start: "WINDOW_WIDTH",
+        end: 400
       }
     }
   });
@@ -91,9 +91,9 @@
       top: {
         start: yoffset
       },
-      right: {
-        start: "-WINDOW_WIDTH",
-        end: 159
+      left: {
+        start: "WINDOW_WIDTH",
+        end: 400
       }
     }
   });
@@ -238,7 +238,7 @@
       },
       right: {
         start: "-WINDOW_WIDTH",
-        end: 100
+        end: 30
       }
     }
   });

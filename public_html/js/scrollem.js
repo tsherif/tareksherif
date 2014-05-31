@@ -33,6 +33,7 @@
 
   resetDimensions();
 
+  HTML.style.overflowX = "hidden";
   BODY.style.overflowX = "hidden";
   BODY.style.position = "relative";
   BODY.style.height = "100%";
