@@ -81,6 +81,7 @@ html {
 }
 
 body {
+  min-width: 280px;
   margin: 0;
   background-color: #F0F0F0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -102,7 +103,6 @@ header {
 }
 
 header h1 {
-  /*font-weight: bold;*/
   font-size: 5em;
   font-family: ArchivoBlack;
   margin-bottom: -0.1em;
@@ -184,6 +184,7 @@ section a {
 
 #graffiti-note1, #graffiti-note2 {
   width: 250px;
+  padding-bottom: 2px;
 }
 
 .down-arrow {
@@ -229,7 +230,8 @@ section a {
 #graffiti-button {
   display: block;
   position: absolute;
-  right: 20px;
+  bottom: 6px;
+  right: 8px;
   font-weight: bold;
   cursor: pointer;
   padding: 0.2em 0.4em;
@@ -267,7 +269,6 @@ section a {
 }
 
 .experiment img {
-  display: block;
   width: 140px;
   height: 140px;
 }
@@ -391,3 +392,142 @@ section a {
   top: 14px;
   left: 13px;
 }
+
+@media screen and (max-width: 799px) {
+  header {
+    height: 64px;
+    padding-top: 3px;
+  }
+
+  header h1 {
+    font-size: 3em;
+  }
+
+  #intro, #follow {
+    position: static;
+  }
+
+  #content {
+    top: 44px;
+    width: auto;
+  }
+
+  .navigation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 8px;
+    text-align: center;
+    z-index: 99;
+  }
+
+  .navigation a {
+    display: none;
+    text-align: center;
+  }
+
+  #graffiti-button {
+    position: static;
+    display: block;
+  }
+
+  .scroller {
+    display: block;
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    clear: both;
+    margin: 20px;
+    overflow: hidden;
+  }
+
+  .scroller.experiment {
+    display: inline-block;
+    margin: 5px;
+  }
+
+  .header-background {
+    display: none;
+  }
+
+  #projects-intro {
+    margin-top: 30px;
+  }
+
+  #graffiti-note1, #graffiti-note2 {
+    display: block;
+    width: auto;
+    text-align: center;
+    margin: 0;
+  }
+
+  #graffiti-note1 {
+    margin-top: 41px;
+  }
+
+  .scroller.scroll-header {
+    font-size: 1.5em;
+    text-align: center;
+    margin-left: 0;
+  }
+
+  .scroller.scroll-header.banner {
+    margin: 60px 0 40px 0;
+    background-color: #00A4CF;
+    padding: 15px;
+  }
+
+  .scroller.column {
+    width: auto;
+  }
+
+  #thats-all, #thanks, #contact, #bye {
+    margin-top: 250px;
+  }
+
+  .gallery {
+    text-align: center;
+  }
+
+  .ending {
+    text-align: center;
+    margin-top: 1200px;
+  }
+
+  #puppy-image {
+    margin-top: 20px;
+    margin-bottom: 1200px;
+  }
+
+  footer {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+@media screen and (max-width: 549px) {
+  body {
+    font-size: 12px;
+  }
+
+  header {
+    height: 46px;
+    padding-top: 8px;
+  }
+
+  #content {
+    top: 15px;
+  }
+
+  .scroller.scroll-header.banner {
+    margin-bottom: 20px;
+  }
+}
+

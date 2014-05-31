@@ -23,19 +23,47 @@
   var navigation = $(".navigation");
   var graffiti_canvas;
 
-  $(document).scroll(function() {
-    if (window.pageYOffset > 102) {
-      navigation.css({
-        position: "fixed",
-        top: "0px"
-      });
+  function navUpdate() {
+    if (document.documentElement.clientWidth < 550) {
+      if (window.pageYOffset > 46) {
+        navigation.css({
+          position: "fixed",
+          top: "0px"
+        });
+      } else {
+        navigation.css({
+          position: "absolute",
+          top: "46px"
+        });
+      }
+    } else if (document.documentElement.clientWidth < 800) {
+      if (window.pageYOffset > 64) {
+        navigation.css({
+          position: "fixed",
+          top: "0px"
+        });
+      } else {
+        navigation.css({
+          position: "absolute",
+          top: "64px"
+        });
+      }
     } else {
-      navigation.css({
-        position: "absolute",
-        top: "102px"
-      });
-    }
-  });
+      if (window.pageYOffset > 102) {
+        navigation.css({
+          position: "fixed",
+          top: "0px"
+        });
+      } else {
+        navigation.css({
+          position: "absolute",
+          top: "102px"
+        });
+      }
+    } 
+  }
+
+  $(window).scroll(navUpdate).resize(navUpdate).ready(navUpdate);
 
   $("#graffiti-button").click(function() {
     var button = $(this);
@@ -64,13 +92,13 @@
     el.text(el.text().replace(/(.)/g, '$1\n'));
   });
 
-
-  yoffset += 680;
-  ScrollEm.forward(200);
-
   ScrollEm.setContainer(document.getElementById("content"));
   ScrollEm.setPageHeight(11500);
   ScrollEm.setDefaultScrollRange(175);
+  ScrollEm.setMinWidth(800);
+
+  yoffset += 680;
+  ScrollEm.forward(200);
 
   ScrollEm.add(document.getElementById("graffiti-note1"), {
     css: {
@@ -467,7 +495,7 @@
       },
       right: {
         start: "WINDOW_WIDTH",
-        end: (document.body.clientWidth - 800) / 2 + 85,
+        end: "MARGIN_RIGHT + 85",
       }
     }
   });
