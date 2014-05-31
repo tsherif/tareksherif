@@ -96,7 +96,7 @@
   ScrollEm.setContainer(document.getElementById("content"));
   ScrollEm.setPageHeight(11500);
   ScrollEm.setDefaultScrollRange(175);
-  ScrollEm.setMinWidth(800);
+  ScrollEm.setMinPageWidth(800);
 
   yoffset += 680;
   ScrollEm.forward(200);
