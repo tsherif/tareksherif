@@ -115,7 +115,7 @@ header h1 {
   font-size: 5em;
   padding: 35px;
   position: absolute;
-  bottom: -500px;
+  bottom: -100%;
 }
 
 #navigation {
@@ -210,6 +210,7 @@ section a {
   position: absolute;
   background-color: #00A4CF;
   width: 100%;
+  top: -100%;
 }
 
 #github img {
