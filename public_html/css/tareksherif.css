@@ -183,8 +183,6 @@ section a {
   height: 80px;
 }
 
-
-
 #graffiti-note1, #graffiti-note2 {
   width: 250px;
   padding-bottom: 2px;
@@ -233,7 +231,7 @@ section a {
 #graffiti-button {
   display: block;
   position: absolute;
-  bottom: 4px;
+  bottom: 2px;
   right: 8px;
   font-weight: bold;
   cursor: pointer;
@@ -382,20 +380,28 @@ section a {
 
 @media screen and (max-width: 799px) {
   header {
-    height: 64px;
+    height: 76px;
     padding-top: 3px;
   }
 
   header h1 {
-    font-size: 3em;
+    font-size: 4em;
   }
 
   #intro, #follow {
     position: static;
   }
 
+  #intro {
+    margin-top: 48px;
+  }
+
+  #follow {
+    margin-top: 64px;
+  }
+
   #content {
-    top: 44px;
+    top: 90px;
     width: auto;
   }
 
@@ -404,7 +410,6 @@ section a {
     top: 0;
     left: 0;
     width: 100%;
-    font-size: 0.75em;
     padding: 2px;
     text-align: center;
     z-index: 99;
@@ -412,12 +417,22 @@ section a {
 
   .navigation a {
     text-align: center;
+    font-size: 1.2em;
+  }
+
+  .nav-section {
+    display: block;
   }
 
   #graffiti-button {
     margin-top: 0.1em;
+    font-size: 1.4em;
     position: static;
     display: block;
+  }
+
+  #about-me {
+    margin-top: 72px;
   }
 
   .scroller {
@@ -443,10 +458,6 @@ section a {
     display: none;
   }
 
-  #projects-intro {
-    margin-top: 30px;
-  }
-
   #graffiti-note1, #graffiti-note2 {
     display: block;
     width: auto;
@@ -455,7 +466,7 @@ section a {
   }
 
   #graffiti-note1 {
-    margin-top: 41px;
+    margin-top: 64px;
   }
 
   .scroller.scroll-header {
@@ -511,8 +522,12 @@ section a {
     padding-top: 8px;
   }
 
+  header h1 {
+    font-size: 3em;
+  }
+
   #content {
-    top: 15px;
+    top: 46px;
   }
 
   .scroller.scroll-header.banner {
