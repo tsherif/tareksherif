@@ -183,6 +183,8 @@ section a {
   height: 80px;
 }
 
+
+
 #graffiti-note1, #graffiti-note2 {
   width: 250px;
   padding-bottom: 2px;
@@ -212,7 +214,7 @@ section a {
   width: 100%;
 }
 
-#github {
+#github img {
   background-color: #666666;
 }
 
@@ -340,22 +342,6 @@ section a {
   left: 40px;
 }
 
-.robot-arm-title {
-  font-size: 12px;
-  white-space: pre;
-  line-height: 1em;
-  right: 18px;
-}
-
-#robot-arm-title-1 {
-  top: 33px;
-}
-
-#robot-arm-title-2 {
-  top: 100px;
-  letter-spacing: 2px;
-}
-
 #spiral-title {
   letter-spacing: 4px;
   top: 55px;
@@ -418,17 +404,18 @@ section a {
     top: 0;
     left: 0;
     width: 100%;
+    font-size: 0.75em;
     padding: 2px;
     text-align: center;
     z-index: 99;
   }
 
   .navigation a {
-    display: none;
     text-align: center;
   }
 
   #graffiti-button {
+    margin-top: 0.1em;
     position: static;
     display: block;
   }
@@ -444,6 +431,7 @@ section a {
     clear: both;
     margin: 20px;
     overflow: hidden;
+    padding-bottom: 0.1em;
   }
 
   .scroller.experiment {
@@ -486,7 +474,7 @@ section a {
     width: auto;
   }
 
-  #thats-all, #thanks, #contact, #bye {
+  #thats-all, #thanks, #in-touch, #bye {
     margin-top: 250px;
   }
 

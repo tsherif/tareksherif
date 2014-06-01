@@ -144,7 +144,10 @@
 
   yoffset += 180;
   ScrollEm.forward(250);
-  ScrollEm.addAnchor("projects", yoffset + 62);
+  ScrollEm.addBookmark("projects", yoffset - 16, {
+    before: document.getElementById("projects-intro"),
+    offset: -40
+  });
 
   ScrollEm.add(document.getElementById("projects-intro"), {
     css: {
@@ -201,7 +204,10 @@
 
   yoffset += 310;
   ScrollEm.forward(500);
-  ScrollEm.addAnchor("games", yoffset + 62);
+  ScrollEm.addBookmark("games", yoffset - 21, {
+    before: document.getElementById("games-intro"),
+    offset: -10
+  });
 
   ScrollEm.add(document.getElementById("games-intro"), {
     css: {
@@ -258,7 +264,10 @@
 
   yoffset += 310;
   ScrollEm.forward(500);
-  ScrollEm.addAnchor("experiments", yoffset + 62);
+  ScrollEm.addBookmark("experiments", yoffset - 16, {
+    before: document.getElementById("experiments-intro"),
+    offset: -10
+  });
 
   ScrollEm.add(document.getElementById("experiments-intro"), {
     css: {
@@ -418,7 +427,10 @@
 
   yoffset += 310;
   ScrollEm.forward(500);
-  ScrollEm.addAnchor("libraries", yoffset + 62);
+  ScrollEm.addBookmark("libraries", yoffset - 21, {
+    before: document.getElementById("libraries-intro"),
+    offset: 10
+  });
 
   ScrollEm.add(document.getElementById("libraries-intro"), {
     css: {
@@ -475,7 +487,10 @@
 
   yoffset += 410;
   ScrollEm.forward(350);
-  ScrollEm.addAnchor("mistakes", yoffset + 62);
+  ScrollEm.addBookmark("mistakes", yoffset - 16, {
+    before: document.getElementById("mistakes-intro"),
+    offset: -10
+  });
 
   ScrollEm.add(document.getElementById("mistakes-intro"), {
     css: {
@@ -647,9 +662,12 @@
 
   yoffset += 300;
   ScrollEm.forward(300);
-  ScrollEm.addAnchor("contact-info", yoffset + 72);
+  ScrollEm.addBookmark("contact", yoffset - 16, {
+    before: document.getElementById("in-touch"),
+    offset: 190
+  });
 
-  ScrollEm.add(document.getElementById("contact"), {
+  ScrollEm.add(document.getElementById("in-touch"), {
     css: {
       top: {
         start: yoffset
