@@ -460,7 +460,7 @@
   yoffset += 130;
 
 
-  ScrollEm.add(document.getElementById("ofactory"), {
+  ScrollEm.add(document.getElementById("scroll-em"), {
     css: {
       top: {
         start: yoffset
@@ -472,21 +472,36 @@
     }
   });
 
+  yoffset += 150;
 
-  ScrollEm.add(document.getElementById("tgame"), {
+  ScrollEm.add(document.getElementById("ofactory"), {
     css: {
       top: {
         start: yoffset
       },
-      right: {
-        start: "-WINDOW_WIDTH",
+      left: {
+        start: "WINDOW_WIDTH",
         end: 50
       }
     }
   });
 
+  yoffset += 150;
+
+  ScrollEm.add(document.getElementById("tgame"), {
+    css: {
+      top: {
+        start: yoffset + " + WINDOW_HEIGHT",
+        end: yoffset
+      },
+      left: {
+        start: 50
+      }
+    }
+  });
+
   yoffset += 410;
-  ScrollEm.forward(350);
+  ScrollEm.forward(650);
   ScrollEm.addBookmark("mistakes", yoffset - 16, {
     before: document.getElementById("mistakes-intro"),
     offset: -86
