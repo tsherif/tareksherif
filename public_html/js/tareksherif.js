@@ -515,7 +515,7 @@ $(function () {
       },
       right: {
         start: "-WINDOW_WIDTH",
-        end: 100
+        end: 110
       }
     }
   });
