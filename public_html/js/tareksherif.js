@@ -21,7 +21,7 @@ $(function () {
 
   var yoffset = 0;
   var navigation = $("#navigation");
-  var graffiti_canvas = $(graffiti.get("graffiti-canvas"));
+  var graffiti_canvas;
 
   $("#footer").css("bottom", 0);
 
@@ -69,6 +69,7 @@ $(function () {
 
   $("#graffiti-button").click(function() {
     var button = $(this);
+    graffiti_canvas = graffiti_canvas || $(graffiti.get("graffiti-canvas"));
 
     function escapeKeyHide(e) {
       if (e.keyCode === 27) {
