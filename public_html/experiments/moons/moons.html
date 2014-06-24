@@ -66,7 +66,7 @@
         vColor = aColor;
       }
     </script>
-    <script id="shadow-fragment-shader" type=x-fragment-shader>
+    <script id="shadow-fragment-shader" type="x-fragment-shader">
       precision mediump float;
       varying vec4 vColor;
       void main() {
@@ -202,45 +202,23 @@
         canvas.width = document.body.clientWidth;
         canvas.height = document.body.clientHeight;
         
-        var gl = gl_utils.getGL(canvas);
+        var gl = glUtils.getGL(canvas);
+        gl.program = glUtils.getProgram(gl, "vertex-shader", "fragment-shader");
 
         gl.clearColor(0, 0, 0, 1.0);
         gl.enable(gl.DEPTH_TEST);
         gl.depthFunc(gl.LEQUAL);
 
-        var main_vars = gl_utils.getGLVars(gl, gl.program, {
+        var main_vars = glUtils.getGLVars(gl, gl.program, {
           attributes: ["aPosition", "aNormal"],
           uniforms: ["uColor1", "uColor2", "uMVP", "uModelMatrix", "uNormalMatrix", "uLightPosition", "uLightColor", "uAmbientLight", "uShininess", "uEyePosition", "uMVPFromLight", "uShadowMap", "uTime", "uPosFrequency", "uPolarFrequency"]
         });
 
         // Set up shadow map.
 
-        var vshader = gl.createShader(gl.VERTEX_SHADER);
-        gl.shaderSource(vshader, document.getElementById("shadow-vertex-shader").text);
-        gl.compileShader(vshader);
-        if (!gl.getShaderParameter(vshader, gl.COMPILE_STATUS)) {
-          console.error(gl.getShaderInfoLog(vshader));
-        }
+        gl.shadow_program = glUtils.getProgram(gl, "shadow-vertex-shader", "shadow-fragment-shader");
 
-        var fshader = gl.createShader(gl.FRAGMENT_SHADER);
-        gl.shaderSource(fshader, document.getElementById("shadow-fragment-shader").text);
-        gl.compileShader(fshader);
-        if (!gl.getShaderParameter(fshader, gl.COMPILE_STATUS)) {
-          console.error(gl.getShaderInfoLog(fshader));
-        }
-
-        var program = gl.createProgram();
-        gl.attachShader(program, vshader);
-        gl.attachShader(program, fshader);
-        gl.linkProgram(program);
-
-        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-          console.error(gl.getProgramInfoLog(program));
-        }
-
-        gl.shadow_program = program;
-
-        var shadow_vars = gl_utils.getGLVars(gl, gl.shadow_program, {
+        var shadow_vars = glUtils.getGLVars(gl, gl.shadow_program, {
          attributes: ["aPosition", "aColor"],
          uniforms: ["uMVP"]
         });
@@ -294,16 +272,16 @@
 
         current_radius = Math.random() * 0.4 + 0.4;
 
-        var sphere = gl_utils.createSphere({
+        var sphere = glUtils.createSphere({
           long_bands: 32,
           lat_bands: 32,
           radius: 1
         });
 
-        gl_utils.setBuffer(gl, main_vars.aPosition, sphere.vertices, 3);
-        gl_utils.setBuffer(gl, main_vars.aNormal, sphere.normals, 3);
-        gl_utils.setBuffer(gl, shadow_vars.aPosition, sphere.vertices, 3);
-        gl_utils.setBuffer(gl, shadow_vars.aNormal, sphere.normals, 3);
+        glUtils.setBuffer(gl, main_vars.aPosition, sphere.vertices, 3);
+        glUtils.setBuffer(gl, main_vars.aNormal, sphere.normals, 3);
+        glUtils.setBuffer(gl, shadow_vars.aPosition, sphere.vertices, 3);
+        glUtils.setBuffer(gl, shadow_vars.aNormal, sphere.normals, 3);
 
         var planet = {
           color1: colors[Math.floor(Math.random() * colors.length)],

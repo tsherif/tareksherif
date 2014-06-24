@@ -136,8 +136,9 @@
         canvas.width = document.body.clientWidth;
         canvas.height = document.body.clientHeight;
 
-        var gl = gl_utils.getGL(canvas);
-        var gl_vars = gl_utils.getGLVars(gl, gl.program, {
+        var gl = glUtils.getGL(canvas);
+        gl.program = glUtils.getProgram(gl, "vertex-shader", "fragment-shader");
+        var gl_vars = glUtils.getGLVars(gl, gl.program, {
           attributes: ["aPosition"],
           uniforms: ["uResolution", "uTime", "uColor1", "uColor2", "uXFrequency", "uYFrequency", "uRFrequency", "uAFrequency"]
         });
@@ -147,7 +148,7 @@
 
         var timer = window.performance || window.Date;
 
-        gl_utils.setBuffer(gl, gl_vars.aPosition, new Float32Array([
+        glUtils.setBuffer(gl, gl_vars.aPosition, new Float32Array([
           -1,  1,
           -1, -1,
            1, -1,

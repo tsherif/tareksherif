@@ -16,20 +16,24 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //////////////////////////////////////////////////////////////////////////////
 
-var gl_utils = {
+var glUtils = {
   getGL: function getGL(canvas) {
     var gl = canvas.getContext("experimental-webgl");
     gl.viewport(0, 0, canvas.width, canvas.height);
 
+    return gl;
+  },
+
+  getProgram: function(gl, vshader_id, fshader_id) {
     var vshader = gl.createShader(gl.VERTEX_SHADER);
-    gl.shaderSource(vshader, document.getElementById("vertex-shader").text);
+    gl.shaderSource(vshader, document.getElementById(vshader_id).text);
     gl.compileShader(vshader);
     if (!gl.getShaderParameter(vshader, gl.COMPILE_STATUS)) {
       console.error(gl.getShaderInfoLog(vshader));
     }
 
     var fshader = gl.createShader(gl.FRAGMENT_SHADER);
-    gl.shaderSource(fshader, document.getElementById("fragment-shader").text);
+    gl.shaderSource(fshader, document.getElementById(fshader_id).text);
     gl.compileShader(fshader);
     if (!gl.getShaderParameter(fshader, gl.COMPILE_STATUS)) {
       console.error(gl.getShaderInfoLog(fshader));
@@ -45,9 +49,8 @@ var gl_utils = {
     }
 
     gl.useProgram(program);
-    gl.program = program;
 
-    return gl;
+    return program;
   },
 
   createBox: function createBox(params) {
