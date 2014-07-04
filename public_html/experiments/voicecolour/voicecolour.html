@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<!--
+  tareksherif.ca: codebase for www.tareksherif.ca
+  Copyright (C) 2013  Tarek Sherif
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>The Colour of Your Voice</title>
+    <link rel="icon" type="image/png" href="/img/tarek-icon.png">
+    <meta name="description" content="An HTML5 Canvas Experiment by Tarek Sherif">
+    <meta property="og:image" content="http://tareksherif.ca/img/voicecolour.png">
+    <meta property="og:image:secure_url" content="https://tareksherif.ca/img/voicecolour.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:creator" content="@thsherif">
+    <meta name="twitter:title" content="The Colour of Your Voice">
+    <meta name="twitter:description" content="An HTML5 Canvas Experiment by Tarek Sherif">
+    <meta name="twitter:image" content="http://tareksherif.ca/img/voicecolour.png">
+    <style>
+      html {
+        height: 100%;
+      }
+      
+      body {
+        height: 100%;
+        margin: 0;
+      }
+      
+      #canvas {
+        background-color: #FFFFFF;
+        width: 100%;
+        height: 100%;
+      }
+      
+      .warning {
+        color: red;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="compatibility-warning" class="warning" style="display:none">
+      Your browser does not seem to support functionality required for this experiment.<BR>
+      <a href="http://www.mozilla.org/en-US/firefox/new/">Mozilla Firefox</a> or
+      <a href="https://www.google.com/intl/en/chrome/browser/">Google Chrome</a> are recommended for best viewing.
+    </div>
+    <canvas id="canvas"></canvas>
+    <script src="../js/shims.js"></script>
+    <script>
+      (function() {
+        "use strict";
+
+        if (!document.createElement("canvas") || !navigator.getUserMedia) {
+          (function() {
+             var warning = document.getElementById("compatibility-warning");
+             warning.style.display = "block";
+          })();
+          return;
+        }
+        
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext("2d");
+        var audio_context = new AudioContext();
+        var analyser = audio_context.createAnalyser();
+        var bin_count = analyser.frequencyBinCount;
+        var nodes = [];
+        var audio_source;
+        var frequency_data, i;
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+                
+        for (i = 0; i < bin_count; i++) {
+          nodes.push({
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            vx: Math.random() * 4 - 2,
+            vy: Math.random() * 4 - 2,
+            r: (bin_count - i) / bin_count * 30 + 10,
+            color: "hsl(" + Math.max(0, 255 - 4 * Math.floor(i / bin_count * 255)) + ", 100%, 50%)",
+            value: 0
+          })
+        }
+
+        window.onresize = function() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        };
+   
+        function update() {
+          frequency_data = new Uint8Array(analyser.frequencyBinCount);
+          analyser.getByteFrequencyData(frequency_data);
+
+          requestAnimationFrame(draw);
+        }
+
+        function draw() {
+          var centerx = canvas.width / 2;
+          var centery = canvas.height / 2;
+          var a, r, x, y, base_r, num_particles;
+
+          nodes.forEach(function(node, i) {
+            node.x += node.vx;
+            node.y += node.vy;
+            node.value = frequency_data[i];
+
+            if (node.value === 0 || node.x < 0 || node.y < 0 || node.x > canvas.width || node.y > canvas.height) {
+              resetNode(node);
+            }
+
+            if (node.value > 0) {
+              num_particles = Math.ceil(node.value / 2);
+              base_r = node.value / 5;
+              while (num_particles--) {
+                r = Math.random() * base_r;
+                a = Math.random() * 2 * Math.PI;
+                x = r * Math.cos(a) - 0.5;
+                y = r * Math.sin(a) - 0.5;
+
+                context.fillStyle = node.color;
+                context.fillRect(node.x + x, node.y + y, 1, 1);
+              }
+            }
+          });
+        }
+
+        navigator.getUserMedia({audio: true }, function(stream) {
+          audio_source = audio_context.createMediaStreamSource(stream);
+          audio_source.connect(analyser);
+          
+          setInterval(update, 1000 / 60);
+        }, function(err) {
+          console.log("ERROR: ", err);
+        });
+
+        function resetNode(node) {
+          node.x = canvas.width / 2;
+          node.y = canvas.height / 2;
+          node.vx = Math.random() * 4 - 2;
+          node.vy = Math.random() * 4 - 2;
+        }
+        
+      })();
+    </script>
+  </body>
+</html>

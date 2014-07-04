@@ -298,7 +298,7 @@ $(function () {
   yoffset += 170;
   ScrollEm.forward(150);
 
-  ScrollEm.add(document.getElementById("liquidglass"), {
+  ScrollEm.add(document.getElementById("moons"), {
     css: {
       top: {
         start: yoffset + " + WINDOW_HEIGHT",
@@ -312,7 +312,7 @@ $(function () {
   });
 
 
-  ScrollEm.add(document.getElementById("flowers"), {
+  ScrollEm.add(document.getElementById("liquidglass"), {
     css: {
       top: {
         start: yoffset + " + WINDOW_HEIGHT",
@@ -327,7 +327,7 @@ $(function () {
 
   ScrollEm.forward(50);
 
-  ScrollEm.add(document.getElementById("moons"), {
+  ScrollEm.add(document.getElementById("voicecolour"), {
     css: {
       top: {
         start: yoffset + " + WINDOW_HEIGHT",
@@ -341,7 +341,7 @@ $(function () {
   });
 
 
-  ScrollEm.add(document.getElementById("remains"), {
+  ScrollEm.add(document.getElementById("flowers"), {
     css: {
       top: {
         start: yoffset + " + WINDOW_HEIGHT",
@@ -357,7 +357,7 @@ $(function () {
   yoffset += 150;
   ScrollEm.forward(50);
 
-  ScrollEm.add(document.getElementById("storm"), {
+  ScrollEm.add(document.getElementById("spiral"), {
     css: {
       top: {
         start: yoffset,
@@ -371,7 +371,7 @@ $(function () {
   });
 
 
-  ScrollEm.add(document.getElementById("evolve"), {
+  ScrollEm.add(document.getElementById("storm"), {
     css: {
       top: {
         start: yoffset,
@@ -386,7 +386,7 @@ $(function () {
   
   ScrollEm.forward(50);
 
-  ScrollEm.add(document.getElementById("spiral"), {
+  ScrollEm.add(document.getElementById("remains"), {
     css: {
       top: {
         start: yoffset - 750,
@@ -400,7 +400,7 @@ $(function () {
   });
 
 
-  ScrollEm.add(document.getElementById("snowflakes"), {
+  ScrollEm.add(document.getElementById("evolve"), {
     css: {
       top: {
         start: yoffset - 750,
@@ -415,14 +415,26 @@ $(function () {
 
   yoffset += 150;
 
-  ScrollEm.add(document.getElementById("gravity"), {
+  ScrollEm.add(document.getElementById("snowflakes"), {
     css: {
       top: {
         start: yoffset + " + WINDOW_HEIGHT",
         end: yoffset
       },
       left: {
-        start: 325
+        start: 255
+      }
+    }
+  });
+
+  ScrollEm.add(document.getElementById("gravity"), {
+    css: {
+      top: {
+        start: yoffset + " + WINDOW_HEIGHT",
+        end: yoffset
+      },
+      right: {
+        start: 255
       }
     }
   });
@@ -493,11 +505,25 @@ $(function () {
   ScrollEm.add(document.getElementById("tgame"), {
     css: {
       top: {
-        start: yoffset + " + WINDOW_HEIGHT",
-        end: yoffset
+        start: yoffset
       },
       left: {
-        start: 50
+        start: "-WINDOW_WIDTH",
+        end: 50
+      }
+    }
+  });
+
+  yoffset += 150;
+
+  ScrollEm.add(document.getElementById("gl-utils"), {
+    css: {
+      top: {
+        start: yoffset
+      },
+      left: {
+        start: "WINDOW_WIDTH",
+        end: 50
       }
     }
   });

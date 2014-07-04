@@ -379,6 +379,21 @@ section a {
   left: 13px;
 }
 
+.voicecolour-title {
+  color: #000000;
+  letter-spacing: 1px;
+}
+
+#voicecolour-title-1 {
+  top: 5px;
+  left: 19px;
+}
+
+#voicecolour-title-2 {
+  bottom: 11px;
+  left: 31px; 
+}
+
 @media screen and (max-width: 799px) {
   header {
     height: 76px;
