@@ -98,6 +98,8 @@
         window.onresize = function() {
           canvas.width = window.innerWidth;
           canvas.height = window.innerHeight;
+
+          nodes.forEach(resetNode);
         };
    
         function update() {
@@ -113,16 +115,20 @@
           var a, r, x, y, base_r, num_particles;
 
           nodes.forEach(function(node, i) {
-            node.x += node.vx;
-            node.y += node.vy;
             node.value = frequency_data[i];
 
-            if (node.value === 0 || node.x < 0 || node.y < 0 || node.x > canvas.width || node.y > canvas.height) {
+            if (!node.reset && 
+                (node.value < 100 || 
+                 node.x < 0 || node.y < 0 || 
+                 node.x > canvas.width || node.y > canvas.height)) {
               resetNode(node);
             }
 
-            if (node.value > 0) {
-              num_particles = Math.ceil(node.value / 2);
+            if (node.value >= 100) {
+              node.x += node.vx;
+              node.y += node.vy;
+              node.reset = false;
+              num_particles = Math.ceil(node.value / 4);
               base_r = node.value / 5;
               while (num_particles--) {
                 r = Math.random() * base_r;
@@ -151,6 +157,7 @@
           node.y = canvas.height / 2;
           node.vx = Math.random() * 4 - 2;
           node.vy = Math.random() * 4 - 2;
+          node.reset = true;
         }
         
       })();
