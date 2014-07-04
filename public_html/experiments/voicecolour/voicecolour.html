@@ -118,13 +118,13 @@
             node.value = frequency_data[i];
 
             if (!node.reset && 
-                (node.value < 100 || 
+                (node.value < 75 || 
                  node.x < 0 || node.y < 0 || 
                  node.x > canvas.width || node.y > canvas.height)) {
               resetNode(node);
             }
 
-            if (node.value >= 100) {
+            if (node.value >= 75) {
               node.x += node.vx;
               node.y += node.vy;
               node.reset = false;
