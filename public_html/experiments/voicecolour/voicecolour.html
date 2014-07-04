@@ -63,7 +63,7 @@
       (function() {
         "use strict";
 
-        if (!document.createElement("canvas") || !navigator.getUserMedia) {
+        if (!document.createElement("canvas") || !window.AudioContext || !navigator.getUserMedia) {
           (function() {
              var warning = document.getElementById("compatibility-warning");
              warning.style.display = "block";
