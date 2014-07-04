@@ -76,9 +76,10 @@
         var audio_context = new AudioContext();
         var analyser = audio_context.createAnalyser();
         var bin_count = analyser.frequencyBinCount;
+        var frequency_data = new Uint8Array(analyser.frequencyBinCount);
         var nodes = [];
         var audio_source;
-        var frequency_data, i;
+        var i;
 
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -103,7 +104,6 @@
         };
    
         function update() {
-          frequency_data = new Uint8Array(analyser.frequencyBinCount);
           analyser.getByteFrequencyData(frequency_data);
 
           requestAnimationFrame(draw);
