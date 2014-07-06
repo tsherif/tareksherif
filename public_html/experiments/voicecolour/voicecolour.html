@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
   tareksherif.ca: codebase for www.tareksherif.ca
-  Copyright (C) 2013  Tarek Sherif
+  Copyright (C) 2014  Tarek Sherif
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
@@ -21,22 +21,24 @@
     <meta charset="utf-8">
     <title>The Colour of Your Voice</title>
     <link rel="icon" type="image/png" href="/img/tarek-icon.png">
-    <meta name="description" content="An HTML5 Canvas Experiment by Tarek Sherif">
+    <meta name="description" content="An HTML5 Canvas and Web Audio Experiment by Tarek Sherif">
     <meta property="og:image" content="http://tareksherif.ca/img/voicecolour.png">
     <meta property="og:image:secure_url" content="https://tareksherif.ca/img/voicecolour.png">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:creator" content="@thsherif">
     <meta name="twitter:title" content="The Colour of Your Voice">
-    <meta name="twitter:description" content="An HTML5 Canvas Experiment by Tarek Sherif">
+    <meta name="twitter:description" content="An HTML5 Canvas and Web Audio Experiment by Tarek Sherif">
     <meta name="twitter:image" content="http://tareksherif.ca/img/voicecolour.png">
     <style>
       html {
+        font-size: 
         height: 100%;
       }
       
       body {
         height: 100%;
         margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
       }
       
       #canvas {
@@ -49,6 +51,69 @@
         color: red;
         font-weight: bold;
       }
+
+      #input-select {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 1em;
+        font-weight: bold;
+        font-size: 24px;
+      }
+
+      .input-option {
+        margin: 0.2em 0 0.2em 1em;
+        padding: 0.5em 1em;
+        background-color: #00A4CF;
+        color: #F0F0F0;
+        cursor: pointer;
+        font-size: 18px;
+      }
+
+      .input-option:first-child {
+        margin-top: 0.8em;
+      }
+
+      .input-option.unavailable {
+        background-color: gray;
+        cursor: default;
+      }
+
+      .unavailable-text {
+        font-size: 12px;
+        display: none;
+      }
+
+      .unavailable-text a {
+        color: #F0F0F0;
+      }
+
+      .unavailable .unavailable-text {
+        display: inline;
+      }
+
+      #input-option:hover {
+        background-color: #20C4EF;
+      }
+
+      #input-option:active {
+        color: #00A4CF;
+        background-color: #F0F0F0;
+      }
+
+      #now-playing {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0.5em 1em;
+        background-color: #00A4CF;
+        color: #F0F0F0;
+        font-weight: bold;
+      }
+
+      #now-playing a {
+        color: #F0F0F0;
+      }
     </style>
   </head>
   <body>
@@ -57,18 +122,59 @@
       <a href="http://www.mozilla.org/en-US/firefox/new/">Mozilla Firefox</a> or
       <a href="https://www.google.com/intl/en/chrome/browser/">Google Chrome</a> are recommended for best viewing.
     </div>
+    <div id="input-select">
+      Please select an input source:
+        <div id="mic-select" data-value="mic" class="input-option">
+          Microphone
+          <span class="unavailable-text">
+            (Unavailable on this device or browser. Try <a href="http://www.mozilla.org/en-US/firefox/new/">Mozilla Firefox</a> or <a href="https://www.google.com/intl/en/chrome/browser/">Google Chrome</a>)
+          </span> 
+        </div>
+        <div data-value="nay" class="input-option">Nay by Nadir Bellahmer and Michael Frishkopf</div>
+        <div data-value="round1" class="input-option">Round 1 by Nadir Bellahmer</div>
+        <div data-value="duet" class="input-option">Duet for Abdelrazik by Stefan Christoff and Norman Nawrocki</div>
+    </div>
+    <div id="now-playing" style="display:none">
+      Now playing:
+      <span id="playing-nay" style="display:none">
+        <a href="http://youtu.be/yszPe83eRbE" target="_blank">Nay by Nadir Bellahmer and Michael Frishkopf</a> 
+      </span>
+      <span id="playing-round1" style="display:none">
+        <a href="http://nadirbellahmer.bandcamp.com/" target="_blank">Round 1 by Nadir Bellahmer, from the album live@listen</a> 
+      </span>
+      <span id="playing-duet" style="display:none">
+        <a href="http://howlarts.net/releases" target="_blank">Stefan Christoff and Norman Nawrocki, from the album Duets for Abdelrazik</a> 
+      </span>
+    </div>
+    <audio id="nay">
+      <source src="../audio/nay.ogg" type="audio/ogg; codecs=vorbis"></source>
+      <source src="../audio/nay.mp3" type="audio/mpeg"></source>
+    </audio>
+    <audio id="round1">
+      <source src="../audio/round1.ogg" type="audio/ogg; codecs=vorbis"></source>
+      <source src="../audio/round1.mp3" type="audio/mpeg"></source>
+    </audio>
+    <audio id="duet">
+      <source src="../audio/duet.ogg" type="audio/ogg; codecs=vorbis"></source>
+      <source src="../audio/duet.mp3" type="audio/mpeg"></source>
+    </audio>
     <canvas id="canvas"></canvas>
     <script src="../js/shims.js"></script>
     <script>
       (function() {
         "use strict";
 
-        if (!document.createElement("canvas") || !window.AudioContext || !navigator.getUserMedia) {
+        if (!document.createElement("canvas") || !window.AudioContext) {
           (function() {
              var warning = document.getElementById("compatibility-warning");
              warning.style.display = "block";
+             document.getElementById("input-select").style.display = "none";
           })();
           return;
+        }
+
+        if (!navigator.getUserMedia) {
+          document.getElementById("mic-select").classList.add("unavailable");
         }
         
         var canvas = document.getElementById("canvas");
@@ -78,8 +184,10 @@
         var bin_count = analyser.frequencyBinCount;
         var frequency_data = new Uint8Array(analyser.frequencyBinCount);
         var nodes = [];
-        var audio_source;
-        var i;
+        var input_select = document.getElementById("input-select");
+        var now_playing = document.getElementById("now-playing");
+        var threshold = 60;
+        var audio_source, i;
 
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -95,6 +203,45 @@
             value: 0
           })
         }
+
+        input_select.addEventListener("click", function(event) {
+          var target = event.target;
+          if (!target.classList.contains("input-option") || target.classList.contains("unavailable")) {
+            return;
+          }
+          var value = target.dataset.value;
+          var audio, gain;
+
+          input_select.style.display = "none";
+
+          if (value === "mic") {
+            navigator.getUserMedia({audio: true }, function(stream) {
+              audio_source = audio_context.createMediaStreamSource(stream);
+              audio_source.connect(analyser);
+              
+              setInterval(update, 1000 / 60);
+            }, function(err) {
+              console.log("ERROR: ", err);
+            });
+          } else {
+            audio = document.getElementById(value);
+            audio_source = audio_context.createMediaElementSource(audio);
+            gain = audio_context.createGain();
+            gain.gain.value = 0.1;
+
+            audio_source.connect(gain);
+            gain.connect(analyser);
+            audio_source.connect(audio_context.destination);
+            
+            audio.play();
+            setInterval(update, 1000 / 60);
+
+            input_select.style.display = "none";
+            now_playing.style.display = "block";
+            document.getElementById("playing-" + value).style.display = "inline";
+          }
+
+        });
 
         window.onresize = function() {
           canvas.width = window.innerWidth;
@@ -113,44 +260,38 @@
           var centerx = canvas.width / 2;
           var centery = canvas.height / 2;
           var a, r, x, y, base_r, num_particles;
+          var node, i;
 
           nodes.forEach(function(node, i) {
             node.value = frequency_data[i];
 
             if (!node.reset && 
-                (node.value < 60 || 
+                (node.value < threshold || 
                  node.x < 0 || node.y < 0 || 
                  node.x > canvas.width || node.y > canvas.height)) {
               resetNode(node);
             }
 
-            if (node.value >= 60) {
+            if (node.value >= threshold) {
               node.x += node.vx;
               node.y += node.vy;
               node.reset = false;
               num_particles = Math.ceil(node.value / 4);
               base_r = node.value / 5;
+              context.beginPath();
+              context.fillStyle = node.color;
               while (num_particles--) {
                 r = Math.random() * base_r;
                 a = Math.random() * 2 * Math.PI;
                 x = r * Math.cos(a) - 0.5;
                 y = r * Math.sin(a) - 0.5;
 
-                context.fillStyle = node.color;
-                context.fillRect(node.x + x, node.y + y, 1, 1);
+                context.rect(node.x + x, node.y + y, 1, 1);
               }
+              context.fill();
             }
           });
         }
-
-        navigator.getUserMedia({audio: true }, function(stream) {
-          audio_source = audio_context.createMediaStreamSource(stream);
-          audio_source.connect(analyser);
-          
-          setInterval(update, 1000 / 60);
-        }, function(err) {
-          console.log("ERROR: ", err);
-        });
 
         function resetNode(node) {
           node.x = canvas.width / 2;
