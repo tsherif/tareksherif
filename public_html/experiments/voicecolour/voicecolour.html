@@ -75,6 +75,24 @@
         margin-top: 0.8em;
       }
 
+      .input-option.unavailable {
+        background-color: gray;
+        cursor: default;
+      }
+
+      .unavailable-text {
+        font-size: 12px;
+        display: none;
+      }
+
+      .unavailable-text a {
+        color: #F0F0F0;
+      }
+
+      .unavailable .unavailable-text {
+        display: inline;
+      }
+
       #input-option:hover {
         background-color: #20C4EF;
       }
@@ -97,6 +115,22 @@
       #now-playing a {
         color: #F0F0F0;
       }
+
+      #loading-icon {
+        position: absolute;
+        top: 22px;
+        left: 30px;
+        display: none;
+      }
+
+      @media screen and (max-width: 699px) {
+        #loading-icon {
+          top: auto;
+          left: auto;
+          bottom: 22px;
+          right: 30px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -105,9 +139,16 @@
       <a href="http://www.mozilla.org/en-US/firefox/new/">Mozilla Firefox</a> or
       <a href="https://www.google.com/intl/en/chrome/browser/">Google Chrome</a> are recommended for best viewing.
     </div>
+    <!-- Loading icon created at http://www.ajaxload.info/ -->
+    <img id="loading-icon" src="../img/load.gif">
     <div id="input-select">
       Please select an input source:
-        <div data-value="mic" class="input-option">Microphone</div>
+        <div id="mic-select" data-value="mic" class="input-option">
+          Microphone
+          <span class="unavailable-text">
+            (Unavailable on this device or browser. Try <a href="http://www.mozilla.org/en-US/firefox/new/" target="_blank">Mozilla Firefox</a> or <a href="https://www.google.com/intl/en/chrome/browser/" target="_blank">Google Chrome</a>)
+          </span> 
+        </div>
         <div data-value="nay" class="input-option">Nay by Nadir Bellahmer and Michael Frishkopf</div>
         <div data-value="round1" class="input-option">Round 1 by Nadir Bellahmer</div>
         <div data-value="duet" class="input-option">Duet for Abdelrazik by Stefan Christoff and Norman Nawrocki</div>
@@ -124,31 +165,23 @@
         <a href="http://howlarts.net/releases" target="_blank">Stefan Christoff and Norman Nawrocki, from the album Duets for Abdelrazik</a> 
       </span>
     </div>
-    <audio id="nay">
-      <source src="../audio/nay.ogg" type="audio/ogg; codecs=vorbis"></source>
-      <source src="../audio/nay.mp3" type="audio/mpeg"></source>
-    </audio>
-    <audio id="round1">
-      <source src="../audio/round1.ogg" type="audio/ogg; codecs=vorbis"></source>
-      <source src="../audio/round1.mp3" type="audio/mpeg"></source>
-    </audio>
-    <audio id="duet">
-      <source src="../audio/duet.ogg" type="audio/ogg; codecs=vorbis"></source>
-      <source src="../audio/duet.mp3" type="audio/mpeg"></source>
-    </audio>
     <canvas id="canvas"></canvas>
     <script src="../js/shims.js"></script>
     <script>
       (function() {
         "use strict";
 
-        if (!document.createElement("canvas") || !window.AudioContext || !navigator.getUserMedia) {
+        if (!document.createElement("canvas") || !window.AudioContext) {
           (function() {
              var warning = document.getElementById("compatibility-warning");
              warning.style.display = "block";
              document.getElementById("input-select").style.display = "none";
           })();
           return;
+        }
+
+        if (!navigator.getUserMedia) {
+          document.getElementById("mic-select").classList.add("unavailable");
         }
         
         var canvas = document.getElementById("canvas");
@@ -160,8 +193,29 @@
         var nodes = [];
         var input_select = document.getElementById("input-select");
         var now_playing = document.getElementById("now-playing");
+        var loading = document.getElementById("loading-icon");
         var threshold = 60;
+
+        var audio_extension = (function() {
+          var audio = document.createElement("audio");
+          var can_play = audio.canPlayType("audio/ogg codecs='vorbis'");
+          
+          if (audio.canPlayType("audio/ogg codecs='vorbis'")) {
+            return ".ogg";
+          }
+
+          can_play = audio.canPlayType("audio/mpeg");
+          if (can_play === "probably" || can_play === "maybe") {
+            return ".mp3";
+          }
+        })();
+
+        var audio_urls = {};
         var audio_source, i;
+
+        ["nay", "round1", "duet"].forEach(function(title) {
+          audio_urls[title] = "../audio/" + title + audio_extension;
+        });
 
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -184,7 +238,6 @@
             return;
           }
           var value = target.dataset.value;
-          var audio, gain;
 
           input_select.style.display = "none";
 
@@ -198,19 +251,31 @@
               console.log("ERROR: ", err);
             });
           } else {
-            audio = document.getElementById(value);
-            audio.addEventListener("playing", function() {
-              audio_source = audio_context.createMediaElementSource(audio);
-              gain = audio_context.createGain();
-              gain.gain.value = 0.1;
+            loading.style.display = "block";
+            audio_source = audio_context.createBufferSource();
 
-              audio_source.connect(gain);
-              gain.connect(analyser);
-              audio_source.connect(audio_context.destination);
-              
-              setInterval(update, 1000 / 60);
-            });
-            audio.play();        
+            var request = new XMLHttpRequest();
+            request.open('GET', audio_urls[value]);
+            request.responseType = 'arraybuffer';
+
+            request.onload = function() {
+              audio_context.decodeAudioData(request.response, function(buffer) {
+                loading.style.display = "none";
+                audio_source.buffer = buffer;
+                audio_source.start(0);
+                var gain = audio_context.createGain();
+                gain.gain.value = 0.1;
+
+                audio_source.connect(gain);
+                gain.connect(analyser);
+                audio_source.connect(audio_context.destination);
+                
+                setInterval(update, 1000 / 60);
+              }, function(error) {
+                console.log("ERROR: ", err);
+              });
+            }
+            request.send();        
 
             input_select.style.display = "none";
             now_playing.style.display = "block";
@@ -261,9 +326,8 @@
                 x = r * Math.cos(a) - 0.5;
                 y = r * Math.sin(a) - 0.5;
 
-                context.rect(node.x + x, node.y + y, 1, 1);
+                context.fillRect(node.x + x, node.y + y, 1, 1);
               }
-              context.fill();
             }
           });
         }
