@@ -19,6 +19,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>The Colour of Your Voice</title>
     <link rel="icon" type="image/png" href="/img/tarek-icon.png">
     <meta name="description" content="An HTML5 Canvas and Web Audio Experiment by Tarek Sherif">
@@ -74,24 +75,6 @@
         margin-top: 0.8em;
       }
 
-      .input-option.unavailable {
-        background-color: gray;
-        cursor: default;
-      }
-
-      .unavailable-text {
-        font-size: 12px;
-        display: none;
-      }
-
-      .unavailable-text a {
-        color: #F0F0F0;
-      }
-
-      .unavailable .unavailable-text {
-        display: inline;
-      }
-
       #input-option:hover {
         background-color: #20C4EF;
       }
@@ -124,12 +107,7 @@
     </div>
     <div id="input-select">
       Please select an input source:
-        <div id="mic-select" data-value="mic" class="input-option">
-          Microphone
-          <span class="unavailable-text">
-            (Unavailable on this device or browser. Try <a href="http://www.mozilla.org/en-US/firefox/new/">Mozilla Firefox</a> or <a href="https://www.google.com/intl/en/chrome/browser/">Google Chrome</a>)
-          </span> 
-        </div>
+        <div idata-value="mic" class="input-option">Microphone</div>
         <div data-value="nay" class="input-option">Nay by Nadir Bellahmer and Michael Frishkopf</div>
         <div data-value="round1" class="input-option">Round 1 by Nadir Bellahmer</div>
         <div data-value="duet" class="input-option">Duet for Abdelrazik by Stefan Christoff and Norman Nawrocki</div>
@@ -164,17 +142,13 @@
       (function() {
         "use strict";
 
-        if (!document.createElement("canvas") || !window.AudioContext) {
+        if (!document.createElement("canvas") || !window.AudioContext || !navigator.getUserMedia) {
           (function() {
              var warning = document.getElementById("compatibility-warning");
              warning.style.display = "block";
              document.getElementById("input-select").style.display = "none";
           })();
           return;
-        }
-
-        if (!navigator.getUserMedia) {
-          document.getElementById("mic-select").classList.add("unavailable");
         }
         
         var canvas = document.getElementById("canvas");
@@ -225,16 +199,18 @@
             });
           } else {
             audio = document.getElementById(value);
-            audio_source = audio_context.createMediaElementSource(audio);
-            gain = audio_context.createGain();
-            gain.gain.value = 0.1;
+            audio.addEventListener("playing", function() {
+              audio_source = audio_context.createMediaElementSource(audio);
+              gain = audio_context.createGain();
+              gain.gain.value = 0.1;
 
-            audio_source.connect(gain);
-            gain.connect(analyser);
-            audio_source.connect(audio_context.destination);
-            
-            audio.play();
-            setInterval(update, 1000 / 60);
+              audio_source.connect(gain);
+              gain.connect(analyser);
+              audio_source.connect(audio_context.destination);
+              
+              setInterval(update, 1000 / 60);
+            });
+            audio.play();        
 
             input_select.style.display = "none";
             now_playing.style.display = "block";
@@ -252,7 +228,6 @@
    
         function update() {
           analyser.getByteFrequencyData(frequency_data);
-
           requestAnimationFrame(draw);
         }
 
