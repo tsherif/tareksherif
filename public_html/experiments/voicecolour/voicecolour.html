@@ -227,7 +227,7 @@
             vx: Math.random() * 4 - 2,
             vy: Math.random() * 4 - 2,
             r: (bin_count - i) / bin_count * 30 + 10,
-            color: "hsl(" + Math.max(0, 255 - 4 * Math.floor(i / bin_count * 255)) + ", 100%, 50%)",
+            color: "hsl(" + (255 - Math.floor(255 * Math.min(i, 144) / 144)) + ", 100%, 50%)",
             value: 0
           })
         }
