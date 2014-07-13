@@ -23,27 +23,22 @@ $(function () {
   var navigation = $("#navigation");
   var graffiti_canvas;
   var WINDOW_WIDTH = window.innerWidth;
-  var SCROLL_POSITION = window.pageYOffset;
   var NAV_POSITION = navigation.css("position");
   var NAV_TOP = navigation.css("top");
 
   $("#footer").css("bottom", 0);
 
-  $(window).scroll(function() {
-    SCROLL_POSITION = window.pageYOffset;
-  });
-
   $(window).resize(function() {
     WINDOW_WIDTH = window.innerWidth;
-    SCROLL_POSITION = window.pageYOffset;
   });
 
   (function navUpdate() {
+    var scroll_position = window.pageYOffset;
     var nav_position;
     var nav_top;
 
     if (WINDOW_WIDTH < 550) {
-      if (SCROLL_POSITION > 46) {
+      if (scroll_position > 46) {
         nav_position = "fixed";
         nav_top = "0px";
       } else {
@@ -51,7 +46,7 @@ $(function () {
         nav_top = "46px";
       }
     } else if (WINDOW_WIDTH < 800) {
-      if (SCROLL_POSITION > 76) {
+      if (scroll_position > 76) {
         nav_position = "fixed";
         nav_top = "0px";
       } else {
@@ -59,7 +54,7 @@ $(function () {
         nav_top = "76px";
       }
     } else {
-      if (SCROLL_POSITION > 102) {
+      if (scroll_position > 102) {
         nav_position = "fixed";
         nav_top = "0px";
       } else {
