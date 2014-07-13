@@ -75,13 +75,14 @@
           new_spray = false;
         }
       
+        context.fillStyle = brush_color;
+
         for (i = 0; i < brush_density; i++) {
           angle = Math.random() * Math.PI * 2;
           radius = Math.random() * brush_size;
           xpos = Math.floor(cursor.x + Math.cos(angle) * radius);
           ypos = Math.floor(cursor.y + Math.sin(angle) * radius);
           
-          context.fillStyle = brush_color;
           context.fillRect(xpos, ypos, 1, 1);
         }
       }
