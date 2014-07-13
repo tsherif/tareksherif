@@ -22,50 +22,63 @@ $(function () {
   var yoffset = 0;
   var navigation = $("#navigation");
   var graffiti_canvas;
+  var WINDOW_WIDTH = window.innerWidth;
+  var SCROLL_POSITION = window.pageYOffset;
+  var NAV_POSITION = navigation.css("position");
+  var NAV_TOP = navigation.css("top");
 
   $("#footer").css("bottom", 0);
 
-  function navUpdate() {
-    if (window.innerWidth < 550) {
-      if (window.pageYOffset > 46) {
-        navigation.css({
-          position: "fixed",
-          top: "0px"
-        });
+  $(window).scroll(function() {
+    SCROLL_POSITION = window.pageYOffset;
+  });
+
+  $(window).resize(function() {
+    WINDOW_WIDTH = window.innerWidth;
+    SCROLL_POSITION = window.pageYOffset;
+  });
+
+  (function navUpdate() {
+    var nav_position;
+    var nav_top;
+
+    if (WINDOW_WIDTH < 550) {
+      if (SCROLL_POSITION > 46) {
+        nav_position = "fixed";
+        nav_top = "0px";
       } else {
-        navigation.css({
-          position: "absolute",
-          top: "46px"
-        });
+        nav_position = "absolute";
+        nav_top = "46px";
       }
-    } else if (window.innerWidth < 800) {
-      if (window.pageYOffset > 76) {
-        navigation.css({
-          position: "fixed",
-          top: "0px"
-        });
+    } else if (WINDOW_WIDTH < 800) {
+      if (SCROLL_POSITION > 76) {
+        nav_position = "fixed";
+        nav_top = "0px";
       } else {
-        navigation.css({
-          position: "absolute",
-          top: "76px"
-        });
+        nav_position = "absolute";
+        nav_top = "76px";
       }
     } else {
-      if (window.pageYOffset > 102) {
-        navigation.css({
-          position: "fixed",
-          top: "0px"
-        });
+      if (SCROLL_POSITION > 102) {
+        nav_position = "fixed";
+        nav_top = "0px";
       } else {
-        navigation.css({
-          position: "absolute",
-          top: "102px"
-        });
+        nav_position = "absolute";
+        nav_top = "102px";
       }
-    } 
-  }
+    }
 
-  $(window).scroll(navUpdate).resize(navUpdate).ready(navUpdate);
+    if (NAV_POSITION !== nav_position || NAV_TOP !== nav_top) {
+      NAV_POSITION = nav_position;
+      NAV_TOP = nav_top;
+      navigation.css({
+        position: NAV_POSITION,
+        top: NAV_TOP
+      });
+    }
+
+    window.requestAnimationFrame(navUpdate);
+  })();
 
   $("#graffiti-button").click(function() {
     var button = $(this);
@@ -104,44 +117,62 @@ $(function () {
   ScrollEm.forward(200);
 
   ScrollEm.add(document.getElementById("graffiti-note1"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      right: {
+      {
+        property: "right",
         start: "WINDOW_WIDTH",
-        end: 400
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH - 400"
       }
-    }
+    ]
   });
 
   ScrollEm.forward(100);
 
   ScrollEm.add(document.getElementById("graffiti-note2"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      left: {
-        start: "WINDOW_WIDTH",
-        end: 399
+      {
+        property: "left",
+        start: "WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH + 399"
       }
-    }
+    ]
   });
 
   yoffset += 180;
   ScrollEm.forward(150);
 
   ScrollEm.add(document.getElementById("about-me"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      left: {
-        start: "-WINDOW_WIDTH",
-        end: 100
+      {
+        property: "left",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH + 100"
       }
-    }
+    ]
   });
 
   yoffset += 180;
@@ -152,56 +183,80 @@ $(function () {
   });
 
   ScrollEm.add(document.getElementById("projects-intro"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      right: {
-        start: "-WINDOW_WIDTH",
-        end: 108
+      {
+        property: "right",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH - 108"
       }
-    }
+    ]
   });
 
   ScrollEm.add(document.getElementById("projects-background"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset + 127
       },
-      right: {
-        start: "WINDOW_WIDTH",
-        end: "MARGIN_RIGHT + 85",
+      {
+        property: "right",
+        start: "WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH - (MARGIN_RIGHT + 85)"
       }
-    }
+    ]
   });
 
   yoffset += 170;
   ScrollEm.forward(100);
 
   ScrollEm.add(document.getElementById("brainbrowser"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      left: {
-        start: "WINDOW_WIDTH",
-        end: 50
+      {
+        property: "left",
+        start: "WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH + 50"
       }
-    }
+    ]
   });
 
   yoffset += 160;
 
   ScrollEm.add(document.getElementById("cbrain"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      left: {
-        start: "-WINDOW_WIDTH",
-        end: 50
+      {
+        property: "left",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH + 50"
       }
-    }
+    ]
   });
 
   yoffset += 310;
@@ -212,56 +267,80 @@ $(function () {
   });
 
   ScrollEm.add(document.getElementById("games-intro"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      left: {
-        start: "-WINDOW_WIDTH",
-        end: 100
+      {
+        property: "left",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH + 100"
       }
-    }
+    ]
   });
 
   ScrollEm.add(document.getElementById("games-background"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset + 122
       },
-      left: {
-        start: "WINDOW_WIDTH",
-        end: "MARGIN_LEFT + 85",
+      {
+        property: "left",
+        start: "WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH + MARGIN_LEFT + 85"
       }
-    }
+    ]
   });
 
   yoffset += 170;
   ScrollEm.forward(100);
 
   ScrollEm.add(document.getElementById("climb"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      left: {
-        start: "-WINDOW_WIDTH",
-        end: 25
+      {
+        property: "left",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH + 25"
       }
-    }
+    ]
   });
 
   yoffset += 160;
 
   ScrollEm.add(document.getElementById("redsquare"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      left: {
-        start: "WINDOW_WIDTH",
-        end: 25
+      {
+        property: "left",
+        start: "WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH + 25"
       }
-    }
+    ]
   });
 
   yoffset += 310;
@@ -272,171 +351,266 @@ $(function () {
   });
 
   ScrollEm.add(document.getElementById("experiments-intro"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset + 4
       },
-      right: {
-        start: "-WINDOW_WIDTH",
-        end: 116
+      {
+        property: "right",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH - 116"
       }
-    }
+    ]
   });
 
   ScrollEm.add(document.getElementById("experiments-background"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset + 127
       },
-      right: {
-        start: "WINDOW_WIDTH",
-        end: "MARGIN_RIGHT + 85",
+      {
+        property: "right",
+        start: "WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH - MARGIN_RIGHT - 85"
       }
-    }
+    ]
   });
 
   yoffset += 170;
   ScrollEm.forward(150);
 
   ScrollEm.add(document.getElementById("moons"), {
-    css: {
-      top: {
-        start: yoffset + " + WINDOW_HEIGHT",
-        end: yoffset
+    css: [
+      {
+        property: "top",
+        start: yoffset + " + WINDOW_HEIGHT"
       },
-      left: {
+      {
+        property: "left",
+        start: 0
+      },
+      {
+        property: "translateX",
         start: 0,
         end: 255
+      },
+      {
+        property: "translateY",
+        start: 0,
+        end: "-WINDOW_HEIGHT"
       }
-    }
+    ]
   });
 
 
   ScrollEm.add(document.getElementById("liquidglass"), {
-    css: {
-      top: {
-        start: yoffset + " + WINDOW_HEIGHT",
-        end: yoffset
+    css: [
+      {
+        property: "top",
+        start: yoffset + " + WINDOW_HEIGHT"
       },
-      right: {
+      {
+        property: "right",
+        start: 0
+      },
+      {
+        property: "translateX",
         start: 0,
-        end: 255
+        end: -255
+      },
+      {
+        property: "translateY",
+        start: 0,
+        end: "-WINDOW_HEIGHT"
       }
-    }
+    ]
   });
 
   ScrollEm.forward(50);
 
   ScrollEm.add(document.getElementById("voicecolour"), {
-    css: {
-      top: {
-        start: yoffset + " + WINDOW_HEIGHT",
-        end: yoffset
+    css: [
+      {
+        property: "top",
+        start: yoffset + " + WINDOW_HEIGHT"
       },
-      left: {
-        start: -200,
-        end: 105
+      {
+        property: "left",
+        start: -200
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: 305
+      },
+      {
+        property: "translateY",
+        start: 0,
+        end: "-WINDOW_HEIGHT"
       }
-    }
+
+    ]
   });
 
 
   ScrollEm.add(document.getElementById("flowers"), {
-    css: {
-      top: {
-        start: yoffset + " + WINDOW_HEIGHT",
-        end: yoffset
+    css: [
+      {
+        property: "top",
+        start: yoffset + " + WINDOW_HEIGHT"
       },
-      right: {
-        start: -200,
-        end: 105
+      {
+        property: "right",
+        start: -200
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: -305
+      },
+      {
+        property: "translateY",
+        start: 0,
+        end: "-WINDOW_HEIGHT"
       }
-    }
+    ]
   });
 
   yoffset += 150;
   ScrollEm.forward(50);
 
   ScrollEm.add(document.getElementById("spiral"), {
-    css: {
-      top: {
-        start: yoffset,
-        end: yoffset
+    css: [
+      {
+        property: "top",
+        start: yoffset
       },
-      left: {
-        start: "-WINDOW_WIDTH",
-        end: 255
+      {
+        property: "left",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH + 255"
       }
-    }
+    ]
   });
 
 
   ScrollEm.add(document.getElementById("storm"), {
-    css: {
-      top: {
-        start: yoffset,
-        end: yoffset
+    css: [
+      {
+        property: "top",
+        start: yoffset
       },
-      right: {
-        start: "-WINDOW_WIDTH",
-        end: 255
+      {
+        property: "right",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH - 255"
       }
-    }
+    ]
   });
   
   ScrollEm.forward(50);
 
   ScrollEm.add(document.getElementById("remains"), {
-    css: {
-      top: {
-        start: yoffset - 750,
-        end: yoffset
+    css: [
+      {
+        property: "top",
+        start: yoffset - 750
       },
-      left: {
-        start: "-WINDOW_WIDTH",
-        end: 105
+      {
+        property: "left",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH + 105"
+      },
+      {
+        property: "translateY",
+        start: 0,
+        end: 750
       }
-    }
+    ]
   });
 
 
   ScrollEm.add(document.getElementById("evolve"), {
-    css: {
-      top: {
-        start: yoffset - 750,
-        end: yoffset
+    css: [
+      {
+        property: "top",
+        start: yoffset - 750
       },
-      right: {
-        start: "-WINDOW_WIDTH",
-        end: 105
+      {
+        property: "right",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH - 105"
+      },
+      {
+        property: "translateY",
+        start: 0,
+        end: 750
       }
-    }
+    ]
   });
 
   yoffset += 150;
 
   ScrollEm.add(document.getElementById("snowflakes"), {
-    css: {
-      top: {
-        start: yoffset + " + WINDOW_HEIGHT",
-        end: yoffset
+    css: [
+      {
+        property: "top",
+        start: yoffset + " + WINDOW_HEIGHT"
       },
-      left: {
+      {
+        property: "left",
         start: 255
+      },
+      {
+        property: "translateY",
+        start: 0,
+        end: "-WINDOW_HEIGHT"
       }
-    }
+    ]
   });
 
   ScrollEm.add(document.getElementById("gravity"), {
-    css: {
-      top: {
-        start: yoffset + " + WINDOW_HEIGHT",
-        end: yoffset
+    css: [
+      {
+        property: "top",
+        start: yoffset + " + WINDOW_HEIGHT"
       },
-      right: {
+      {
+        property: "right",
         start: 255
+      },
+      {
+        property: "translateY",
+        start: 0,
+        end: "-WINDOW_HEIGHT"
       }
-    }
+    ]
   });
 
   yoffset += 310;
@@ -447,27 +621,39 @@ $(function () {
   });
 
   ScrollEm.add(document.getElementById("libraries-intro"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      left: {
-        start: "-WINDOW_WIDTH",
-        end: 100
+      {
+        property: "left",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH + 100"
       }
-    }
+    ]
   });
 
   ScrollEm.add(document.getElementById("libraries-background"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset + 122
       },
-      left: {
-        start: "WINDOW_WIDTH",
-        end: "MARGIN_LEFT + 85",
+      {
+        property: "left",
+        start: "WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH + MARGIN_LEFT + 85"
       }
-    }
+    ]
   });
 
   ScrollEm.forward(150);
@@ -475,232 +661,343 @@ $(function () {
 
 
   ScrollEm.add(document.getElementById("scroll-em"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      left: {
-        start: "-WINDOW_WIDTH",
-        end: 50
+      {
+        property: "left",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH + 50"
       }
-    }
+    ]
   });
 
   yoffset += 150;
 
   ScrollEm.add(document.getElementById("ofactory"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      left: {
-        start: "WINDOW_WIDTH",
-        end: 50
+      {
+        property: "left",
+        start: "WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH + 50"
       }
-    }
+    ]
   });
 
   yoffset += 150;
 
   ScrollEm.add(document.getElementById("tgame"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      left: {
-        start: "-WINDOW_WIDTH",
-        end: 50
+      {
+        property: "left",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH + 50"
       }
-    }
+    ]
   });
 
   yoffset += 150;
 
   ScrollEm.add(document.getElementById("gl-utils"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      left: {
-        start: "WINDOW_WIDTH",
-        end: 50
+      {
+        property: "left",
+        start: "WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH + 50"
       }
-    }
+    ]
   });
 
   yoffset += 410;
-  ScrollEm.forward(650);
+  ScrollEm.forward(850);
   ScrollEm.addBookmark("mistakes", yoffset - 16, {
     before: document.getElementById("mistakes-intro"),
     offset: -86
   });
 
   ScrollEm.add(document.getElementById("mistakes-intro"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset + 8
       },
-      right: {
-        start: "-WINDOW_WIDTH",
-        end: 110
+      {
+        property: "right",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH - 110"
       }
-    }
+    ]
   });
 
   ScrollEm.add(document.getElementById("mistakes-background"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset + 127
       },
-      right: {
-        start: "WINDOW_WIDTH",
-        end: "MARGIN_RIGHT + 85",
+      {
+        property: "right",
+        start: "WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH - MARGIN_RIGHT - 85"
       }
-    }
+    ]
   });
 
   yoffset += 170;
   ScrollEm.forward(150);
 
   ScrollEm.add(document.getElementById("mistake1"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      left: {
-        start: "-WINDOW_WIDTH",
-        end: 255
+      {
+        property: "left",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH + 255"
       }
-    }
+    ]
   });
 
 
   ScrollEm.add(document.getElementById("mistake2"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      right: {
-        start: "-WINDOW_WIDTH",
-        end: 255
+      {
+        property: "right",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH - 255"
       }
-    }
+    ]
   });
   
   ScrollEm.forward(50);
 
   ScrollEm.add(document.getElementById("mistake3"), {
-    css: {
-      top: {
-        start: yoffset - 500,
-        end: yoffset
+    css: [
+      {
+        property: "top",
+        start: yoffset - 500
       },
-      left: {
-        start: "-WINDOW_WIDTH",
-        end: 105
+      {
+        property: "left",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH + 105"
+      },
+      {
+        property: "translateY",
+        start: 0,
+        end: 500
       }
-    }
+    ]
   });
 
-
   ScrollEm.add(document.getElementById("mistake4"), {
-    css: {
-      top: {
-        start: yoffset - 500,
-        end: yoffset
+    css: [
+      {
+        property: "top",
+        start: yoffset - 500
       },
-      right: {
-        start: "-WINDOW_WIDTH",
-        end: 105
+      {
+        property: "right",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH - 105"
+      },
+      {
+        property: "translateY",
+        start: 0,
+        end: 500
       }
-    }
+    ]
   });
 
   yoffset += 150;
   ScrollEm.forward(50);
 
   ScrollEm.add(document.getElementById("mistake5"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      left: {
-        start: "-WINDOW_WIDTH",
-        end: 255
+      {
+        property: "left",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH + 255"
       }
-    }
+    ]
   });
 
 
   ScrollEm.add(document.getElementById("mistake6"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      right: {
-        start: "-WINDOW_WIDTH",
-        end: 255
+      {
+        property: "right",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH - 255"
       }
-    }
+    ]
   });
 
   ScrollEm.forward(50);
 
   ScrollEm.add(document.getElementById("mistake7"), {
-    css: {
-      top: {
-        start: yoffset + " + WINDOW_HEIGHT",
-        end: yoffset
+    css: [
+      {
+        property: "top",
+        start: yoffset + " + WINDOW_HEIGHT"
       },
-      left: {
+      {
+        property: "left",
+        start: 0
+      },
+      {
+        property: "translateX",
         start: 0,
         end: 105
+      },
+      {
+        property: "translateY",
+        start: 0,
+        end: "-WINDOW_HEIGHT"
       }
-    }
+    ]
   });
 
 
   ScrollEm.add(document.getElementById("mistake8"), {
-    css: {
-      top: {
-        start: yoffset + " + WINDOW_HEIGHT",
-        end: yoffset
+    css: [
+      {
+        property: "top",
+        start: yoffset + " + WINDOW_HEIGHT"
       },
-      right: {
+      {
+        property: "right",
+        start: 0
+      },
+      {
+        property: "translateX",
         start: 0,
-        end: 105
+        end: -105
+      },
+      {
+        property: "translateY",
+        start: 0,
+        end: "-WINDOW_HEIGHT"
       }
-    }
+    ]
   });
 
   yoffset += 500;
-  ScrollEm.forward(600);
+  ScrollEm.forward(550);
 
   ScrollEm.add(document.getElementById("thats-all"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      left: {
-        start: "-WINDOW_WIDTH",
-        end: 100
+      {
+        property: "left",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH + 100"
       }
-    }
+    ]
   });
 
   yoffset += 300;
   ScrollEm.forward(300);
 
   ScrollEm.add(document.getElementById("thanks"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      right: {
-        start: "-WINDOW_WIDTH",
-        end: 100
+      {
+        property: "right",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH - 100"
       }
-    }
+    ]
   });
 
   yoffset += 300;
@@ -711,173 +1008,245 @@ $(function () {
   });
 
   ScrollEm.add(document.getElementById("in-touch"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      left: {
-        start: "-WINDOW_WIDTH",
-        end: 100
+      {
+        property: "left",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH + 100"
       }
-    }
+    ]
   });
 
   yoffset += 100;
   ScrollEm.forward(30);
 
   ScrollEm.add(document.getElementById("email"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      left: {
-        start: "WINDOW_WIDTH",
-        end: 110
+      {
+        property: "left",
+        start: "WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH + 110"
       }
-    }
+    ]
   });
 
   ScrollEm.forward(30);
 
   ScrollEm.add(document.getElementById("twitter"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      left: {
-        start: "WINDOW_WIDTH",
-        end: 202
+      {
+        property: "left",
+        start: "WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH + 202"
       }
-    }
+    ]
   });
 
   ScrollEm.forward(30);
 
   ScrollEm.add(document.getElementById("linkedin"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      left: {
-        start: "WINDOW_WIDTH",
-        end: 294
+      {
+        property: "left",
+        start: "WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH + 294"
       }
-    }
+    ]
   });
 
   ScrollEm.forward(30);
 
   ScrollEm.add(document.getElementById("github"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      left: {
-        start: "WINDOW_WIDTH",
-        end: 386
+      {
+        property: "left",
+        start: "WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH + 386"
       }
-    }
+    ]
   });
 
   ScrollEm.forward(30);
 
   ScrollEm.add(document.getElementById("wordpress"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      left: {
-        start: "WINDOW_WIDTH",
-        end: 480
+      {
+        property: "left",
+        start: "WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH + 480"
       }
-    }
+    ]
   });
 
   yoffset += 500;
   ScrollEm.forward(450);
 
   ScrollEm.add(document.getElementById("bye"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      left: {
-        start: "-WINDOW_WIDTH",
-        end: 350
+      {
+        property: "left",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH + 350"
       }
-    }
+    ]
   });
 
   yoffset += 900;
   ScrollEm.forward(800);
 
   ScrollEm.add(document.getElementById("seriously"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      left: {
-        start: "-WINDOW_WIDTH",
-        end: 330
+      {
+        property: "left",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH + 330"
       }
-    }
+    ]
   });
 
   yoffset += 1000;
   ScrollEm.forward(1000);
 
   ScrollEm.add(document.getElementById("go-now"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      right: {
-        start: "-WINDOW_WIDTH",
-        end: 345
+      {
+        property: "right",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH - 345"
       }
-    }
+    ]
   });
 
   yoffset += 950;
   ScrollEm.forward(1000);
 
   ScrollEm.add(document.getElementById("im-out"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      left: {
-        start: "-WINDOW_WIDTH",
-        end: 250
+      {
+        property: "left",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH + 250"
       }
-    }
+    ]
   });
 
   yoffset += 1000;
   ScrollEm.forward(1000);
 
   ScrollEm.add(document.getElementById("puppy-text"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset
       },
-      left: {
-        start: "-WINDOW_WIDTH",
-        end: 180
+      {
+        property: "left",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH + 180"
       }
-    }
+    ]
   });
 
   ScrollEm.add(document.getElementById("puppy-image"), {
-    css: {
-      top: {
+    css: [
+      {
+        property: "top",
         start: yoffset - 100
       },
-      right: {
-        start: "-WINDOW_WIDTH",
-        end: 180
+      {
+        property: "right",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH - 180"
       }
-    }
+    ]
   });
 
 });
