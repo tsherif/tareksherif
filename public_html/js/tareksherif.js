@@ -28,11 +28,12 @@ $(function () {
 
   $("#footer").css("bottom", 0);
 
-  $(window).resize(function() {
+  $(window).scroll(navUpdate).ready(navUpdate).resize(function() {
     WINDOW_WIDTH = window.innerWidth;
+    navUpdate();
   });
 
-  (function navUpdate() {
+  function navUpdate() {
     var scroll_position = window.pageYOffset;
     var nav_position;
     var nav_top;
@@ -72,8 +73,7 @@ $(function () {
       });
     }
 
-    window.requestAnimationFrame(navUpdate);
-  })();
+  }
 
   $("#graffiti-button").click(function() {
     var button = $(this);
