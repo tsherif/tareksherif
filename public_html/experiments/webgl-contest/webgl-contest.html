@@ -262,11 +262,10 @@
           radius: 1
         });
 
-        glUtils.setBuffer(gl, main_vars.aPosition, sphere.vertices, 3);
-        glUtils.setBuffer(gl, main_vars.aNormal, sphere.normals, 3);
-        glUtils.setBuffer(gl, shadow_vars.aPosition, sphere.vertices, 3);
-        glUtils.setBuffer(gl, shadow_vars.aNormal, sphere.normals, 3);
-        glUtils.setBuffer(gl, main_vars.aTexCoord, sphere.texture_coords, 2);
+        var main_position_buffer = createBuffer(main_vars.aPosition, sphere.vertices, 3);
+        var main_normal_buffer = createBuffer(main_vars.aNormal, sphere.normals, 3);
+        var main_texture_buffer = createBuffer(main_vars.aTexCoord, sphere.texture_coords, 2);
+        var shadow_position_buffer = createBuffer(shadow_vars.aPosition, sphere.vertices, 3);        
 
         var planet = {
           translation: {
@@ -321,7 +320,7 @@
         var eye = {
           x: 0,
           y: 0,
-          z: 2 // Avoid clipping
+          z: 1.9
         };
         var at = {
           x: 0,
@@ -404,6 +403,9 @@
           gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
           gl.viewport(0, 0, offscreen.x, offscreen.y);
 
+
+          enableBuffer(shadow_vars.aPosition, shadow_position_buffer, 3);  
+
           gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
           mat4.perspective(proj_matrix, Math.PI / 3, offscreen.x / offscreen.y, 1, 100);
@@ -416,10 +418,16 @@
           var planet_shadow_mvp = drawObject(planet, shadow_vars);
           moons.forEach(drawMoonShadow);
 
+          gl.disableVertexAttribArray(shadow_vars.aPosition);
+
           gl.useProgram(gl.program);
           gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 
           gl.viewport(0, 0, canvas.width, canvas.height);
+
+          enableBuffer(main_vars.aPosition, main_position_buffer, 3);
+          enableBuffer(main_vars.aNormal, main_normal_buffer, 3);
+          enableBuffer(main_vars.aTexCoord, main_texture_buffer, 2);
           
           gl.uniform3f(main_vars.uLightColor, 0.7, 0.7, 0.7);
           gl.uniform3fv(main_vars.uLightPosition, light_position);
@@ -442,6 +450,10 @@
           drawObject(planet, main_vars);
 
           moons.forEach(drawMoonMain);
+
+          gl.disableVertexAttribArray(main_vars.aPosition);
+          gl.disableVertexAttribArray(main_vars.aNormal);
+          gl.disableVertexAttribArray(main_vars.aTexCoord);
         }
 
         window.onresize = function() {
@@ -449,6 +461,25 @@
           canvas.height = document.body.clientHeight;
           gl.viewport(0, 0, canvas.width, canvas.height);
           mat4.perspective(proj_matrix, Math.PI / 3, canvas.width / canvas.height, 1, 100);
+        }
+
+        function createBuffer(attribute, data, item_size) {
+          var buffer = gl.createBuffer();
+
+          gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+          gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
+          gl.vertexAttribPointer(attribute, item_size, gl.FLOAT, false, 0, 0);
+          gl.enableVertexAttribArray(attribute);
+
+          return buffer;
+        }
+
+        function enableBuffer(attribute, buffer, item_size) {
+          gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+          gl.vertexAttribPointer(attribute, item_size, gl.FLOAT, false, 0, 0);
+          gl.enableVertexAttribArray(attribute);
+
+          return buffer;
         }
 
       };
