@@ -57,17 +57,21 @@
     <script src="js/gl-utils.min.js"></script>
     <script id="shadow-vertex-shader" type="x-vertex-shader">
       attribute vec4 aPosition;
-      attribute vec4 aColor;
+      attribute vec4 aNormal;
+      attribute vec2 aTexCoord;
       uniform mat4 uMVP;
-      varying vec4 vColor;
+      varying vec4 vNormal;
+      varying vec2 vTexCoord;
       void main() {
+        vNormal = aNormal;
+        vTexCoord = aTexCoord;
         gl_Position = uMVP * aPosition;
-        vColor = aColor;
       }
     </script>
     <script id="shadow-fragment-shader" type="x-fragment-shader">
       precision mediump float;
-      varying vec4 vColor;
+      varying vec4 vNormal;
+      varying vec2 vTexCoord;
       void main() {
         const vec4 bitShift = vec4(1.0, 256.0, 256.0 * 256.0, 256.0 * 256.0 * 256.0);
         const vec4 bitMask = vec4(1.0 / 256.0, 1.0 / 256.0, 1.0 / 256.0,  0.0);
@@ -203,7 +207,7 @@
         gl.shadow_program = glUtils.getProgram(gl, "shadow-vertex-shader", "shadow-fragment-shader");
 
         var shadow_vars = glUtils.getGLVars(gl, gl.shadow_program, {
-         attributes: ["aPosition", "aColor"],
+         attributes: ["aPosition", "aColor", "aNormal", "aTexCoord"],
          uniforms: ["uMVP"]
         });
 
@@ -262,10 +266,18 @@
           radius: 1
         });
 
-        var main_position_buffer = createBuffer(main_vars.aPosition, sphere.vertices, 3);
-        var main_normal_buffer = createBuffer(main_vars.aNormal, sphere.normals, 3);
-        var main_texture_buffer = createBuffer(main_vars.aTexCoord, sphere.texture_coords, 2);
-        var shadow_position_buffer = createBuffer(shadow_vars.aPosition, sphere.vertices, 3);        
+        // var main_position_buffer = createBuffer(main_vars.aPosition, sphere.vertices, 3);
+        // var main_normal_buffer = createBuffer(main_vars.aNormal, sphere.normals, 3);
+        // var main_texture_buffer = createBuffer(main_vars.aTexCoord, sphere.texture_coords, 2);
+        // var shadow_position_buffer = createBuffer(shadow_vars.aPosition, sphere.vertices, 3);        
+
+        glUtils.setBuffer(gl, main_vars.aPosition, sphere.vertices, 3);
+        glUtils.setBuffer(gl, main_vars.aNormal, sphere.normals, 3);
+        glUtils.setBuffer(gl, main_vars.aTexCoord, sphere.texture_coords, 2);
+        glUtils.setBuffer(gl, shadow_vars.aPosition, sphere.vertices, 3);
+        glUtils.setBuffer(gl, shadow_vars.aNormal, sphere.normals, 3);
+        glUtils.setBuffer(gl, shadow_vars.aTexCoord, sphere.texture_coords, 2);
+
 
         var planet = {
           translation: {
@@ -404,7 +416,7 @@
           gl.viewport(0, 0, offscreen.x, offscreen.y);
 
 
-          enableBuffer(shadow_vars.aPosition, shadow_position_buffer, 3);  
+          // enableBuffer(shadow_vars.aPosition, shadow_position_buffer, 3);  
 
           gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
@@ -418,16 +430,16 @@
           var planet_shadow_mvp = drawObject(planet, shadow_vars);
           moons.forEach(drawMoonShadow);
 
-          gl.disableVertexAttribArray(shadow_vars.aPosition);
+          // gl.disableVertexAttribArray(shadow_vars.aPosition);
 
           gl.useProgram(gl.program);
           gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 
           gl.viewport(0, 0, canvas.width, canvas.height);
 
-          enableBuffer(main_vars.aPosition, main_position_buffer, 3);
-          enableBuffer(main_vars.aNormal, main_normal_buffer, 3);
-          enableBuffer(main_vars.aTexCoord, main_texture_buffer, 2);
+          // enableBuffer(main_vars.aPosition, main_position_buffer, 3);
+          // enableBuffer(main_vars.aNormal, main_normal_buffer, 3);
+          // enableBuffer(main_vars.aTexCoord, main_texture_buffer, 2);
           
           gl.uniform3f(main_vars.uLightColor, 0.7, 0.7, 0.7);
           gl.uniform3fv(main_vars.uLightPosition, light_position);
@@ -451,9 +463,9 @@
 
           moons.forEach(drawMoonMain);
 
-          gl.disableVertexAttribArray(main_vars.aPosition);
-          gl.disableVertexAttribArray(main_vars.aNormal);
-          gl.disableVertexAttribArray(main_vars.aTexCoord);
+          // gl.disableVertexAttribArray(main_vars.aPosition);
+          // gl.disableVertexAttribArray(main_vars.aNormal);
+          // gl.disableVertexAttribArray(main_vars.aTexCoord);
         }
 
         window.onresize = function() {
