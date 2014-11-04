@@ -176,8 +176,8 @@
 
         vec4 baseColor = texture2D(uTextureMap, vTexCoord * vec2(3.0, 1.5) - vec2(0.0, 0.25));
 
-        if (baseColor.r + baseColor.g + baseColor.b < 2.2) {
-          baseColor = vec4(baseColor.rrr * 0.6, baseColor.r);
+        if (baseColor.r > baseColor.g + baseColor.b) {
+          baseColor = vec4(baseColor.rrr * 1.4, 1.0);
         } else {
           colorModifier = throb(vModelPosition);
           baseColor = colorModifier > 0.0 ? uColor1 : uColor2;
