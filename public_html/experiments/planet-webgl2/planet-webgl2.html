@@ -221,17 +221,11 @@
         var gl = glUtils.getGL(canvas);
         gl.program = glUtils.getProgram(gl, "vertex-shader", "fragment-shader");
 
+
         var texture_image = new Image();
-        var logo_texture = gl.createTexture();
 
         texture_image.onload = function() {
-          gl.activeTexture(gl.TEXTURE1);
-          gl.bindTexture(gl.TEXTURE_2D, logo_texture);
-          gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture_image);
-          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
-          gl.generateMipmap(gl.TEXTURE_2D);
+          glUtils.loadTexture(gl, gl.TEXTURE1, texture_image, drawScene);
       
           drawScene();
         };
