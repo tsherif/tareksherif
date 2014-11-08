@@ -219,11 +219,11 @@ section a {
   background-color: #666666;
 }
 
-#projects-background, #experiments-background {
+#work-background, #art-background, #code-background, #experiments-background {
   height: 87px;
 }
 
-#games-background, #libraries-background, #mistakes-background {
+#mistakes-background {
   height: 61px;
 }
 
@@ -394,6 +394,18 @@ section a {
 #voicecolour-title-2 {
   bottom: 11px;
   left: 31px; 
+}
+
+#planet-webgl-title {
+  letter-spacing: 1.2px;
+  bottom: 8px;
+  left: 19px; 
+}
+
+#planet-webgl2-title {
+  letter-spacing: 1.2px;
+  bottom: 8px;
+  left: 8px; 
 }
 
 @media screen and (max-width: 799px) {

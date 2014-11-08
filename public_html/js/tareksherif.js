@@ -172,12 +172,12 @@ $(function () {
 
   yoffset += 180;
   ScrollEm.forward(250);
-  ScrollEm.addBookmark("projects", yoffset - 16, {
-    before: document.getElementById("projects-intro"),
+  ScrollEm.addBookmark("work", yoffset - 16, {
+    before: document.getElementById("work-intro"),
     offset: -86
   });
 
-  ScrollEm.add(document.getElementById("projects-intro"), {
+  ScrollEm.add(document.getElementById("work-intro"), {
     css: [
       {
         property: "top",
@@ -195,7 +195,7 @@ $(function () {
     ]
   });
 
-  ScrollEm.add(document.getElementById("projects-background"), {
+  ScrollEm.add(document.getElementById("work-background"), {
     css: [
       {
         property: "top",
@@ -256,12 +256,12 @@ $(function () {
 
   yoffset += 310;
   ScrollEm.forward(500);
-  ScrollEm.addBookmark("games", yoffset - 21, {
-    before: document.getElementById("games-intro"),
-    offset: -86
+  ScrollEm.addBookmark("art", yoffset - 21, {
+    before: document.getElementById("art-intro"),
+    offset: -66
   });
 
-  ScrollEm.add(document.getElementById("games-intro"), {
+  ScrollEm.add(document.getElementById("art-intro"), {
     css: [
       {
         property: "top",
@@ -279,7 +279,7 @@ $(function () {
     ]
   });
 
-  ScrollEm.add(document.getElementById("games-background"), {
+  ScrollEm.add(document.getElementById("art-background"), {
     css: [
       {
         property: "top",
@@ -299,6 +299,26 @@ $(function () {
 
   yoffset += 170;
   ScrollEm.forward(100);
+
+  ScrollEm.add(document.getElementById("in-gaza"), {
+    css: [
+      {
+        property: "top",
+        start: yoffset
+      },
+      {
+        property: "left",
+        start: "WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH + 25"
+      }
+    ]
+  });
+
+  yoffset += 160;
 
   ScrollEm.add(document.getElementById("climb"), {
     css: [
@@ -342,7 +362,7 @@ $(function () {
   ScrollEm.forward(500);
   ScrollEm.addBookmark("experiments", yoffset - 16, {
     before: document.getElementById("experiments-intro"),
-    offset: -86
+    offset: -76
   });
 
   ScrollEm.add(document.getElementById("experiments-intro"), {
@@ -384,7 +404,7 @@ $(function () {
   yoffset += 170;
   ScrollEm.forward(150);
 
-  ScrollEm.add(document.getElementById("moons"), {
+  ScrollEm.add(document.getElementById("planet-webgl"), {
     css: [
       {
         property: "top",
@@ -408,7 +428,7 @@ $(function () {
   });
 
 
-  ScrollEm.add(document.getElementById("liquidglass"), {
+  ScrollEm.add(document.getElementById("voicecolour"), {
     css: [
       {
         property: "top",
@@ -433,7 +453,7 @@ $(function () {
 
   ScrollEm.forward(50);
 
-  ScrollEm.add(document.getElementById("voicecolour"), {
+  ScrollEm.add(document.getElementById("planet-webgl2"), {
     css: [
       {
         property: "top",
@@ -458,7 +478,7 @@ $(function () {
   });
 
 
-  ScrollEm.add(document.getElementById("flowers"), {
+  ScrollEm.add(document.getElementById("moons"), {
     css: [
       {
         property: "top",
@@ -484,7 +504,7 @@ $(function () {
   yoffset += 150;
   ScrollEm.forward(50);
 
-  ScrollEm.add(document.getElementById("spiral"), {
+  ScrollEm.add(document.getElementById("flowers"), {
     css: [
       {
         property: "top",
@@ -502,8 +522,7 @@ $(function () {
     ]
   });
 
-
-  ScrollEm.add(document.getElementById("storm"), {
+  ScrollEm.add(document.getElementById("remains"), {
     css: [
       {
         property: "top",
@@ -523,7 +542,7 @@ $(function () {
   
   ScrollEm.forward(50);
 
-  ScrollEm.add(document.getElementById("remains"), {
+  ScrollEm.add(document.getElementById("liquidglass"), {
     css: [
       {
         property: "top",
@@ -547,7 +566,7 @@ $(function () {
   });
 
 
-  ScrollEm.add(document.getElementById("evolve"), {
+  ScrollEm.add(document.getElementById("spiral"), {
     css: [
       {
         property: "top",
@@ -572,7 +591,7 @@ $(function () {
 
   yoffset += 150;
 
-  ScrollEm.add(document.getElementById("snowflakes"), {
+  ScrollEm.add(document.getElementById("evolve"), {
     css: [
       {
         property: "top",
@@ -590,7 +609,7 @@ $(function () {
     ]
   });
 
-  ScrollEm.add(document.getElementById("gravity"), {
+  ScrollEm.add(document.getElementById("snowflakes"), {
     css: [
       {
         property: "top",
@@ -608,14 +627,52 @@ $(function () {
     ]
   });
 
-  yoffset += 310;
-  ScrollEm.forward(500);
-  ScrollEm.addBookmark("libraries", yoffset - 21, {
-    before: document.getElementById("libraries-intro"),
-    offset: -66
+  ScrollEm.forward(50);
+
+  ScrollEm.add(document.getElementById("storm"), {
+    css: [
+      {
+        property: "top",
+        start: yoffset
+      },
+      {
+        property: "left",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH + 105"
+      }
+    ]
   });
 
-  ScrollEm.add(document.getElementById("libraries-intro"), {
+  ScrollEm.add(document.getElementById("gravity"), {
+    css: [
+      {
+        property: "top",
+        start: yoffset
+      },
+      {
+        property: "right",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH - 105"
+      }
+    ]
+  });
+
+  yoffset += 310;
+  ScrollEm.forward(500);
+  ScrollEm.addBookmark("code", yoffset - 21, {
+    before: document.getElementById("code-intro"),
+    offset: -56
+  });
+
+  ScrollEm.add(document.getElementById("code-intro"), {
     css: [
       {
         property: "top",
@@ -633,7 +690,7 @@ $(function () {
     ]
   });
 
-  ScrollEm.add(document.getElementById("libraries-background"), {
+  ScrollEm.add(document.getElementById("code-background"), {
     css: [
       {
         property: "top",
@@ -652,10 +709,9 @@ $(function () {
   });
 
   ScrollEm.forward(150);
-  yoffset += 130;
+  yoffset += 170;
 
-
-  ScrollEm.add(document.getElementById("scroll-em"), {
+  ScrollEm.add(document.getElementById("nano-server"), {
     css: [
       {
         property: "top",
@@ -663,19 +719,39 @@ $(function () {
       },
       {
         property: "left",
-        start: "-WINDOW_WIDTH"
+        start: "WINDOW_WIDTH"
       },
       {
         property: "translateX",
         start: 0,
-        end: "WINDOW_WIDTH + 50"
+        end: "-WINDOW_WIDTH + 50"
       }
     ]
   });
 
   yoffset += 150;
 
-  ScrollEm.add(document.getElementById("ofactory"), {
+  ScrollEm.add(document.getElementById("scroll-em"), {
+    css: [
+       {
+         property: "top",
+         start: yoffset
+       },
+       {
+         property: "left",
+         start: "-WINDOW_WIDTH"
+       },
+       {
+         property: "translateX",
+         start: 0,
+         end: "WINDOW_WIDTH + 50"
+       }
+    ]
+  });
+
+  yoffset += 150;
+
+  ScrollEm.add(document.getElementById("gl-utils"), {
     css: [
       {
         property: "top",
@@ -715,7 +791,7 @@ $(function () {
 
   yoffset += 150;
 
-  ScrollEm.add(document.getElementById("gl-utils"), {
+  ScrollEm.add(document.getElementById("ofactory"), {
     css: [
       {
         property: "top",
@@ -737,7 +813,7 @@ $(function () {
   ScrollEm.forward(850);
   ScrollEm.addBookmark("mistakes", yoffset - 16, {
     before: document.getElementById("mistakes-intro"),
-    offset: -86
+    offset: -76
   });
 
   ScrollEm.add(document.getElementById("mistakes-intro"), {
