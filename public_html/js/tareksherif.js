@@ -359,7 +359,7 @@ $(function () {
   });
 
   yoffset += 310;
-  ScrollEm.forward(500);
+  ScrollEm.forward(680);
   ScrollEm.addBookmark("experiments", yoffset - 16, {
     before: document.getElementById("experiments-intro"),
     offset: -76
@@ -402,7 +402,7 @@ $(function () {
   });
 
   yoffset += 170;
-  ScrollEm.forward(150);
+  ScrollEm.forward(100);
 
   ScrollEm.add(document.getElementById("planet-webgl"), {
     css: [
@@ -810,7 +810,7 @@ $(function () {
   });
 
   yoffset += 410;
-  ScrollEm.forward(850);
+  ScrollEm.forward(940);
   ScrollEm.addBookmark("mistakes", yoffset - 16, {
     before: document.getElementById("mistakes-intro"),
     offset: -76
