@@ -174,7 +174,7 @@ $(function () {
   ScrollEm.forward(250);
   ScrollEm.addBookmark("work", yoffset - 16, {
     before: document.getElementById("work-intro"),
-    offset: -86
+    offset: -66
   });
 
   ScrollEm.add(document.getElementById("work-intro"), {
