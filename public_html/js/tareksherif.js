@@ -811,12 +811,12 @@ $(function () {
 
   yoffset += 410;
   ScrollEm.forward(940);
-  ScrollEm.addBookmark("mistakes", yoffset - 16, {
-    before: document.getElementById("mistakes-intro"),
+  ScrollEm.addBookmark("glitches", yoffset - 16, {
+    before: document.getElementById("glitches-intro"),
     offset: -76
   });
 
-  ScrollEm.add(document.getElementById("mistakes-intro"), {
+  ScrollEm.add(document.getElementById("glitches-intro"), {
     css: [
       {
         property: "top",
@@ -834,7 +834,7 @@ $(function () {
     ]
   });
 
-  ScrollEm.add(document.getElementById("mistakes-background"), {
+  ScrollEm.add(document.getElementById("glitches-background"), {
     css: [
       {
         property: "top",
@@ -855,7 +855,7 @@ $(function () {
   yoffset += 170;
   ScrollEm.forward(150);
 
-  ScrollEm.add(document.getElementById("mistake1"), {
+  ScrollEm.add(document.getElementById("glitch9"), {
     css: [
       {
         property: "top",
@@ -874,7 +874,7 @@ $(function () {
   });
 
 
-  ScrollEm.add(document.getElementById("mistake2"), {
+  ScrollEm.add(document.getElementById("glitch8"), {
     css: [
       {
         property: "top",
@@ -894,7 +894,7 @@ $(function () {
   
   ScrollEm.forward(50);
 
-  ScrollEm.add(document.getElementById("mistake3"), {
+  ScrollEm.add(document.getElementById("glitch7"), {
     css: [
       {
         property: "top",
@@ -917,7 +917,7 @@ $(function () {
     ]
   });
 
-  ScrollEm.add(document.getElementById("mistake4"), {
+  ScrollEm.add(document.getElementById("glitch6"), {
     css: [
       {
         property: "top",
@@ -943,7 +943,7 @@ $(function () {
   yoffset += 150;
   ScrollEm.forward(50);
 
-  ScrollEm.add(document.getElementById("mistake5"), {
+  ScrollEm.add(document.getElementById("glitch5"), {
     css: [
       {
         property: "top",
@@ -962,7 +962,7 @@ $(function () {
   });
 
 
-  ScrollEm.add(document.getElementById("mistake6"), {
+  ScrollEm.add(document.getElementById("glitch4"), {
     css: [
       {
         property: "top",
@@ -982,7 +982,7 @@ $(function () {
 
   ScrollEm.forward(50);
 
-  ScrollEm.add(document.getElementById("mistake7"), {
+  ScrollEm.add(document.getElementById("glitch3"), {
     css: [
       {
         property: "top",
@@ -1006,7 +1006,7 @@ $(function () {
   });
 
 
-  ScrollEm.add(document.getElementById("mistake8"), {
+  ScrollEm.add(document.getElementById("glitch2"), {
     css: [
       {
         property: "top",
@@ -1029,8 +1029,29 @@ $(function () {
     ]
   });
 
+  yoffset += 150;
+  ScrollEm.forward(50);
+
+  ScrollEm.add(document.getElementById("glitch1"), {
+    css: [
+      {
+        property: "top",
+        start: yoffset + " + WINDOW_HEIGHT"
+      },
+      {
+        property: "left",
+        start: 325
+      },
+      {
+        property: "translateY",
+        start: 0,
+        end: "-WINDOW_HEIGHT"
+      }
+    ]
+  });
+
   yoffset += 500;
-  ScrollEm.forward(550);
+  ScrollEm.forward(650);
 
   ScrollEm.add(document.getElementById("thats-all"), {
     css: [
