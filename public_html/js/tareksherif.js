@@ -855,7 +855,7 @@ $(function () {
   yoffset += 170;
   ScrollEm.forward(150);
 
-  ScrollEm.add(document.getElementById("glitch9"), {
+  ScrollEm.add(document.getElementById("glitch10"), {
     css: [
       {
         property: "top",
@@ -874,7 +874,7 @@ $(function () {
   });
 
 
-  ScrollEm.add(document.getElementById("glitch8"), {
+  ScrollEm.add(document.getElementById("glitch9"), {
     css: [
       {
         property: "top",
@@ -894,7 +894,7 @@ $(function () {
   
   ScrollEm.forward(50);
 
-  ScrollEm.add(document.getElementById("glitch7"), {
+  ScrollEm.add(document.getElementById("glitch8"), {
     css: [
       {
         property: "top",
@@ -917,7 +917,7 @@ $(function () {
     ]
   });
 
-  ScrollEm.add(document.getElementById("glitch6"), {
+  ScrollEm.add(document.getElementById("glitch7"), {
     css: [
       {
         property: "top",
@@ -943,7 +943,7 @@ $(function () {
   yoffset += 150;
   ScrollEm.forward(50);
 
-  ScrollEm.add(document.getElementById("glitch5"), {
+  ScrollEm.add(document.getElementById("glitch6"), {
     css: [
       {
         property: "top",
@@ -962,7 +962,7 @@ $(function () {
   });
 
 
-  ScrollEm.add(document.getElementById("glitch4"), {
+  ScrollEm.add(document.getElementById("glitch5"), {
     css: [
       {
         property: "top",
@@ -982,7 +982,7 @@ $(function () {
 
   ScrollEm.forward(50);
 
-  ScrollEm.add(document.getElementById("glitch3"), {
+  ScrollEm.add(document.getElementById("glitch4"), {
     css: [
       {
         property: "top",
@@ -1006,7 +1006,7 @@ $(function () {
   });
 
 
-  ScrollEm.add(document.getElementById("glitch2"), {
+  ScrollEm.add(document.getElementById("glitch3"), {
     css: [
       {
         property: "top",
@@ -1032,20 +1032,39 @@ $(function () {
   yoffset += 150;
   ScrollEm.forward(50);
 
+  ScrollEm.add(document.getElementById("glitch2"), {
+    css: [
+      {
+        property: "top",
+        start: yoffset
+      },
+      {
+        property: "left",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH + 255"
+      }
+    ]
+  });
+
   ScrollEm.add(document.getElementById("glitch1"), {
     css: [
       {
         property: "top",
-        start: yoffset + " + WINDOW_HEIGHT"
+        start: yoffset
       },
       {
-        property: "left",
-        start: 325
+        property: "right",
+        start: "-WINDOW_WIDTH",
+
       },
       {
-        property: "translateY",
+        property: "translateX",
         start: 0,
-        end: "-WINDOW_HEIGHT"
+        end: "-WINDOW_WIDTH - 255"
       }
     ]
   });
