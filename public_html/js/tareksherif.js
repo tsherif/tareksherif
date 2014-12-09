@@ -404,7 +404,7 @@ $(function () {
   yoffset += 170;
   ScrollEm.forward(100);
 
-  ScrollEm.add(document.getElementById("planet-webgl"), {
+  ScrollEm.add(document.getElementById("planet-webgl2"), {
     css: [
       {
         property: "top",
@@ -428,7 +428,7 @@ $(function () {
   });
 
 
-  ScrollEm.add(document.getElementById("voicecolour"), {
+  ScrollEm.add(document.getElementById("planet-webgl"), {
     css: [
       {
         property: "top",
@@ -453,7 +453,7 @@ $(function () {
 
   ScrollEm.forward(50);
 
-  ScrollEm.add(document.getElementById("planet-webgl2"), {
+  ScrollEm.add(document.getElementById("youintherain"), {
     css: [
       {
         property: "top",
@@ -477,8 +477,7 @@ $(function () {
     ]
   });
 
-
-  ScrollEm.add(document.getElementById("moons"), {
+  ScrollEm.add(document.getElementById("voicecolour"), {
     css: [
       {
         property: "top",
@@ -504,7 +503,7 @@ $(function () {
   yoffset += 150;
   ScrollEm.forward(50);
 
-  ScrollEm.add(document.getElementById("flowers"), {
+  ScrollEm.add(document.getElementById("liquidglass"), {
     css: [
       {
         property: "top",
@@ -522,7 +521,7 @@ $(function () {
     ]
   });
 
-  ScrollEm.add(document.getElementById("remains"), {
+  ScrollEm.add(document.getElementById("flowers"), {
     css: [
       {
         property: "top",
@@ -542,7 +541,7 @@ $(function () {
   
   ScrollEm.forward(50);
 
-  ScrollEm.add(document.getElementById("liquidglass"), {
+  ScrollEm.add(document.getElementById("moons"), {
     css: [
       {
         property: "top",
@@ -566,7 +565,7 @@ $(function () {
   });
 
 
-  ScrollEm.add(document.getElementById("spiral"), {
+  ScrollEm.add(document.getElementById("remains"), {
     css: [
       {
         property: "top",
@@ -591,7 +590,7 @@ $(function () {
 
   yoffset += 150;
 
-  ScrollEm.add(document.getElementById("evolve"), {
+  ScrollEm.add(document.getElementById("storm"), {
     css: [
       {
         property: "top",
@@ -609,7 +608,7 @@ $(function () {
     ]
   });
 
-  ScrollEm.add(document.getElementById("snowflakes"), {
+  ScrollEm.add(document.getElementById("evolve"), {
     css: [
       {
         property: "top",
@@ -629,7 +628,7 @@ $(function () {
 
   ScrollEm.forward(50);
 
-  ScrollEm.add(document.getElementById("storm"), {
+  ScrollEm.add(document.getElementById("spiral"), {
     css: [
       {
         property: "top",
@@ -647,7 +646,7 @@ $(function () {
     ]
   });
 
-  ScrollEm.add(document.getElementById("gravity"), {
+  ScrollEm.add(document.getElementById("snowflakes"), {
     css: [
       {
         property: "top",
@@ -661,6 +660,26 @@ $(function () {
         property: "translateX",
         start: 0,
         end: "-WINDOW_WIDTH - 105"
+      }
+    ]
+  });
+
+  yoffset += 150;
+
+  ScrollEm.add(document.getElementById("gravity"), {
+    css: [
+      {
+        property: "top",
+        start: yoffset + " + WINDOW_HEIGHT"
+      },
+      {
+        property: "left",
+        start: 330
+      },
+      {
+        property: "translateY",
+        start: 0,
+        end: "-WINDOW_HEIGHT"
       }
     ]
   });

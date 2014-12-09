@@ -408,6 +408,16 @@ section a {
   left: 8px; 
 }
 
+#youintherain-title1 {
+  left: 56px;
+  top: 45px;
+}
+
+#youintherain-title2 {
+  left: 36px;
+  bottom: 51px; 
+}
+
 @media screen and (max-width: 799px) {
   header {
     height: 76px;
