@@ -65,6 +65,9 @@
       <a href="http://www.mozilla.org/en-US/firefox/new/">Mozilla Firefox</a> or
       <a href="https://www.google.com/intl/en/chrome/browser/">Google Chrome</a> are recommended for best viewing.
     </div>
+    <div id="camera-warning" class="warning" style="display:none">
+      Camera not found. Unable to start experiment.
+    </div>
     <canvas id="webgl"></canvas>
     <audio id="thunder">
       <source type="audio/ogg codecs='vorbis'" src="audio/thunder.ogg">
@@ -243,6 +246,7 @@
             video.src = window.URL.createObjectURL(stream);
           }, 
           function(err) {
+            document.getElementById("camera-warning").style.display = "block";
             console.log("Error: ", err);
           }
         );
