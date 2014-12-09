@@ -138,7 +138,7 @@
 
         var mouse = utils.captureMouse(canvas);
 
-        var max_points = Math.floor(canvas.width * canvas.height / 40);
+        var max_points = Math.floor(canvas.width * canvas.height / 50);
         var gravity = 0.0001;
         var friction = 0.6;
 
@@ -268,7 +268,7 @@
         window.onresize = function() {
           canvas.width = document.body.clientWidth;
           canvas.height = document.body.clientHeight;
-          max_points = Math.floor(canvas.width * canvas.height / 40);
+          max_points = Math.floor(canvas.width * canvas.height / 50);
           gl.viewport(0, 0, canvas.width, canvas.height);
           gl.uniform2f(gl_vars.uResolution, canvas.width, canvas.height);
         }
