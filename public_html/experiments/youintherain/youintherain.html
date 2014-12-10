@@ -142,8 +142,9 @@
         var mouse = utils.captureMouse(canvas);
 
         var max_points = Math.floor(canvas.width * canvas.height / 50);
+        var num_points = 0;
         var gravity = 0.0001;
-        var friction = 0.6;
+        var friction = 0.2;
 
         var gl = glUtils.getGL(canvas);
         var program = glUtils.getProgram(gl, "vertex-shader", "fragment-shader");
@@ -154,8 +155,8 @@
 
         gl.uniform2f(gl_vars.uResolution, canvas.width, canvas.height);
 
-        var points = [];
-        var velocities = [];
+        var points = new Float32Array(max_points * 3);
+        var velocities = new Float32Array(max_points * 3);
 
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
         gl.enable(gl.BLEND);
@@ -191,26 +192,33 @@
 
                 gl.clear(gl.COLOR_BUFFER_BIT);
 
-                var num_new_points = 0;
+                var new_num_points = num_points;
                 var i;
                 var count;
                 var repulsion;
 
-                if (points.length / 3 < max_points) {
-                  num_new_points = Math.floor(Math.random() * 100);
+                if (num_points < max_points) {
+                  new_num_points += Math.floor(Math.random() * 100);
+                  new_num_points = Math.min(new_num_points, max_points);
                 }
 
-                while(num_new_points--) {
-                  points.push(
-                    Math.random() * 2 - 1,
-                    1,
-                    Math.random() * 2 - 1
-                  );
+                if (new_num_points > num_points) {
 
-                  velocities.push(0, Math.random() * 0.01, 0);
+                  while(num_points < new_num_points) {
+                    points[num_points * 3] = Math.random() * 2 - 1;
+                    points[num_points * 3 + 1] = 1,
+                    points[num_points * 3 + 2] = Math.random() * 2 - 1
+
+                    velocities[num_points * 3] = 0;
+                    velocities[num_points * 3 + 1] = Math.random() * 0.01,
+                    velocities[num_points * 3 + 2] = 0;
+
+                    num_points++;
+                  }
+
                 }
-
-                for (i = 0, count = points.length; i < count; i += 3) {
+                
+                for (i = 0, count = num_points * 3; i < count; i += 3) {
                   repulsion = getRepulsion(points[i], points[i + 1], points[i + 2]);
 
                   velocities[i] += repulsion[0];
@@ -236,9 +244,9 @@
                 }
 
                 gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
-                glUtils.setBuffer(gl, gl_vars.aPosition, new Float32Array(points), 3);
+                glUtils.setBuffer(gl, gl_vars.aPosition, points, 3);
                           
-                gl.drawArrays(gl.POINTS, 0, points.length / 3);
+                gl.drawArrays(gl.POINTS, 0, num_points);
 
               };  
             });
@@ -258,11 +266,11 @@
           var dx = x - mouse_x;
           var dy = y - mouse_y;
           var dz = z;
-          var force = 0.6;
+          var force = 0.8;
 
           var diff2 = dx * dx + dy * dy;
 
-          if (diff2 > 0.001 || Math.abs(dz) > 0.99) {
+          if (diff2 > 0.0013 || Math.abs(dz) > 0.99) {
             return [0, 0, 0];
           }
 
@@ -273,8 +281,26 @@
           canvas.width = document.body.clientWidth;
           canvas.height = document.body.clientHeight;
           max_points = Math.floor(canvas.width * canvas.height / 50);
+          if (max_points > points.length / 3) {
+            extendArrays();
+          }
           gl.viewport(0, 0, canvas.width, canvas.height);
           gl.uniform2f(gl_vars.uResolution, canvas.width, canvas.height);
+        }
+
+        function extendArrays() {
+          var old_points = points;
+          var old_velocities = velocities;
+
+          points = new Float32Array(max_points * 3);
+          velocities = new Float32Array(max_points * 3);
+
+          var i, count;
+
+          for (i = 0, count = old_points.length; i < count; i++) {
+            points[i] = old_points[i];
+            velocities[i] = old_velocities[i];
+          }
         }
         
       };
