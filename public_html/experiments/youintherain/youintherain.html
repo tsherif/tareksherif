@@ -112,7 +112,7 @@
         vec2 p = position * 2.0 - 1.0;
         p.x *= uResolution.x / uResolution.y;
 
-        vec4 rainColor = vec4(0.5, 0.7, 1.0, vNearness * 0.8);
+        vec4 rainColor = vec4(0.6, 0.8, 1.0, vNearness * 0.9);
         vec4 videoColor = vec4(1.0);
 
         if (p.x >= -1.0 && p.y >= -1.0 && p.x <= 1.0 && p.y <= 1.0) {
