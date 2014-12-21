@@ -1340,7 +1340,7 @@ $(function () {
   });
 
   yoffset += 900;
-  ScrollEm.forward(800);
+  ScrollEm.forward(900);
 
   ScrollEm.add(document.getElementById("seriously"), {
     css: [
