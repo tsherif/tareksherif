@@ -174,7 +174,7 @@
 
         float colorModifier = throb(vModelPosition);
         vec4 baseColor = colorModifier > 0.0 ? uColor1 : uColor2;
-        colorModifier = abs(colorModifier);
+        colorModifier = abs(colorModifier) * 1.4;
 
         vec3 normal = normalize(vNormal);
         vec3 eyeDirection = normalize(uEyePosition - vPosition);

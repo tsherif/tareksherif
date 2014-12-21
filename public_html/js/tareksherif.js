@@ -109,6 +109,10 @@ $(function () {
   ScrollEm.setMinPageWidth(800);
   ScrollEm.setEasing(0.7);
 
+  $(".nav-link").click(function() {
+    ScrollEm.resetElements();
+  });
+
   yoffset += 680;
   ScrollEm.forward(200);
 
