@@ -104,7 +104,7 @@ $(function () {
   });
 
   ScrollEm.setContainer(document.getElementById("content"));
-  ScrollEm.setPageHeight(13000);
+  ScrollEm.setPageHeight(15000);
   ScrollEm.setDefaultScrollRange(175);
   ScrollEm.setMinPageWidth(800);
   ScrollEm.setEasing(0.7);
@@ -456,7 +456,7 @@ $(function () {
     ]
   });
 
-  ScrollEm.forward(50);
+  ScrollEm.forward(20);
 
   ScrollEm.add(document.getElementById("youintherain"), {
     css: [
@@ -506,7 +506,7 @@ $(function () {
   });
 
   yoffset += 150;
-  ScrollEm.forward(50);
+  ScrollEm.forward(20);
 
   ScrollEm.add(document.getElementById("liquidglass"), {
     css: [
@@ -544,7 +544,7 @@ $(function () {
     ]
   });
   
-  ScrollEm.forward(50);
+  ScrollEm.forward(20);
 
   ScrollEm.add(document.getElementById("moons"), {
     css: [
@@ -631,7 +631,7 @@ $(function () {
     ]
   });
 
-  ScrollEm.forward(50);
+  ScrollEm.forward(20);
 
   ScrollEm.add(document.getElementById("spiral"), {
     css: [
@@ -690,7 +690,7 @@ $(function () {
   });
 
   yoffset += 310;
-  ScrollEm.forward(500);
+  ScrollEm.forward(730);
   ScrollEm.addBookmark("code", yoffset - 21, {
     before: document.getElementById("code-intro"),
     offset: -56
@@ -834,7 +834,7 @@ $(function () {
   });
 
   yoffset += 410;
-  ScrollEm.forward(940);
+  ScrollEm.forward(1000);
   ScrollEm.addBookmark("glitches", yoffset - 16, {
     before: document.getElementById("glitches-intro"),
     offset: -76
@@ -916,7 +916,7 @@ $(function () {
     ]
   });
   
-  ScrollEm.forward(50);
+  ScrollEm.forward(20);
 
   ScrollEm.add(document.getElementById("glitch11"), {
     css: [
@@ -965,7 +965,7 @@ $(function () {
   });
 
   yoffset += 150;
-  ScrollEm.forward(50);
+  ScrollEm.forward(20);
 
   ScrollEm.add(document.getElementById("glitch9"), {
     css: [
@@ -1004,7 +1004,7 @@ $(function () {
     ]
   });
 
-  ScrollEm.forward(50);
+  ScrollEm.forward(20);
 
   ScrollEm.add(document.getElementById("glitch7"), {
     css: [
@@ -1054,7 +1054,7 @@ $(function () {
   });
 
   yoffset += 150;
-  ScrollEm.forward(50);
+  ScrollEm.forward(20);
 
   ScrollEm.add(document.getElementById("glitch5"), {
     css: [
@@ -1130,7 +1130,7 @@ $(function () {
   });
 
   yoffset += 150;
-  ScrollEm.forward(50);
+  ScrollEm.forward(20);
 
   ScrollEm.add(document.getElementById("glitch1"), {
     css: [
@@ -1150,8 +1150,8 @@ $(function () {
     ]
   });
 
-  yoffset += 500;
-  ScrollEm.forward(650);
+  yoffset += 700;
+  ScrollEm.forward(1080);
 
   ScrollEm.add(document.getElementById("thats-all"), {
     css: [
@@ -1171,8 +1171,8 @@ $(function () {
     ]
   });
 
-  yoffset += 300;
-  ScrollEm.forward(300);
+  yoffset += 800;
+  ScrollEm.forward(800);
 
   ScrollEm.add(document.getElementById("thanks"), {
     css: [
@@ -1192,8 +1192,8 @@ $(function () {
     ]
   });
 
-  yoffset += 300;
-  ScrollEm.forward(300);
+  yoffset += 800;
+  ScrollEm.forward(800);
   ScrollEm.addBookmark("contact", yoffset - 16, {
     before: document.getElementById("in-touch"),
     offset: 124
@@ -1318,8 +1318,8 @@ $(function () {
     ]
   });
 
-  yoffset += 500;
-  ScrollEm.forward(450);
+  yoffset += 900;
+  ScrollEm.forward(850);
 
   ScrollEm.add(document.getElementById("bye"), {
     css: [
@@ -1381,7 +1381,7 @@ $(function () {
     ]
   });
 
-  yoffset += 950;
+  yoffset += 1000;
   ScrollEm.forward(1000);
 
   ScrollEm.add(document.getElementById("im-out"), {
