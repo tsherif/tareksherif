@@ -252,10 +252,10 @@
           radius: 1
         });
 
-        var main_position_buffer = createBuffer(main_vars.aPosition, sphere.vertices, 3);
-        var main_normal_buffer = createBuffer(main_vars.aNormal, sphere.normals, 3);
-        var main_texture_buffer = createBuffer(main_vars.aTexCoord, sphere.texture_coords, 2);
-        var shadow_position_buffer = createBuffer(shadow_vars.aPosition, sphere.vertices, 3);        
+        var main_position_buffer = glUtils.setBuffer(gl, main_vars.aPosition, sphere.vertices, 3);
+        var main_normal_buffer = glUtils.setBuffer(gl, main_vars.aNormal, sphere.normals, 3);
+        var main_texture_buffer = glUtils.setBuffer(gl, main_vars.aTexCoord, sphere.texture_coords, 2);
+        var shadow_position_buffer = glUtils.setBuffer(gl, shadow_vars.aPosition, sphere.vertices, 3);       
 
         var planet = {
           translation: {
@@ -394,16 +394,15 @@
           gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
           gl.viewport(0, 0, offscreen.x, offscreen.y);
 
-
-          enableBuffer(shadow_vars.aPosition, shadow_position_buffer, 3);  
+          glUtils.enableBuffer(gl, shadow_vars.aPosition, shadow_position_buffer, 3);  
 
           gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
           mat4.perspective(proj_matrix, Math.PI / 3, offscreen.x / offscreen.y, 1, 100);
           mat4.lookAt(view_matrix, 
-           light_position,
-           [0, 0, 0],
-           [0, 1, 0]
+            light_position,
+            [0, 0, 0],
+            [0, 1, 0]
           );
 
           var planet_shadow_mvp = drawObject(planet, shadow_vars);
@@ -416,9 +415,9 @@
 
           gl.viewport(0, 0, canvas.width, canvas.height);
 
-          enableBuffer(main_vars.aPosition, main_position_buffer, 3);
-          enableBuffer(main_vars.aNormal, main_normal_buffer, 3);
-          enableBuffer(main_vars.aTexCoord, main_texture_buffer, 2);
+          glUtils.enableBuffer(gl, main_vars.aPosition, main_position_buffer, 3);
+          glUtils.enableBuffer(gl, main_vars.aNormal, main_normal_buffer, 3);
+          glUtils.enableBuffer(gl, main_vars.aTexCoord, main_texture_buffer, 2);
           
           gl.uniform3f(main_vars.uLightColor, 0.7, 0.7, 0.7);
           gl.uniform3fv(main_vars.uLightPosition, light_position);
@@ -453,25 +452,6 @@
         
           gl.viewport(0, 0, canvas.width, canvas.height);
           mat4.perspective(proj_matrix, Math.PI / 3, canvas.width / canvas.height, 1, 100);
-        }
-
-        function createBuffer(attribute, data, item_size) {
-          var buffer = gl.createBuffer();
-
-          gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-          gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
-          gl.vertexAttribPointer(attribute, item_size, gl.FLOAT, false, 0, 0);
-          gl.enableVertexAttribArray(attribute);
-
-          return buffer;
-        }
-
-        function enableBuffer(attribute, buffer, item_size) {
-          gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-          gl.vertexAttribPointer(attribute, item_size, gl.FLOAT, false, 0, 0);
-          gl.enableVertexAttribArray(attribute);
-
-          return buffer;
         }
 
       };
