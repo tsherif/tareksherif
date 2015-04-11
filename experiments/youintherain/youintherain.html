@@ -253,6 +253,10 @@
             video.src = window.URL.createObjectURL(stream);
           }, 
           function(err) {
+            if (window.location.origin.indexOf("tareksherif.ca") !== -1) {
+              window.location = "http://tsherif.github.io/tareksherif/experiments/youintherain/youintherain.html";
+              return;
+            }
             document.getElementById("camera-warning").style.display = "block";
             console.log("Error: ", err);
           }
