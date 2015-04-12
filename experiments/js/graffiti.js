@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////////
-//  tareksherif.ca: codebase for www.tareksherif.ca
+//  tareksherif.net: codebase for www.tareksherif.net
 //  Copyright (C) 2013  Tarek Sherif
 //
 //  This program is free software: you can redistribute it and/or modify
