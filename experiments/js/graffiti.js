@@ -22,6 +22,8 @@
 // by Billy Lamberta and Keith Peters
 
 (function() {
+  "use strict";
+
   window.graffiti = {
     get: function(id) {
       var canvas = document.getElementById(id);
@@ -35,6 +37,7 @@
       var brush_size;
       var brush_density = 500;
       var brush_color;
+      var spraying = false;
       var new_spray = false;
       
       window.addEventListener("resize", function() {
@@ -44,48 +47,50 @@
 
       canvas.addEventListener("touchstart", function(e) {
         e.preventDefault();
-        new_spray = true;
-        spray(e);
-        canvas.addEventListener("touchmove", spray, false);
+        spraying = new_spray = true;
       }, false);
       
       canvas.addEventListener("touchend", function(e) {
         e.preventDefault();
-        canvas.removeEventListener("touchmove", spray, false);
+        spraying = false;
       }, false);
       
       canvas.addEventListener("mousedown", function(e) {
-        new_spray = true;
-        spray(e);
-        canvas.addEventListener("mousemove", spray, false);
-      }, false);
-      
-      canvas.addEventListener("mouseup", function() {
-        canvas.removeEventListener("mousemove", spray, false);
-      }, false);
-        
-      function spray(e) {
-        var i, angle, radius, xpos, ypos, offset;
-        var cursor = touch.touching ? touch : mouse;
         e.preventDefault();
-        
-        if (new_spray) {
-          brush_color = utils.randomColor();
-          brush_size = Math.random() * 90 + 10;
-          new_spray = false;
-        }
+        spraying = new_spray = true;
+      }, false);
       
-        context.fillStyle = brush_color;
+      canvas.addEventListener("mouseup", function(e) {
+        e.preventDefault();
+        spraying = false;
+      }, false);
+        
+      (function update() {
+        var i, angle, radius, xpos, ypos, offset, cursor;
 
-        for (i = 0; i < brush_density; i++) {
-          angle = Math.random() * Math.PI * 2;
-          radius = Math.random() * brush_size;
-          xpos = Math.floor(cursor.x + Math.cos(angle) * radius);
-          ypos = Math.floor(cursor.y + Math.sin(angle) * radius);
+        if (spraying) {
+          cursor = touch.touching ? touch : mouse;
+
+          if (new_spray) {
+            brush_color = utils.randomColor();
+            brush_size = Math.random() * 90 + 10;
+            new_spray = false;
+          }
           
-          context.fillRect(xpos, ypos, 1, 1);
+          context.fillStyle = brush_color;
+
+          for (i = 0; i < brush_density; i++) {
+            angle = Math.random() * Math.PI * 2;
+            radius = Math.random() * brush_size;
+            xpos = Math.floor(cursor.x + Math.cos(angle) * radius);
+            ypos = Math.floor(cursor.y + Math.sin(angle) * radius);
+            
+            context.fillRect(xpos, ypos, 1, 1);
+          }
         }
-      }
+
+        requestAnimationFrame(update);
+      })();
 
       return canvas;
     }

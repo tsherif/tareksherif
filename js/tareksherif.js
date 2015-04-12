@@ -186,7 +186,7 @@ $(function () {
     css: [
       {
         property: "top",
-        start: yoffset
+        start: yoffset + 8
       },
       {
         property: "right",
@@ -220,6 +220,26 @@ $(function () {
 
   yoffset += 170;
   ScrollEm.forward(100);
+
+  ScrollEm.add(document.getElementById("biodigital"), {
+    css: [
+      {
+        property: "top",
+        start: yoffset
+      },
+      {
+        property: "left",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH + 50"
+      }
+    ]
+  });
+
+  yoffset += 160;
 
   ScrollEm.add(document.getElementById("brainbrowser"), {
     css: [

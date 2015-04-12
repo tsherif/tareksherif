@@ -219,11 +219,11 @@ section a {
   background-color: #666666;
 }
 
-#work-background, #art-background, #code-background, #experiments-background {
+#art-background, #code-background, #experiments-background {
   height: 87px;
 }
 
-#glitches-background {
+#work-background, #glitches-background {
   height: 61px;
 }
 
@@ -285,8 +285,8 @@ section a {
   text-decoration: none;
 }
 
-#cbrain img {
-  border: 2px solid #000000;
+#cbrain img, #biodigital img {
+  border: 2px solid #AAAAAA;
 }
 
 #gravity-title {
