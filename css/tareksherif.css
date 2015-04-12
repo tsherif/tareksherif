@@ -185,11 +185,6 @@ section a {
   height: 80px;
 }
 
-#graffiti-note1, #graffiti-note2 {
-  width: 250px;
-  padding-bottom: 2px;
-}
-
 .down-arrow {
   width: 40px;
   margin: 10px auto;
@@ -229,35 +224,6 @@ section a {
 
 #puppy-image img {
   width: 200px;
-}
-
-#graffiti-button {
-  display: block;
-  position: absolute;
-  bottom: 2px;
-  right: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  padding: 0.2em 0.4em;
-}
-
-#graffiti-button:hover {
-  background-color: #20C4EF;
-}
-
-#graffiti-button:active {
-  color: #00A4CF;
-  background-color: #F0F0F0;
-}
-
-
-#graffiti-canvas {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  cursor: crosshair;
-  z-index: 9;
 }
 
 .scroller.experiment {
@@ -464,15 +430,9 @@ section a {
     display: block;
   }
 
-  #graffiti-button {
-    margin-top: 0.1em;
-    font-size: 1.4em;
-    position: static;
-    display: block;
-  }
-
   #about-me {
-    margin-top: 72px;
+    margin-top: 576px;
+    margin-bottom: 920px;
   }
 
   .scroller {
@@ -496,17 +456,6 @@ section a {
 
   .header-background {
     display: none;
-  }
-
-  #graffiti-note1, #graffiti-note2 {
-    display: block;
-    width: auto;
-    text-align: center;
-    margin: 0;
-  }
-
-  #graffiti-note1 {
-    margin-top: 64px;
   }
 
   .scroller.scroll-header {
