@@ -21,7 +21,6 @@ $(function () {
 
   var yoffset = 0;
   var navigation = $("#navigation");
-  var graffiti_canvas;
   var WINDOW_WIDTH = window.innerWidth;
   var NAV_POSITION = navigation.css("position");
   var NAV_TOP = navigation.css("top");
@@ -75,29 +74,6 @@ $(function () {
     window.requestAnimationFrame(navUpdate);
   })();
 
-  $("#graffiti-button").click(function() {
-    var button = $(this);
-    graffiti_canvas = graffiti_canvas || $(graffiti.get("graffiti-canvas"));
-
-    function escapeKeyHide(e) {
-      if (e.keyCode === 27) {
-        graffiti_canvas.hide();
-        button.text("Graffiti Mode");
-      }
-    }
-    
-    if (graffiti_canvas.is(":visible")) {
-      graffiti_canvas.hide();
-      button.text("Graffiti Mode");
-      $(document).unbind("keydown", escapeKeyHide);
-    } else {
-      graffiti_canvas.show();
-      button.text("End Graffiti Mode");
-      $(document).keydown(escapeKeyHide);
-    }
-  });
-
-
   $(".vertical-text").each(function() {
     var el = $(this);
     el.text(el.text().replace(/(.)/g, '$1\n'));
@@ -115,47 +91,6 @@ $(function () {
 
   yoffset += 680;
   ScrollEm.forward(200);
-
-  ScrollEm.add(document.getElementById("graffiti-note1"), {
-    css: [
-      {
-        property: "top",
-        start: yoffset
-      },
-      {
-        property: "right",
-        start: "WINDOW_WIDTH",
-      },
-      {
-        property: "translateX",
-        start: 0,
-        end: "WINDOW_WIDTH - 400"
-      }
-    ]
-  });
-
-  ScrollEm.forward(100);
-
-  ScrollEm.add(document.getElementById("graffiti-note2"), {
-    css: [
-      {
-        property: "top",
-        start: yoffset
-      },
-      {
-        property: "left",
-        start: "WINDOW_WIDTH"
-      },
-      {
-        property: "translateX",
-        start: 0,
-        end: "-WINDOW_WIDTH + 399"
-      }
-    ]
-  });
-
-  yoffset += 180;
-  ScrollEm.forward(150);
 
   ScrollEm.add(document.getElementById("about-me"), {
     css: [
