@@ -431,8 +431,9 @@ section a {
   }
 
   #about-me {
-    margin-top: 576px;
-    margin-bottom: 576px;
+    font-size: 2em;
+    margin-top: 122px;
+    margin-bottom: 122px;
   }
 
   .scroller {
