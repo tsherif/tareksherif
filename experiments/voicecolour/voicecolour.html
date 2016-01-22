@@ -247,6 +247,10 @@
               
               setInterval(update, 1000 / 60);
             }, function(err) {
+              if (window.location.origin.indexOf("tareksherif.net") !== -1) {
+                window.location = "https://tsherif.github.io/tareksherif/experiments/voicecolour/voicecolour.html";
+                return;
+              }
               console.log("ERROR: ", err);
             });
           } else {
