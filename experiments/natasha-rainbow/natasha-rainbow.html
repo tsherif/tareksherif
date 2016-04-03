@@ -127,10 +127,6 @@
 
                     if (playing[i]) {
                         color = lightColors[i];
-                        if (playing[i] === "start") {
-                            sounds[i].play();
-                            playing[i] = true;
-                        }
                     } else {
                         color = color || colors[i];
                     }
@@ -144,24 +140,30 @@
             })();
 
             document.addEventListener("touchstart", function(event) {
+                event.preventDefault();
+
                 var touches = event.touches;
 
                 for (var i = 0; i < touches.length; i++) {
                     var j = Math.floor(touches[i].clientY / segHeight);
-                    if (!playing[j]) {
-                        playing[j] = "start";
+                    if (!playing[j] && sounds[j]) {
+                        sounds[j].play();
+                        playing[j] = true;
                     }
                 }
             });
 
             document.addEventListener("mousedown", function(event) {
+                event.preventDefault();
                 var i = Math.floor(event.clientY / segHeight);
-                if (!playing[i]) {
-                    playing[i] = "start";
+                if (!playing[i] && sounds[i]) {
+                    sounds[i].play();
+                    playing[i] = true;
                 }
             });
 
             document.addEventListener("mousemove", function(event) {
+                event.preventDefault();
 
                 var wasPlaying = false;
                 var i = Math.floor(event.clientY / segHeight);;
@@ -176,11 +178,13 @@
                 }
 
                 if (wasPlaying && !playing[i]) {
-                    playing[i] = "start";
+                    sounds[i].play();
+                    playing[i] = true;
                 }
             });
 
             document.addEventListener("touchmove", function(event) {
+                event.preventDefault();
                 var touches = event.touches;
 
                 newPlaying.length = 0;
@@ -192,8 +196,9 @@
                 }
 
                 for (i = 0; i < sounds.length; i++) {
-                    if (newPlaying[i] && !playing[i]) {
-                        playing[i] = "start";
+                    if (newPlaying[i] && !playing[i] && sounds[i]) {
+                        sounds[i].play();
+                        playing[i] = true;
                     }
 
                     if (playing[i] && !newPlaying[i]) {
@@ -205,6 +210,7 @@
             });
 
             document.addEventListener("touchend", function(event) {
+                event.preventDefault();
                 var touches = event.changedTouches;
 
                 for (var i = 0; i < touches.length; i++) {
@@ -219,6 +225,7 @@
             });
 
             document.addEventListener("mouseup", function(event) {
+                event.preventDefault();
                 for (var i = 0; i < sounds.length; i++) {
                     if (playing[i]) {
                         sounds[i].pause();
@@ -232,65 +239,63 @@
                 event.preventDefault();
             });
 
-            function fadeOut(element) {
+            function fadeOut(element, duration, ok) {
                 var opacity = parseFloat(element.style.opacity || 1);
+                var startTime = Date.now();
 
                 function fade() {
                     if (opacity <= 0) {
                         element.style.opacity = 0;
+                        element.parentElement.removeChild(element);
+                        if (ok) {
+                            ok();
+                        }
                     } else {
                         requestAnimationFrame(fade);
-                        opacity -= 0.008;
                         element.style.opacity = opacity;
                     }
+
+                    opacity = 1 - (Date.now() - startTime) / duration;
                 }
 
                 requestAnimationFrame(fade);
             }
 
-            var time = 1000;
-
             setTimeout(function() {
-                fadeOut(title);
-            }, time);
+                fadeOut(title, 1500, function() {
+                    setTimeout(function() {
+                        from.style.display = "block";
+                        setTimeout(function() {
+                            fadeOut(from, 1500, function() {
+                                var i = 0;
+                                var inc = 1;
+                                var play = setInterval(function() {
+                                    if (i >= sounds.length - 1) {
+                                        inc *= -1;
+                                    }
 
-            time += 2900;
+                                    if (i < 0) {
+                                        clearInterval(play);
+                                    }
 
-            setTimeout(function() {
-                from.style.display = "block";
-            }, time);
+                                    for (var j = 0; j < sounds.length; j++) {
+                                        playing[j] = false;
+                                        sounds[j].pause();
+                                        sounds[j].currentTime = 0;
+                                    }
 
-            time += 500;
+                                    if (sounds[i]) {
+                                        sounds[i].play();
+                                        playing[i] = true;
+                                    }
 
-            setTimeout(function() {
-                fadeOut(from);
-            }, time);
-
-            time += 1000;
-
-            setTimeout(function() {
-                var i = 0;
-                var inc = 1;
-                var play = setInterval(function() {
-                    if (i >= sounds.length - 1) {
-                        inc *= -1;
-                    }
-
-                    if (i < 0) {
-                        clearInterval(play);
-                    }
-
-                    for (var j = 0; j < sounds.length; j++) {
-                        playing[j] = false;
-                        sounds[j].pause();
-                        sounds[j].currentTime = 0;
-                    }
-
-                    playing[i] = "start";
-
-                    i += inc;
-                }, 300);
-            }, time);
+                                    i += inc;
+                                }, 300);
+                            });
+                        }, 500);
+                    })
+                });
+            }, 1000);
         };
     </script>
 </body>
