@@ -139,8 +139,25 @@
 
             })();
 
+            var firstPlay = true;
+
+            function init() {
+                for (var i = 0; i < sounds.length; i++) {
+                    sounds[i].volume = 0;
+                    sounds[i].play();
+                    sounds[i].pause();
+                    sounds[i].volume = 1;
+                }
+
+                firstPlay = false;
+            }
+
             document.addEventListener("touchstart", function(event) {
                 event.preventDefault();
+
+                if (firstPlay) {
+                    init();
+                }
 
                 var touches = event.touches;
 
@@ -155,6 +172,11 @@
 
             document.addEventListener("mousedown", function(event) {
                 event.preventDefault();
+
+                if (firstPlay) {
+                    init();
+                }
+
                 var i = Math.floor(event.clientY / segHeight);
                 if (!playing[i] && sounds[i]) {
                     sounds[i].play();
@@ -177,7 +199,7 @@
                     }
                 }
 
-                if (wasPlaying && !playing[i]) {
+                if (wasPlaying && !playing[i] && sounds[i]) {
                     sounds[i].play();
                     playing[i] = true;
                 }
