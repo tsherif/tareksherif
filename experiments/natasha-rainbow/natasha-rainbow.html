@@ -143,6 +143,10 @@
 
             function init() {
                 for (var i = 0; i < sounds.length; i++) {
+                    if (playing[i]) {
+                        continue;
+                    }
+
                     sounds[i].volume = 0;
                     sounds[i].play();
                     sounds[i].pause();
@@ -155,10 +159,6 @@
             document.addEventListener("touchstart", function(event) {
                 event.preventDefault();
 
-                if (firstPlay) {
-                    init();
-                }
-
                 var touches = event.touches;
 
                 for (var i = 0; i < touches.length; i++) {
@@ -168,19 +168,23 @@
                         playing[j] = true;
                     }
                 }
+
+                if (firstPlay) {
+                    init();
+                }
             });
 
             document.addEventListener("mousedown", function(event) {
                 event.preventDefault();
 
-                if (firstPlay) {
-                    init();
-                }
-
                 var i = Math.floor(event.clientY / segHeight);
                 if (!playing[i] && sounds[i]) {
                     sounds[i].play();
                     playing[i] = true;
+                }
+
+                if (firstPlay) {
+                    init();
                 }
             });
 
