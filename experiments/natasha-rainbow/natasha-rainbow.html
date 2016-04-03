@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<!--
+  tareksherif.net: codebase for www.tareksherif.net
+  Copyright (C) 2014 Tarek Sherif
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html>
+<head>
+    <title>Natasha's Touchable Rainbow</title>
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .header {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            text-align: center;
+            color: #FFF;
+            text-shadow: 2px 2px black;
+        }
+
+        #title {
+            font-size: 6em;
+            top: 10%;
+        }
+
+        #from {
+            font-size: 2em;
+            top: 37%;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <h1 id="title" class="header">Natasha's Touchable Rainbow</h1>
+    <h1 id="from" class="header">From Tarek and Sahar</h1>
+    <audio id="a-note" loop src="audio/A.mp3"></audio>
+    <audio id="b-note" loop src="audio/B.mp3"></audio>
+    <audio id="c-note" loop src="audio/C.mp3"></audio>
+    <audio id="d-note" loop src="audio/D.mp3"></audio>
+    <audio id="e-note" loop src="audio/E.mp3"></audio>
+    <audio id="f-note" loop src="audio/F.mp3"></audio>
+    <script>
+        window.onload = function() {
+            "use strict";
+
+            var title = document.getElementById("title");
+            var from = document.getElementById("from");
+            var canvas = document.getElementById("canvas");
+
+            var ctx = canvas.getContext("2d");
+
+            var colors = [
+                "red",
+                "orange",
+                "yellow",
+                "green",
+                "blue",
+                "magenta"
+            ];
+
+            var lightColors = [
+                "#F55",
+                "#FFA5AA",
+                "#FFA",
+                "#5F5",
+                "#55F",
+                "#FAF"
+            ];
+
+            var sounds = [
+                document.getElementById("f-note"),
+                document.getElementById("e-note"),
+                document.getElementById("d-note"),
+                document.getElementById("c-note"),
+                document.getElementById("b-note"),
+                document.getElementById("a-note")
+            ];
+
+            var playing = [];
+            var newPlaying = [];
+
+            var width, height, segHeight;
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+                segHeight = height / colors.length;
+            }
+
+            resize();
+
+            window.onresize = resize;
+
+            var segY = 0;
+
+            (function draw() {
+                requestAnimationFrame(draw);
+
+                var color;
+
+                segY = 0;
+                for (var i = 0; i < colors.length; i++) {
+
+                    color = null;
+
+                    if (playing[i]) {
+                        color = lightColors[i];
+                        if (playing[i] === "start") {
+                            sounds[i].play();
+                            playing[i] = true;
+                        }
+                    } else {
+                        color = color || colors[i];
+                    }
+
+
+                    ctx.fillStyle = color;
+                    ctx.fillRect(0, segY, width, segHeight);
+                    segY += segHeight;
+                };
+
+            })();
+
+            document.addEventListener("touchstart", function(event) {
+                var touches = event.touches;
+
+                for (var i = 0; i < touches.length; i++) {
+                    var j = Math.floor(touches[i].clientY / segHeight);
+                    if (!playing[j]) {
+                        playing[j] = "start";
+                    }
+                }
+            });
+
+            document.addEventListener("mousedown", function(event) {
+                var i = Math.floor(event.clientY / segHeight);
+                if (!playing[i]) {
+                    playing[i] = "start";
+                }
+            });
+
+            document.addEventListener("mousemove", function(event) {
+
+                var wasPlaying = false;
+                var i = Math.floor(event.clientY / segHeight);;
+
+                for (var j = 0; j < sounds.length; j++) {
+                    if (j !== i && playing[j]) {
+                        sounds[j].pause();
+                        sounds[j].currentTime = 0;
+                        playing[j] = false;
+                        wasPlaying = true;
+                    }
+                }
+
+                if (wasPlaying && !playing[i]) {
+                    playing[i] = "start";
+                }
+            });
+
+            document.addEventListener("touchmove", function(event) {
+                var touches = event.touches;
+
+                newPlaying.length = 0;
+
+                for (var i = 0; i < touches.length; i++) {
+                    var j = Math.floor(touches[i].clientY / segHeight);
+
+                    newPlaying[j] = true;
+                }
+
+                for (i = 0; i < sounds.length; i++) {
+                    if (newPlaying[i] && !playing[i]) {
+                        playing[i] = "start";
+                    }
+
+                    if (playing[i] && !newPlaying[i]) {
+                        sounds[i].pause();
+                        sounds[i].currentTime = 0;
+                        playing[i] = false;
+                    }
+                }
+            });
+
+            document.addEventListener("touchend", function(event) {
+                var touches = event.changedTouches;
+
+                for (var i = 0; i < touches.length; i++) {
+                    var j = Math.floor(touches[i].clientY / segHeight);
+
+                    if (playing[j] && sounds[j]) {
+                        sounds[j].pause();
+                        sounds[j].currentTime = 0;
+                        playing[j] = false;
+                    }
+                }
+            });
+
+            document.addEventListener("mouseup", function(event) {
+                for (var i = 0; i < sounds.length; i++) {
+                    if (playing[i]) {
+                        sounds[i].pause();
+                        sounds[i].currentTime = 0;
+                        playing[i] = false;
+                    }
+                }
+            });
+
+            document.addEventListener("contextmenu", function(event) {
+                event.preventDefault();
+            });
+
+            function fadeOut(element) {
+                var opacity = parseFloat(element.style.opacity || 1);
+
+                function fade() {
+                    if (opacity <= 0) {
+                        element.style.opacity = 0;
+                    } else {
+                        requestAnimationFrame(fade);
+                        opacity -= 0.008;
+                        element.style.opacity = opacity;
+                    }
+                }
+
+                requestAnimationFrame(fade);
+            }
+
+            var time = 1000;
+
+            setTimeout(function() {
+                fadeOut(title);
+            }, time);
+
+            time += 2900;
+
+            setTimeout(function() {
+                from.style.display = "block";
+            }, time);
+
+            time += 500;
+
+            setTimeout(function() {
+                fadeOut(from);
+            }, time);
+
+            time += 1000;
+
+            setTimeout(function() {
+                var i = 0;
+                var inc = 1;
+                var play = setInterval(function() {
+                    if (i >= sounds.length - 1) {
+                        inc *= -1;
+                    }
+
+                    if (i < 0) {
+                        clearInterval(play);
+                    }
+
+                    for (var j = 0; j < sounds.length; j++) {
+                        playing[j] = false;
+                        sounds[j].pause();
+                        sounds[j].currentTime = 0;
+                    }
+
+                    playing[i] = "start";
+
+                    i += inc;
+                }, 300);
+            }, time);
+        };
+    </script>
+</body>
+</html>
