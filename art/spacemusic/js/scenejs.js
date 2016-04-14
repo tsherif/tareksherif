@@ -17126,7 +17126,7 @@ SceneJS_Display.prototype._logPickList = function () {
 
                 SceneJS_math_transformVector4(object.modelTransform.matrix, tempVec4, tempVec4b);
 
-                hit.worldPos = tempVec4b.slice(0, 3);
+                hit.worldPos = sliceArray(tempVec4b, 0, 3);
 
                 // Get barycentric coordinates of the ray-triangle intersection
 
@@ -17338,6 +17338,20 @@ SceneJS_Display.prototype._logPickList = function () {
         SceneJS_math_lerpVec3(time, time1, time2, c1, c2, c);
     };
 
+    function sliceArray(array, start, end) {
+        if (typeof array.slice === "function") {
+            return array.slice(start, end);
+        }
+
+        var length = end - start;
+        var newArray = new array.constructor(length);
+
+        for (var i = 0; i < length; i++) {
+            newArray[i] = array[start + i];
+        }
+
+        return newArray;
+    }
 })();
 
 /** Renders either the draw or pick list.
