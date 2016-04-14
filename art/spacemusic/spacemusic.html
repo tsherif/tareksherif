@@ -253,7 +253,17 @@
                                         ]
                                     },
                                     {
-                                        id: "planetRoot"
+                                        id: "planetRoot",
+                                        type: "shader",
+                                        shaders: [
+                                            {
+                                                "stage": "fragment",
+                                                "code": getShaderCode(),
+                                                "hooks": {
+                                                    pixelColor: "colorFunction"
+                                                }
+                                            }
+                                        ]
                                     },
                                     createStars(2000)
                                 ]
@@ -418,22 +428,9 @@
         }
 
         planet.shader = node = node.addNode({
-            "type": "shader",
-            "shaders": [
-                {
-                    "stage": "fragment",
-                    "code": getShaderCode(),
-                    "hooks": {
-                        pixelColor: "colorFunction",
-                        viewPos: "viewPosFunction"
-                    }
-                }
-            ],
 
+            type: "shaderParams",
             params: {
-                fogStart: fogStart,
-                fogDensity: fogDensity,
-                fogColor: [0, 0, 0],
                 color1: color1,
                 color2: color2,
                 xFrequency: Math.random() * 10 + 1,
@@ -576,10 +573,16 @@
             },
             nodes: [
                 {
-                    type: "layer",
-                    priority: -1,
+                    type: "depthBuffer",
+                    enabled: false,
                     nodes: [
-                        geometry
+                        {
+                            type: "layer",
+                            priority: -1,
+                            nodes: [
+                                geometry
+                            ]
+                        }
                     ]
                 }
             ]
@@ -598,10 +601,6 @@
         code.push("uniform float yFrequency;");
         code.push("uniform float zFrequency;");
 
-        code.push("vec4  planetViewPos;");
-        code.push("void viewPosFunction(vec4 viewPos) {");
-        code.push("    planetViewPos = viewPos;");
-        code.push("}");
         code.push("vec4 colorFunction(vec4 color) {");
         code.push("    vec3 pos = SCENEJS_vVertex.xyz;");
         code.push("    float c =  0.5 * sin(pos.x * xFrequency);");
