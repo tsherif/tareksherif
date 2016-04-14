@@ -72,7 +72,6 @@
         #title {
             font-size: 9em;
             line-height: 1.15em;
-            display: none;
             margin-top: 0;
             margin-bottom: 20px;
         }
@@ -80,7 +79,6 @@
         #author {
             margin: 0;
             font-size: 3em;
-            display: none;
         }
 
         #reload {
@@ -112,8 +110,10 @@
 <img id="reload" src="img/reload.png">
 <script>
 
-    showHeader("title", 3700, 2000);
-    showHeader("author", 1000, 2000);
+    window.onload = function() {
+        fadeHeader("title", 3700, 2000);
+        fadeHeader("author", 1000, 2000);
+    };
 
     var reload = document.getElementById("reload");
 
@@ -635,9 +635,8 @@
         return code.join("\n");
     }
 
-    function showHeader(id, showTime, fadeTime, ok) {
+    function fadeHeader(id, showTime, fadeTime, ok) {
         var element = document.getElementById(id);
-        element.style.display = "block";
         setTimeout(function() {
             fadeOut(element, fadeTime, ok);
         }, showTime);
