@@ -466,8 +466,12 @@
 
     function initSounds() {
         for (var i = 0, len = dirtySounds.length; i < len; i++) {
-            dirtySounds[i].play();
-            dirtySounds[i].pause();
+            var dirtySound = dirtySounds[i];
+            var volume = dirtySound.volume;
+            dirtySound.volume = 0;
+            dirtySound.play();
+            dirtySound.pause();
+            dirtySound.volume = volume;
         }
         dirtySounds.length = 0;
         soundsDirty = false;
