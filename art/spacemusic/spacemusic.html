@@ -624,10 +624,10 @@
         code.push("uniform float time;");
         code.push("varying vec4 SCENEJS_vViewVertex;");
         code.push("void main() {");
-        code.push("   vec2 pos = gl_FragCoord.xy;");
+        code.push("   vec3 pos = SCENEJS_vViewVertex.xyz;");
         code.push("   float t = time * 0.0005;");
-        code.push("   float c = (sin(pos.x * 0.1 + t) + sin(pos.y * 0.1 + t)) * 0.5;")
-        code.push("   c *= 1.0 - SCENEJS_vViewVertex.z / -1000.0;")
+        code.push("   float c = (sin(pos.x * 0.1 + t) + sin(pos.y * 0.53 + t)  + sin(pos.z * 0.121 + t)) * 0.333;")
+        code.push("   c *= 1.0 - pos.z / -1000.0;")
         code.push("   gl_FragColor = vec4(c, c, c, 1.0);")
         code.push("}");
 
