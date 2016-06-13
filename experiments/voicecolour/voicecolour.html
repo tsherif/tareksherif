@@ -31,22 +31,22 @@
     <meta name="twitter:image" content="http://tareksherif.net/img/experiments/voicecolour.png">
     <style>
       html {
-        font-size: 
+        font-size:
         height: 100%;
       }
-      
+
       body {
         height: 100%;
         margin: 0;
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
       }
-      
+
       #canvas {
         background-color: #FFFFFF;
         width: 100%;
         height: 100%;
       }
-      
+
       .warning {
         color: red;
         font-weight: bold;
@@ -146,7 +146,7 @@
           Microphone
           <span class="unavailable-text">
             (Unavailable on this device or browser. Try <a href="http://www.mozilla.org/en-US/firefox/new/" target="_blank">Mozilla Firefox</a> or <a href="https://www.google.com/intl/en/chrome/browser/" target="_blank">Google Chrome</a>)
-          </span> 
+          </span>
         </div>
         <div data-value="nay" class="input-option">Nay by Nadir Bellahmer and Michael Frishkopf</div>
         <div data-value="round1" class="input-option">Round 1 by Nadir Bellahmer</div>
@@ -155,13 +155,13 @@
     <div id="now-playing" style="display:none">
       Now playing:
       <span id="playing-nay" style="display:none">
-        <a href="http://youtu.be/yszPe83eRbE" target="_blank">Nay by Nadir Bellahmer and Michael Frishkopf</a> 
+        <a href="http://youtu.be/yszPe83eRbE" target="_blank">Nay by Nadir Bellahmer and Michael Frishkopf</a>
       </span>
       <span id="playing-round1" style="display:none">
-        <a href="http://nadirbellahmer.bandcamp.com/" target="_blank">Round 1 by Nadir Bellahmer, from the album live@listen</a> 
+        <a href="http://nadirbellahmer.bandcamp.com/" target="_blank">Round 1 by Nadir Bellahmer, from the album live@listen</a>
       </span>
       <span id="playing-duet" style="display:none">
-        <a href="http://howlarts.net/releases" target="_blank">Stefan Christoff and Norman Nawrocki, from the album Duets for Abdelrazik</a> 
+        <a href="http://howlarts.net/releases" target="_blank">Stefan Christoff and Norman Nawrocki, from the album Duets for Abdelrazik</a>
       </span>
     </div>
     <canvas id="canvas"></canvas>
@@ -182,7 +182,7 @@
         if (!navigator.getUserMedia) {
           document.getElementById("mic-select").classList.add("unavailable");
         }
-        
+
         var canvas = document.getElementById("canvas");
         var context = canvas.getContext("2d");
         var audio_context = new AudioContext();
@@ -198,7 +198,7 @@
         var audio_extension = (function() {
           var audio = document.createElement("audio");
           var can_play = audio.canPlayType("audio/ogg codecs='vorbis'");
-          
+
           if (audio.canPlayType("audio/ogg codecs='vorbis'")) {
             return ".ogg";
           }
@@ -218,7 +218,7 @@
 
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-                
+
         for (i = 0; i < bin_count; i++) {
           nodes.push({
             x: canvas.width / 2,
@@ -244,11 +244,11 @@
             navigator.getUserMedia({audio: true }, function(stream) {
               audio_source = audio_context.createMediaStreamSource(stream);
               audio_source.connect(analyser);
-              
+
               setInterval(update, 1000 / 60);
             }, function(err) {
-              if (window.location.origin.indexOf("tareksherif.net") !== -1) {
-                window.location = "https://tsherif.github.io/tareksherif/experiments/voicecolour/voicecolour.html";
+              if (window.location.href.indexOf("https://tsherif.github.io/tareksherif-works/") === -1) {
+                window.location = "https://tsherif.github.io/tareksherif-works/experiments/voicecolour/voicecolour.html";
                 return;
               }
               console.log("ERROR: ", err);
@@ -272,13 +272,13 @@
                 audio_source.connect(gain);
                 gain.connect(analyser);
                 audio_source.connect(audio_context.destination);
-                
+
                 setInterval(update, 1000 / 60);
               }, function(error) {
                 console.log("ERROR: ", err);
               });
             }
-            request.send();        
+            request.send();
 
             input_select.style.display = "none";
             now_playing.style.display = "block";
@@ -293,7 +293,7 @@
 
           nodes.forEach(resetNode);
         };
-   
+
         function update() {
           analyser.getByteFrequencyData(frequency_data);
           requestAnimationFrame(draw);
@@ -308,9 +308,9 @@
           nodes.forEach(function(node, i) {
             node.value = frequency_data[i];
 
-            if (!node.reset && 
-                (node.value < threshold || 
-                 node.x < 0 || node.y < 0 || 
+            if (!node.reset &&
+                (node.value < threshold ||
+                 node.x < 0 || node.y < 0 ||
                  node.x > canvas.width || node.y > canvas.height)) {
               resetNode(node);
             }
@@ -342,7 +342,7 @@
           node.vy = Math.random() * 4 - 2;
           node.reset = true;
         }
-        
+
       })();
     </script>
   </body>
