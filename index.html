@@ -23,13 +23,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link type="text/css" href="css/tareksherif.css" rel="stylesheet">
   <link rel="icon" type="image/png" href="img/tarek-icon.png">
-  <title>Tarek Sherif - 3D Web Developer</title>
+  <title>Tarek Sherif - Graphics Programmer</title>
   <meta name="description" content="Hi and welcome to my website! Come find out about my various projects and check out my WebGL and HTML5 experiments and games.">
   <meta property="og:image" content="http://tareksherif.net/img/T.png">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:creator" content="@thsherif">
-  <meta name="twitter:title" content="Tarek Sherif - 3D Web Developer">
-  <meta name="twitter:description" content="Hi and welcome to my website! Come find out about my various projects and check out my WebGL and HTML5 experiments and games.">
+  <meta name="twitter:title" content="Tarek Sherif - Graphics Programmer">
+  <meta name="twitter:description" content="Hi and welcome to my website!">
   <meta name="twitter:image" content="http://tareksherif.net/img/T.png">
 </head>
 <body>
@@ -39,11 +39,11 @@
   <nav id="navigation">
     <span class="nav-section">
       <a class="nav-link" href="#work">Work</a>
+      <a class="nav-link" href="#code">Code</a>
       <a class="nav-link" href="#art">Art</a>
-      <a class="nav-link" href="#experiments">Experiments</a>
     </span>
     <span class="nav-section">
-      <a class="nav-link" href="#code">Code</a>
+      <a class="nav-link" href="#experiments">Experiments</a>
       <a class="nav-link" href="#glitches">Glitches</a>
       <a class="nav-link" href="#contact">Contact</a>
     </span>
@@ -68,7 +68,7 @@
     </section>
     <section id="biodigital" class="scroller">
       <a href="https://www.biodigital.com/" target="_blank"><img class="menu-image" src="img/work/biodigital.png"></a>
-      <a href="https://www.biodigital.com/">The BioDigital Human</a> is a WebGL-based virtual 3D body that brings to life thousands of medically accurate anatomy objects and health conditions in an interactive web-based platform.
+      <a href="https://www.biodigital.com/">The BioDigital Human</a> is a virtual 3D body that brings to life thousands of medically accurate anatomy objects and health conditions in an interactive web-based platform.
     </section>
     <section id="brainbrowser" class="scroller">
       <a href="https://brainbrowser.cbrain.mcgill.ca" target="_blank"><img class="menu-image" src="img/work/brainbrowser.png"></a>
@@ -77,6 +77,27 @@
     <section id="cbrain" class="scroller">
       <a href="http://mcin-cnim.ca/neuroimagingtechnologies/cbrain/" target="_blank"><img class="menu-image" src="img/work/cbrain.png"></a>
       <a href="http://mcin-cnim.ca/neuroimagingtechnologies/cbrain/" target="_blank">CBRAIN</a> is a distributed compute platform connecting neuroimaging researchers to distributed data stores, analysis tools and high performance computing centers across Canada and globally. The source code for CBRAIN is available on <a href="https://github.com/aces/cbrain" target="_blank">GitHub</a>.
+    </section>
+    <section id="code-intro" class="scroller scroll-header banner">
+      Built some tools for 3D and web<BR>programming...
+    </section>
+    <section id="picogl" class="scroller">
+      <a href="https://tsherif.github.io/picogl.js" target="_blank"><img class="menu-image" src="img/code/picogl.png"></a>
+      <a href="https://tsherif.github.io/picogl.js" target="_blank">PicoGL.js</a> is minimal WebGL 2-only rendering library. It's meant for developers who understand the WebGL 2 rendering pipeline and want to use it, but with a more convenient API.
+    </section>
+    <section id="webgl2examples" class="scroller">
+      <a href="https://github.com/tsherif/webgl2examples" target="_blank"><img class="menu-image" src="img/code/webgl2examples.png"></a>
+      <a href="https://github.com/tsherif/webgl2examples" target="_blank">WebGL 2 Examples</a> is a collection or rendering algorithms implemented in raw WebGL 2. It's meant as a pedagogical tool to help developers familiarize themselves with the new API.
+    </section>
+    <section id="nano-server" class="scroller">
+      <a href="https://www.npmjs.org/package/nano-server" target="_blank"><img class="menu-image" src="img/code/nano-server.png"></a>
+      <a href="https://www.npmjs.org/package/nano-server" target="_blank">nano-server</a> is an ultra-lightweight node.js HTTP server for web development. It has no dependencies on external libraries, attemps to set the <code>Content-type</code> header for browser-relevant files and will send gzipped versions of files if they are available.
+    </section>
+    <section id="scroll-em" class="scroller">
+      <a href="https://github.com/tsherif/scroll-em" target="_blank"><img class="menu-image" src="img/code/scroll-em.png"></a>
+      <a href="https://github.com/tsherif/scroll-em" target="_blank">ScrollEm</a> is JavaScript library for creating scrolling animations on a web page.
+      It allows the developer to make numeric CSS properties vary based on the current vertical scroll position of the page.
+      ScrollEm was used to build this web site.
     </section>
     <section id="art-intro" class="scroller scroll-header banner">
       Created some games and<BR>interactive art pieces...
@@ -97,9 +118,15 @@
       <a href="games/redsquare/redsquare.html" target="_blank">Red Square</a> was created during the 2012 Québec student protests to express the feeling of an organized, organic chaos and the power dynamic between protesters and the police. It is available to play on <a href="http://www.newgrounds.com/portal/view/598131" target="_blank">Newgrounds</a>.
     </section>
     <section id="experiments-intro" class="scroller scroll-header banner">
-      A few WebGL and HTML5 Canvas<BR>animation experiments...
+      A few graphics experiments...
     </section>
     <div class="gallery">
+      <section id="cloth" class="experiment scroller">
+        <a href="https://tsherif.github.io/picogl.js/examples/cloth.html" target="_blank">
+          <img src="img/experiments/cloth.png">
+          <div id="cloth-title"  class="experiment-title">Cloth</div>
+        </a>
+      </section>
       <section id="youintherain" class="experiment scroller">
         <a href="https://tsherif.github.io/tareksherif-works/experiments/youintherain/youintherain.html" target="_blank">
           <img src="img/experiments/youintherain.png">
@@ -186,36 +213,8 @@
         </a>
       </section>
     </div>
-    <section id="code-intro" class="scroller scroll-header banner">
-      Some JavaScript libraries and<BR>applications...
-    </section>
-    <section id="nano-server" class="scroller">
-      <a href="https://www.npmjs.org/package/nano-server" target="_blank"><img class="menu-image" src="img/code/nano-server.png"></a>
-      <a href="https://www.npmjs.org/package/nano-server" target="_blank">nano-server</a> is an ultra-lightweight node.js HTTP server for web development. It has no dependencies on external libraries, attemps to set the <code>Content-type</code> header for browser-relevant files and will send gzipped versions of files if they are available.
-    </section>
-    <section id="scroll-em" class="scroller">
-      <a href="https://github.com/tsherif/scroll-em" target="_blank"><img class="menu-image" src="img/code/scroll-em.png"></a>
-      <a href="https://github.com/tsherif/scroll-em" target="_blank">ScrollEm</a> is JavaScript library for creating scrolling animations on a web page.
-      It allows the developer to make numeric CSS properties vary based on the current vertical scroll position of the page.
-      ScrollEm was used to build this web site.
-    </section>
-    <section id="ofactory" class="scroller">
-      <a href="https://github.com/tsherif/oFactory" target="_blank"><img class="menu-image" src="img/code/ofactory.png"></a>
-      <a href="https://github.com/tsherif/oFactory" target="_blank">oFactory</a> is a JavaScript library for building factory functions. It was built as a way to avoid using <a href="http://tsherif.wordpress.com/2013/08/04/constructors-are-bad-for-javascript/" target="_blank">constructor functions</a> in my work.
-      oFactory has been used in many of my <a href="#games">games</a> and <a href="#experiments">experiments</a>.
-    </section>
-    <section id="tgame" class="scroller">
-      <a href="https://github.com/tsherif/tgame" target="_blank"><img class="menu-image" src="img/code/tgame.png"></a>
-      <a href="https://github.com/tsherif/tgame" target="_blank">tgame</a> is a simple JavaScript game engine.
-        It implements a flexible state machine, asset loaders and helpers for basic collision detection, mouse and keyboard binding, and special effects.
-        tgame was used to create <a href="#games">Climb</a>.
-    </section>
-    <section id="gl-utils" class="scroller">
-      <a href="https://github.com/tsherif/gl-utils" target="_blank"><img class="menu-image" src="img/code/gl-utils.png"></a>
-      <a href="https://github.com/tsherif/gl-utils" target="_blank">glUtils</a> is a bare-bones WebGL library that abstracts away the most common boilerplate WebGL code, while still allowing one to use the API directly. glUtils was used to build my <a href="#experiments"> WebGL experiments</a>.
-    </section>
     <section id="glitches-intro" class="scroller scroll-header banner">
-      And some interesting mistakes...
+      And made some interesting mistakes...
     </section>
     <div class="gallery">
       <section id="glitch15" class="scroller experiment">

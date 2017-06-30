@@ -219,11 +219,11 @@ section a {
   background-color: #666666;
 }
 
-#art-background, #code-background, #experiments-background {
+#art-background, #code-background {
   height: 87px;
 }
 
-#work-background, #glitches-background {
+#work-background, #glitches-background, #experiments-background {
   height: 61px;
 }
 
@@ -377,6 +377,12 @@ section a {
   letter-spacing: 1.2px;
   bottom: 8px;
   left: 8px; 
+}
+
+#cloth-title {
+  letter-spacing: 1.2px;
+  bottom: 24px;
+  right: 8px; 
 }
 
 #youintherain-title1 {
