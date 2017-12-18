@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            /*background-color: black;*/
+        }
+        
+        #text {
+            /*color: white;*/
+            font-size: 2.5em;
+            padding: 0.5em;
+            font-family: Courier New;
+        }
+    </style>
+</head>
+<body>
+<div id="text"></div>
+<script>
+    var text = document.getElementById("text");
+    var QUOTES = [
+        {
+            text: "We read the letters of the dead like helpless gods.",
+        },
+        {
+            text: "Humanly speaking, no more is required, and no more can reasonably be asked, for this planet to remain a place fit for human habitation.",
+            
+        },
+        {
+            text: "Seek and learn to recognize who and what, in the midst of inferno, are not inferno, then make them endure, give them space.",
+            
+        },
+        {
+            text: "كأنّ الأذى كله يكون قد حدث بالفعل في اللحظة التي نتأكد فيها أن الكائنات التي أدميْناها كانت حقيقية",
+            textAlign: "right"
+        },
+        {
+            text: "I hope you do not suffer."
+        },
+        {
+            text: "Si on enlève l'extérieur, il reste l'intérieur. Et quand on enlève l'intérieur alors on voit l'âme."
+        },
+        {
+            text: "Burn posthumously, like a word."
+        },
+        {
+            text: "e<sup>iπ</sup> = -1",
+            textAlign: "center"
+        }
+    ];
+
+
+    var quote = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+    text.innerHTML = quote.text;
+    if (quote.textAlign) {
+        text.style.textAlign = quote.textAlign;
+    }
+</script>
+</body>
+</html>
