@@ -258,7 +258,7 @@
 
         // Prepare objects
         var moons = [];
-        var num_moons = Math.ceil(Math.random() * 10);
+        var num_moons = Math.ceil(Math.random() * 6);
         var current_radius;
         var orbit_radius;
 
@@ -405,7 +405,7 @@
 
           if (!rotation_matrix) {
             rotation_matrix = mat4.create();
-            mat4.rotationZ(rotation_matrix, Math.random() * Math.PI * 2);
+            mat4.rotationZ(rotation_matrix, Math.random() * Math.PI / 3 - Math.PI / 6);
           }
 
           mat4.scaling(scale_matrix, s);

@@ -85,7 +85,6 @@
 
         position = position * 2.0 - 1.0;
         position.x *= uResolution.x / uResolution.y;
-        position.xy *= 0.9;
 
         float r = length(position);
         float a = atan(position.y, position.x);
@@ -131,7 +130,7 @@
         });
 
         var inner_radius = Math.random() * 0.7;
-        var max_radius = Math.random() * 0.3 + 0.7;
+        var max_radius = Math.random() * 0.2 + 0.6;
 
         var timer = window.performance || window.Date;
 

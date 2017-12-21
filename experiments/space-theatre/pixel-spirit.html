@@ -284,6 +284,141 @@
         fragColor = vec4(color, 1.0);
     }
 </script>
+<script type="x-fs" id="magician">
+    #version 300 es   
+
+    precision highp float;
+
+    #define PI  3.14159
+    #define TAU 6.28319
+
+    float stroke(float x, float s, float w) {
+        float d = step(s, x + w * 0.5) - step(s, x - w * 0.5);
+        return clamp (d, 0.0, 1.0);
+    }
+
+    float circleSDF(vec2 uv) {
+        return length(uv - 0.5) * 2.0;
+    }
+
+    float fill(float x, float r) {
+        return 1.0 - step(r, x);
+    }
+
+    float rectSDF(vec2 uv, vec2 dims) {
+        uv = uv * 2.0 - 1.0;
+        return max(abs(uv.x / dims.x), abs(uv.y / dims.y));
+    }
+
+    float flip(float base, float flag) {
+        return mix(base, 1.0 - base, flag);
+    }
+
+    float raySDF(vec2 uv, int n) {
+        uv -= 0.5;
+        return fract(atan(uv.y, uv.x) / TAU * float(n));
+    }
+
+    vec2 rotate(vec2 uv, float a) {
+        mat2 rot = mat2(
+                cos(a), -sin(a),
+                sin(a), cos(a) 
+            );
+
+        return rot * (uv - 0.5) + 0.5;
+    }
+
+    vec3 bridge(vec3 color, float d, float s, float w) {
+        color *= 1.0 - stroke(d, s, w * 2.0);
+        return color + stroke(d, s, w);
+    }
+
+    in vec2 vScreenUV;
+
+    out vec4 fragColor;
+    void main() {
+        vec3 color = vec3(0.0);
+        vec2 uv = vScreenUV;
+        uv.x = flip(uv.x, step(0.5, uv.y));
+        vec2 offset = vec2(0.15, 0.0);
+        float left = circleSDF(uv + offset);
+        float right = circleSDF(uv - offset);
+        color += stroke(left, 0.4, 0.075);
+        color = bridge(color, right, 0.4, 0.075);
+
+        fragColor = vec4(color, 1.0);
+    }
+</script>
+<script type="x-fs" id="loop">
+    #version 300 es   
+
+    precision highp float;
+
+    #define PI  3.14159
+    #define TAU 6.28319
+
+    float stroke(float x, float s, float w) {
+        float d = step(s, x + w * 0.5) - step(s, x - w * 0.5);
+        return clamp (d, 0.0, 1.0);
+    }
+
+    float circleSDF(vec2 uv) {
+        return length(uv - 0.5) * 2.0;
+    }
+
+    float fill(float x, float r) {
+        return 1.0 - step(r, x);
+    }
+
+    float rectSDF(vec2 uv, vec2 dims) {
+        uv = uv * 2.0 - 1.0;
+        return max(abs(uv.x / dims.x), abs(uv.y / dims.y));
+    }
+
+    float flip(float base, float flag) {
+        return mix(base, 1.0 - base, flag);
+    }
+
+    float raySDF(vec2 uv, int n) {
+        uv -= 0.5;
+        return fract(atan(uv.y, uv.x) / TAU * float(n));
+    }
+
+    vec2 rotate(vec2 uv, float a) {
+        mat2 rot = mat2(
+                cos(a), -sin(a),
+                sin(a), cos(a) 
+            );
+
+        return rot * (uv - 0.5) + 0.5;
+    }
+
+    vec3 bridge(vec3 color, float d, float s, float w) {
+        color *= 1.0 - stroke(d, s, w * 2.0);
+        return color + stroke(d, s, w);
+    }
+
+    in vec2 vScreenUV;
+
+    out vec4 fragColor;
+    void main() {
+        vec3 color = vec3(0.0);
+        vec2 uv = vScreenUV;
+
+        float inv = step(0.5, uv.y);
+        uv = rotate(uv, -PI / 4.0) - 0.2;
+        uv = mix(uv, 0.6 - uv, step(0.5, inv));
+
+        for (int i = 0; i < 5; ++i) {
+            float rect = rectSDF(uv, vec2(1.0));
+            float s = 0.25 - abs(float(i) * 0.1 - 0.2);
+            color = bridge(color, rect, s, 0.05);
+            uv += 0.1;
+        }
+
+        fragColor = vec4(color, 1.0);
+    }
+</script>
 <canvas id="gl-canvas"></canvas>
 <script>
     var canvas = document.getElementById("gl-canvas");
@@ -292,7 +427,9 @@
 
     var FRAGMENT_IDS = [
         "tower",
-        "judgement"
+        "judgement",
+        "magician",
+        "loop"
     ];
 
     var app = PicoGL.createApp(canvas)
@@ -302,6 +439,7 @@
 
     var quadVsSource = document.getElementById("quad-vs").text.trim();
     var pixelFsSource = document.getElementById(fsID).text.trim();
+    // var pixelFsSource = document.getElementById("loop").text.trim();
 
     var program = app.createProgram(quadVsSource, pixelFsSource);
 
