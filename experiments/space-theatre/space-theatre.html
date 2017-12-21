@@ -44,13 +44,17 @@
             height: 100%;
         }
 
-        #screen {
+        #screen, #biodigital {
             position: absolute;
             top: 25%;
             left: 25%;
             height: 50%;
             width: 50%;
             border: none;
+        }
+
+        #biodigital {
+            display: none;
         }
 
         #gl-canvas {
@@ -60,6 +64,7 @@
 </head>
 <body>
     <iframe id="screen"></iframe>
+    <iframe id="biodigital" src="https://human.biodigital.com/widget/?m=beating_heart&camera=-6.765,142.185,-16.592,-1.583,135.565,4.037,0.072,0.955,0.288&background=black&dk=e2465d038906e07d4f36cf1bcd4bd7448479db8e&ui-all=false"></iframe>
     <canvas id="gl-canvas"></canvas>
     <script id="quad-vs" type="x-shader/vs">
         #version 300 es   
@@ -284,13 +289,14 @@
         canvas.height = window.innerHeight;
 
         var screen = document.getElementById("screen");
+        var biodigital = document.getElementById("biodigital");
 
         var SCENES = [
             "../remains/remains.html",
             "../moons/moons.html",
             "../liquidglass/liquidglass.html",
             "../flowers/flowers.html",
-            "https://human.biodigital.com/widget/?m=beating_heart&camera=-6.765,142.185,-16.592,-1.583,135.565,4.037,0.072,0.955,0.288&background=black&dk=e2465d038906e07d4f36cf1bcd4bd7448479db8e&ui-all=false",
+            "biodigital",
             "./quotes.html",
             "./pixel-spirit.html",
             "./states.html"
@@ -826,7 +832,17 @@
         
 
         function changeScene() {
-            screen.src = SCENES[Math.floor(Math.random() * SCENES.length)];
+            var url = SCENES[Math.floor(Math.random() * SCENES.length)];
+            
+            if (url === "biodigital") {
+                biodigital.style.display = "block";
+                screen.style.display = "none";
+            } else {
+                biodigital.style.display = "none";
+                screen.style.display = "block";
+                screen.src = url;
+            }
+            
             sceneChanged = true;
         }
 
