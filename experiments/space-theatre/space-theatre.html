@@ -31,12 +31,14 @@
     <script src="../js/pico-utils.js"></script>
     <style>
         html {
+            background-color: black;
             overflow: hidden;
             width: 100%;
             height: 100%;
         }
 
         body {
+            background-color: black;
             margin: 0;
             width: 100%;
             height: 100%;
@@ -131,11 +133,9 @@
 
         // uModVal and dir used to select the direction
         // to look for the neighbour we're going to check
-        layout(std140) uniform ConstraintUniforms {
-            ivec2 uDir;
-            int uModVal;
-            float uRestDistance;   
-        };
+        uniform ivec2 uDir;
+        uniform int uModVal;
+        uniform float uRestDistance;   
 
         uniform sampler2D uPositionBuffer;
 
@@ -232,10 +232,6 @@
         uniform sampler2D uPositionBuffer;
         uniform sampler2D uNormalBuffer;
 
-        layout(std140, column_major) uniform  SceneUniforms {
-            vec4 lightPosition;
-        };
-
         out vec3 vPosition;
         out vec2 vUV;
         out vec3 vNormal;
@@ -255,9 +251,7 @@
         #version 300 es
         precision highp float;
 
-        layout(std140, column_major) uniform SceneUniforms {
-            vec4 lightPosition;
-        };
+        uniform vec3 uLightPosition;
 
         in vec3 vPosition;
         in vec2 vUV;
@@ -268,7 +262,7 @@
             vec3 color = vec3(0.46, 0.00, 0.14);
 
             vec3 normal = normalize(vNormal);
-            vec3 lightVec = -normalize(vPosition - lightPosition.xyz);
+            vec3 lightVec = -normalize(vPosition - uLightPosition);
             float diffuse = abs(dot(lightVec, normal));
             float ambient = 0.1;
             fragColor = vec4(color * (diffuse + ambient), 1.0);
@@ -563,88 +557,6 @@
         // UNIFORMS
         ////////////////
 
-        // Constraint uniforms
-        var updateHorizontal1Uniforms = app.createUniformBuffer([
-            PicoGL.INT_VEC2,
-            PicoGL.INT,
-            PicoGL.FLOAT
-        ])
-        .set(0, new Int32Array([1, 0]))
-        .set(1, 0)
-        .set(2, STRUCTURAL_REST)
-        .update();
-
-        var updateHorizontal2Uniforms = app.createUniformBuffer([
-            PicoGL.INT_VEC2,
-            PicoGL.INT,
-            PicoGL.FLOAT
-        ])
-        .set(0, new Int32Array([1, 0]))
-        .set(1, 1)
-        .set(2, STRUCTURAL_REST)
-        .update();
-
-        var updateVertical1Uniforms = app.createUniformBuffer([
-            PicoGL.INT_VEC2,
-            PicoGL.INT,
-            PicoGL.FLOAT
-        ])
-        .set(0, new Int32Array([0, 1]))
-        .set(1, 0)
-        .set(2, STRUCTURAL_REST)
-        .update();
-
-        var updateVertical2Uniforms = app.createUniformBuffer([
-            PicoGL.INT_VEC2,
-            PicoGL.INT,
-            PicoGL.FLOAT
-        ])
-        .set(0, new Int32Array([0, 1]))
-        .set(1, 1)
-        .set(2, STRUCTURAL_REST)
-        .update();
-
-        var updateShear1Uniforms = app.createUniformBuffer([
-            PicoGL.INT_VEC2,
-            PicoGL.INT,
-            PicoGL.FLOAT
-        ])
-        .set(0, new Int32Array([1, 1]))
-        .set(1, 0)
-        .set(2, SHEAR_REST)
-        .update();
-
-        var updateShear2Uniforms = app.createUniformBuffer([
-            PicoGL.INT_VEC2,
-            PicoGL.INT,
-            PicoGL.FLOAT
-        ])
-        .set(0, new Int32Array([1, 1]))
-        .set(1, 1)
-        .set(2, SHEAR_REST)
-        .update();
-
-        var updateShear3Uniforms = app.createUniformBuffer([
-            PicoGL.INT_VEC2,
-            PicoGL.INT,
-            PicoGL.FLOAT
-        ])
-        .set(0, new Int32Array([1, -1]))
-        .set(1, 0)
-        .set(2, SHEAR_REST)
-        .update();
-
-        var updateShear4Uniforms = app.createUniformBuffer([
-            PicoGL.INT_VEC2,
-            PicoGL.INT,
-            PicoGL.FLOAT
-        ])
-        .set(0, new Int32Array([1, -1]))
-        .set(1, 1)
-        .set(2, SHEAR_REST)
-        .update();
-
-
         var pinOffset = clothPositionData[0];
         var pin2Offset = clothPositionData2[0];
 
@@ -674,29 +586,45 @@
 
         // Structural constraints
         var updateHorizontal1DrawCall = app.createDrawCall(updateConstraintProgram, quadArray)
-        .uniformBlock("ConstraintUniforms", updateHorizontal1Uniforms)
+        .uniform("uDir", new Int32Array([1, 0]))
+        .uniform("uModVal", 0)
+        .uniform("uRestDistance", STRUCTURAL_REST)
 
         var updateHorizontal2DrawCall  = app.createDrawCall(updateConstraintProgram, quadArray)
-        .uniformBlock("ConstraintUniforms", updateHorizontal2Uniforms);
+        .uniform("uDir", new Int32Array([1, 0]))
+        .uniform("uModVal", 1)
+        .uniform("uRestDistance", STRUCTURAL_REST)
 
         var updateVertical1DrawCall = app.createDrawCall(updateConstraintProgram, quadArray)
-        .uniformBlock("ConstraintUniforms", updateVertical1Uniforms);
+        .uniform("uDir", new Int32Array([0, 1]))
+        .uniform("uModVal", 0)
+        .uniform("uRestDistance", STRUCTURAL_REST)
 
         var updateVertical2DrawCall = app.createDrawCall(updateConstraintProgram, quadArray)
-        .uniformBlock("ConstraintUniforms", updateVertical2Uniforms);
+        .uniform("uDir", new Int32Array([0, 1]))
+        .uniform("uModVal", 1)
+        .uniform("uRestDistance", STRUCTURAL_REST)
 
         // Shear constraints
         var updateShear1DrawCall = app.createDrawCall(updateConstraintProgram, quadArray)
-        .uniformBlock("ConstraintUniforms", updateShear1Uniforms);
+        .uniform("uDir", new Int32Array([1, 1]))
+        .uniform("uModVal", 0)
+        .uniform("uRestDistance", SHEAR_REST)
 
         var updateShear2DrawCall = app.createDrawCall(updateConstraintProgram, quadArray)
-        .uniformBlock("ConstraintUniforms", updateShear2Uniforms);
+        .uniform("uDir", new Int32Array([1, 1]))
+        .uniform("uModVal", 1)
+        .uniform("uRestDistance", SHEAR_REST)
 
         var updateShear3DrawCall = app.createDrawCall(updateConstraintProgram, quadArray)
-        .uniformBlock("ConstraintUniforms", updateShear3Uniforms);
+        .uniform("uDir", new Int32Array([1, -1]))
+        .uniform("uModVal", 0)
+        .uniform("uRestDistance", SHEAR_REST)
 
         var updateShear4DrawCall = app.createDrawCall(updateConstraintProgram, quadArray)
-        .uniformBlock("ConstraintUniforms", updateShear4Uniforms);
+        .uniform("uDir", new Int32Array([1, -1]))
+        .uniform("uModVal", 1)
+        .uniform("uRestDistance", SHEAR_REST)
 
         var updateNormalDrawCall = app.createDrawCall(updateNormalProgram, quadArray);
         
@@ -710,11 +638,11 @@
         
         // CREATE TEXTURE
         var clothDrawCall = app.createDrawCall(clothProgram, clothArray)
-        .uniformBlock("SceneUniforms", sceneUniformBuffer)
+        .uniform("uLightPosition", lightPosition)
         .texture("uNormalBuffer", normalTexture);
 
         var clothDrawCall2 = app.createDrawCall(clothProgram, clothArray)
-        .uniformBlock("SceneUniforms", sceneUniformBuffer)
+        .uniform("uLightPosition", lightPosition)
         .texture("uNormalBuffer", normalTexture2);
         
 

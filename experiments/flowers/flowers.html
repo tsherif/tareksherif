@@ -85,6 +85,7 @@
 
         position = position * 2.0 - 1.0;
         position.x *= uResolution.x / uResolution.y;
+        position.xy *= 0.9;
 
         float r = length(position);
         float a = atan(position.y, position.x);
