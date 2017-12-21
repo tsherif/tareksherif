@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<!--
+  tareksherif.net: codebase for www.tareksherif.net
+  Copyright (C) 2013  Tarek Sherif
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html>
+<head>
+    <style>
+        html {
+            background-color: black;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            background-color: black;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script src="../js/picogl.min.js"></script>
+    <script src="../js/pico-utils.js"></script>
+</head>
+<body>
+<script type="x-vs" id="quad-vs">
+    #version 300 es   
+
+    layout(location=0) in vec4 aPosition;
+    
+    uniform vec2 uResolution;
+
+    out vec2 vScreenUV;
+    void main() {
+        vScreenUV = aPosition.xy;
+        vScreenUV.x *= uResolution.x / uResolution.y;
+        vScreenUV = vScreenUV * 0.5 + 0.5;
+        gl_Position = aPosition;
+    }
+</script>
+<script type="x-fs" id="stroke">
+    #version 300 es   
+
+    precision highp float;
+
+    float stroke(float x, float midline, float width) {
+        float d = step(midline, x + width * 0.5) - step(midline, x - width * 0.5);
+        return clamp (d, 0.0, 1.0);
+    }
+
+    in vec2 vScreenUV;
+
+    out vec4 fragColor;
+    void main() {
+        fragColor = vec4(vec3(stroke(vScreenUV.x, 0.5, 0.15)), 1.0);
+    }
+</script>
+
+<script type="x-fs" id="circle">
+    #version 300 es   
+
+    precision highp float;
+
+    float stroke(float x, float s, float w) {
+        float d = step(s, x + w * 0.5) - step(s, x - w * 0.5);
+        return clamp (d, 0.0, 1.0);
+    }
+
+    float circleSDF(vec2 uv) {
+        return length(uv - 0.5) * 2.0;
+    }
+
+    in vec2 vScreenUV;
+
+    out vec4 fragColor;
+    void main() {
+        vec3 color = vec3(0.0);
+        color += stroke(circleSDF(vScreenUV), 0.5, 0.05);
+        fragColor = vec4(color, 1.0);
+    }
+</script>
+<script type="x-fs" id="moon">
+    #version 300 es   
+
+    precision highp float;
+
+    float stroke(float x, float s, float w) {
+        float d = step(s, x + w * 0.5) - step(s, x - w * 0.5);
+        return clamp (d, 0.0, 1.0);
+    }
+
+    float circleSDF(vec2 uv) {
+        return length(uv - 0.5) * 2.0;
+    }
+
+    float fill(float x, float r) {
+        return 1.0 - step(r, x);
+    }
+
+    in vec2 vScreenUV;
+
+    out vec4 fragColor;
+    void main() {
+        vec3 color = vec3(0.0);
+        color += fill(circleSDF(vScreenUV), 0.65);
+        color -= fill(circleSDF(vScreenUV - vec2(0.1, 0.05)), 0.45);
+        fragColor = vec4(color, 1.0);
+    }
+</script>
+<script type="x-fs" id="emperor">
+    #version 300 es   
+
+    precision highp float;
+
+    float stroke(float x, float s, float w) {
+        float d = step(s, x + w * 0.5) - step(s, x - w * 0.5);
+        return clamp (d, 0.0, 1.0);
+    }
+
+    float circleSDF(vec2 uv) {
+        return length(uv - 0.5) * 2.0;
+    }
+
+    float fill(float x, float r) {
+        return 1.0 - step(r, x);
+    }
+
+    float rectSDF(vec2 uv, vec2 dims) {
+        uv = uv * 2.0 - 1.0;
+        return max(abs(uv.x / dims.x), abs(uv.y / dims.y));
+    }
+
+    in vec2 vScreenUV;
+
+    out vec4 fragColor;
+    void main() {
+        vec3 color = vec3(0.0);
+        float sdf = rectSDF(vScreenUV, vec2(1.0));
+        color += stroke(sdf, 0.5, 0.125);
+        color += fill(sdf, 0.1);
+        fragColor = vec4(color, 1.0);
+    }
+</script>
+<script type="x-fs" id="tower">
+    #version 300 es   
+
+    precision highp float;
+
+    float stroke(float x, float s, float w) {
+        float d = step(s, x + w * 0.5) - step(s, x - w * 0.5);
+        return clamp (d, 0.0, 1.0);
+    }
+
+    float circleSDF(vec2 uv) {
+        return length(uv - 0.5) * 2.0;
+    }
+
+    float fill(float x, float r) {
+        return 1.0 - step(r, x);
+    }
+
+    float rectSDF(vec2 uv, vec2 dims) {
+        uv = uv * 2.0 - 1.0;
+        return max(abs(uv.x / dims.x), abs(uv.y / dims.y));
+    }
+
+    float flip(float base, float flag) {
+        return mix(base, 1.0 - base, flag);
+    }
+
+    in vec2 vScreenUV;
+
+    out vec4 fragColor;
+    void main() {
+        vec3 color = vec3(0.0);
+        float sdf = rectSDF(vScreenUV, vec2(0.5, 1.0));
+        float diag = (vScreenUV.x + vScreenUV.y) * 0.5;
+        color += flip(fill(sdf, 0.6), stroke(diag, 0.5, 0.01));
+        fragColor = vec4(color, 1.0);
+    }
+</script>
+<script type="x-fs" id="ray">
+    #version 300 es   
+
+    precision highp float;
+
+    #define TAU 6.283185
+
+    float stroke(float x, float s, float w) {
+        float d = step(s, x + w * 0.5) - step(s, x - w * 0.5);
+        return clamp (d, 0.0, 1.0);
+    }
+
+    float circleSDF(vec2 uv) {
+        return length(uv - 0.5) * 2.0;
+    }
+
+    float fill(float x, float r) {
+        return 1.0 - step(r, x);
+    }
+
+    float rectSDF(vec2 uv, vec2 dims) {
+        uv = uv * 2.0 - 1.0;
+        return max(abs(uv.x / dims.x), abs(uv.y / dims.y));
+    }
+
+    float flip(float base, float flag) {
+        return mix(base, 1.0 - base, flag);
+    }
+
+    float raySDF(vec2 uv, int n) {
+        uv -= 0.5;
+        return fract(atan(uv.y, uv.x) / TAU * float(n));
+    }
+
+    in vec2 vScreenUV;
+
+    out vec4 fragColor;
+    void main() {
+        vec3 color = vec3(0.0);
+        color += stroke(raySDF(vScreenUV, 8), 0.5, 0.015);
+        fragColor = vec4(color, 1.0);
+    }
+</script>
+<script type="x-fs" id="judgement">
+    #version 300 es   
+
+    precision highp float;
+
+    #define TAU 6.283185
+
+    float stroke(float x, float s, float w) {
+        float d = step(s, x + w * 0.5) - step(s, x - w * 0.5);
+        return clamp (d, 0.0, 1.0);
+    }
+
+    float circleSDF(vec2 uv) {
+        return length(uv - 0.5) * 2.0;
+    }
+
+    float fill(float x, float r) {
+        return 1.0 - step(r, x);
+    }
+
+    float rectSDF(vec2 uv, vec2 dims) {
+        uv = uv * 2.0 - 1.0;
+        return max(abs(uv.x / dims.x), abs(uv.y / dims.y));
+    }
+
+    float flip(float base, float flag) {
+        return mix(base, 1.0 - base, flag);
+    }
+
+    float raySDF(vec2 uv, int n) {
+        uv -= 0.5;
+        return fract(atan(uv.y, uv.x) / TAU * float(n));
+    }
+
+    in vec2 vScreenUV;
+
+    out vec4 fragColor;
+    void main() {
+        vec3 color = vec3(0.0);
+        float rect = rectSDF(vScreenUV, vec2(1.0));
+        
+        color += flip(stroke(raySDF(vScreenUV, 28), 0.5, 0.2), fill(vScreenUV.y, 0.5));
+        color *= step(.25, rect);
+        color += fill(rect, 0.2);
+
+        fragColor = vec4(color, 1.0);
+    }
+</script>
+<canvas id="gl-canvas"></canvas>
+<script>
+    var canvas = document.getElementById("gl-canvas");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    var FRAGMENT_IDS = [
+        "tower",
+        "judgement"
+    ];
+
+    var app = PicoGL.createApp(canvas)
+    .cullBackfaces();
+
+    var fsID = FRAGMENT_IDS[Math.floor(Math.random() * FRAGMENT_IDS.length)];
+
+    var quadVsSource = document.getElementById("quad-vs").text.trim();
+    var pixelFsSource = document.getElementById(fsID).text.trim();
+
+    var program = app.createProgram(quadVsSource, pixelFsSource);
+
+    var quadPositions = app.createVertexBuffer(PicoGL.FLOAT, 2, new Float32Array([
+        -1, -1,
+        1, -1,
+        -1, 1,
+        1, 1,
+    ]));
+
+    var quadArray = app.createVertexArray()
+    .vertexAttributeBuffer(0, quadPositions);
+
+    var drawCall = app.createDrawCall(program, quadArray, PicoGL.TRIANGLE_STRIP)
+    .uniform("uResolution", [app.width, app.height]);
+    
+    drawCall.draw();
+
+    window.onresize = function() {
+        app.resize(window.innerWidth, window.innerHeight);
+        drawCall.uniform("uResolution", [app.width, app.height])
+        .draw();
+    }
+
+</script>
+</body>
+</html>
