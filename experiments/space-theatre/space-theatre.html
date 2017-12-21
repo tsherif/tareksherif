@@ -57,6 +57,16 @@
             display: none;
         }
 
+        #logo-block {
+            position: absolute;
+            background-color: black;
+            top: 70%;
+            left: 25%;
+            width: 10%;
+            height: 10%;
+            display: none;
+        }
+
         #gl-canvas {
             position: absolute;
         }
@@ -65,6 +75,7 @@
 <body>
     <iframe id="screen"></iframe>
     <iframe id="biodigital" src="https://human.biodigital.com/widget/?m=beating_heart&camera=-6.765,142.185,-16.592,-1.583,135.565,4.037,0.072,0.955,0.288&background=black&dk=e2465d038906e07d4f36cf1bcd4bd7448479db8e&ui-all=false"></iframe>
+    <div id="logo-block"></div>
     <canvas id="gl-canvas"></canvas>
     <script id="quad-vs" type="x-shader/vs">
         #version 300 es   
@@ -290,19 +301,21 @@
 
         var screen = document.getElementById("screen");
         var biodigital = document.getElementById("biodigital");
+        var logoBlock = document.getElementById("logo-block");
 
         var SCENES = [
             "../remains/remains.html",
             "../moons/moons.html",
             "../liquidglass/liquidglass.html",
             "../flowers/flowers.html",
-            "biodigital",
             "./quotes.html",
             "./pixel-spirit.html",
-            "./states.html"
+            "./states.html",
         ];
 
         changeScene();
+
+        SCENES.push("biodigital");
         
         var app = PicoGL.createApp(canvas)
         .clearColor(0.0, 0.0, 0.0, 1.0)
@@ -836,9 +849,11 @@
             
             if (url === "biodigital") {
                 biodigital.style.display = "block";
+                logoBlock.style.display = "block";
                 screen.style.display = "none";
             } else {
                 biodigital.style.display = "none";
+                logoBlock.style.display = "none";
                 screen.style.display = "block";
                 screen.src = url;
             }
