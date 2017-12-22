@@ -27,6 +27,14 @@
     - BioDigital Human
         https://www.biodigital.com/
 
+    States of Exception drawing
+    - From States of Exception by Sahar Kubba
+        http://atelierjamad.ca/
+
+    Wind sound
+     - Vent - wind (1) by Glaneur de sons
+        https://freesound.org/people/Glaneur%20de%20sons/sounds/104952/
+
     Pixel spirit Shaders:
     - Pixel Spirit Deck by Patricio Gonzalez Vivo
         https://patriciogonzalezvivo.github.io/PixelSpiritDeck/
@@ -42,7 +50,7 @@
  -->
 <html>
 <head>
-    <title>Space Theatre</title>
+    <title>A Theatre at the End</title>
     <script src="../js/gl-matrix-min.js"></script>
     <script src="../js/picogl.min.js"></script>
     <script src="../js/pico-utils.js"></script>
@@ -59,6 +67,15 @@
             margin: 0;
             width: 100%;
             height: 100%;
+        }
+
+        #title {
+            color: lightgray;
+            position: absolute;
+            top: 32%;
+            left: 27%;
+            z-index: 999;
+            font-size: 6em;
         }
 
         #screen, #biodigital {
@@ -90,10 +107,17 @@
     </style>
 </head>
 <body>
+    <h1 id="title">
+        A Theatre at the End
+    </h1>
     <iframe id="screen"></iframe>
     <iframe id="biodigital" src="https://human.biodigital.com/widget/?m=beating_heart&camera=-6.765,142.185,-16.592,-1.583,135.565,4.037,0.072,0.955,0.288&background=black&dk=e2465d038906e07d4f36cf1bcd4bd7448479db8e&ui-all=false"></iframe>
     <div id="logo-block"></div>
     <canvas id="gl-canvas"></canvas>
+    <audio id="wind" loop>
+        <source type="audio/ogg codecs='vorbis'" src="sound/wind.ogg">
+        <source type="audio/mpeg" src="sound/wind.mp3">
+    </audio>
     <script id="quad-vs" type="x-shader/vs">
         #version 300 es   
 
@@ -316,9 +340,14 @@
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
+        var title = document.getElementById("title");
         var screen = document.getElementById("screen");
         var biodigital = document.getElementById("biodigital");
         var logoBlock = document.getElementById("logo-block");
+
+        var wind = document.getElementById("wind");
+        wind.volume = 0.5;
+        wind.play();
 
         var SCENES = [
             "../remains/remains.html",
@@ -327,12 +356,9 @@
             "../flowers/flowers.html",
             "./quotes.html",
             "./pixel-spirit.html",
+            "./pixel-spirit.html",
             "./states.html",
         ];
-
-        changeScene();
-
-        SCENES.push("biodigital");
         
         var app = PicoGL.createApp(canvas)
         .clearColor(0.0, 0.0, 0.0, 1.0)
@@ -423,10 +449,13 @@
             var u = (x / DATA_TEXTURE_WIDTH) * CLOTH_WIDTH;
             var v = CLOTH_HEIGHT - (y / DATA_TEXTURE_HEIGHT) * CLOTH_HEIGHT;
 
-            clothPositionData[vec4i] = u - CLOTH_WIDTH;
+            clothPositionData[vec4i] = u - CLOTH_WIDTH + 0.1;
             clothPositionData[vec4i + 1] = v - 0.35;
-            clothPositionData2[vec4i] = u;
+            clothPositionData[vec4i + 2] = Math.sin(u * 18) * 0.01;
+
+            clothPositionData2[vec4i] = u - 0.1;
             clothPositionData2[vec4i + 1] = v - 0.35;
+            clothPositionData2[vec4i + 2] = Math.cos(u * 24) * 0.01;
 
             clothNormalData[vec4i + 2] = 1;
             clothNormalData2[vec4i + 2] = 1;
@@ -670,9 +699,6 @@
 
 
         var targetX = null;
-        canvas.addEventListener("mousemove", function(event) {
-            targetX = Math.abs((event.clientX / canvas.width) * 2 - 1);
-        });
         
         // CREATE TEXTURE
         var clothDrawCall = app.createDrawCall(clothProgram, clothArray)
@@ -857,9 +883,18 @@
             requestAnimationFrame(draw);
         }
 
-        requestAnimationFrame(draw);
+        setTimeout(function() {
+            title.style.display = "none";
+            changeScene();
+            
+            SCENES.push("biodigital");
 
-        
+            canvas.addEventListener("mousemove", function(event) {
+                targetX = Math.abs((event.clientX / canvas.width) * 2 - 1);
+            });
+            
+            requestAnimationFrame(draw);
+        }, 3000);
 
         function changeScene() {
             var url = SCENES[Math.floor(Math.random() * SCENES.length)];
@@ -869,10 +904,10 @@
                 logoBlock.style.display = "block";
                 screen.style.display = "none";
             } else {
+                screen.src = url;
                 biodigital.style.display = "none";
                 logoBlock.style.display = "none";
                 screen.style.display = "block";
-                screen.src = url;
             }
             
             sceneChanged = true;
