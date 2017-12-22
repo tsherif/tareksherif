@@ -87,8 +87,13 @@
             border: none;
         }
 
+        #screen, #biodigital {
+            top: 25%;
+            left: 25%;
+        }
+
         #biodigital {
-            display: none;
+            z-index: -1;
         }
 
         #logo-block {
@@ -358,6 +363,7 @@
             "./pixel-spirit.html",
             "./pixel-spirit.html",
             "./states.html",
+            "biodigital"
         ];
         
         var app = PicoGL.createApp(canvas)
@@ -884,17 +890,20 @@
         }
 
         setTimeout(function() {
-            title.style.display = "none";
-            changeScene();
-            
-            SCENES.push("biodigital");
+            biodigital.style.display = "none";
+            biodigital.style.zIndex = "0";
 
-            canvas.addEventListener("mousemove", function(event) {
-                targetX = Math.abs((event.clientX / canvas.width) * 2 - 1);
-            });
-            
-            requestAnimationFrame(draw);
-        }, 3000);
+            setTimeout(function() {
+                title.style.display = "none";
+                changeScene();
+                
+                canvas.addEventListener("mousemove", function(event) {
+                    targetX = Math.abs((event.clientX / canvas.width) * 2 - 1);
+                });
+                
+                requestAnimationFrame(draw);
+            }, 500);
+        }, 2500);
 
         function changeScene() {
             var url = SCENES[Math.floor(Math.random() * SCENES.length)];
