@@ -365,6 +365,8 @@
             "./states.html",
             "biodigital"
         ];
+
+        var currentScene = null;
         
         var app = PicoGL.createApp(canvas)
         .clearColor(0.0, 0.0, 0.0, 1.0)
@@ -908,6 +910,10 @@
         function changeScene() {
             var url = SCENES[Math.floor(Math.random() * SCENES.length)];
             
+            while (url === currentScene) {
+                url = SCENES[Math.floor(Math.random() * SCENES.length)];
+            }
+
             if (url === "biodigital") {
                 biodigital.style.display = "block";
                 logoBlock.style.display = "block";
@@ -920,6 +926,7 @@
             }
             
             sceneChanged = true;
+            currentScene = url;
         }
 
     </script>
