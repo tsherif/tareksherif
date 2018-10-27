@@ -67,6 +67,7 @@
             margin: 0;
             width: 100%;
             height: 100%;
+            cursor: pointer;
         }
 
         #title {
@@ -76,6 +77,12 @@
             left: 27%;
             z-index: 999;
             font-size: 6em;
+        }
+
+        #click-to-start {
+            margin-top: 0.5em;
+            text-align: center;
+            font-size: 0.3em;
         }
 
         #screen, #biodigital {
@@ -113,6 +120,9 @@
 <body>
     <h1 id="title">
         A Theatre at the End
+        <div id="click-to-start">
+            Click to Start
+        </div>
     </h1>
     <iframe id="screen"></iframe>
     <iframe id="biodigital" src="https://human.biodigital.com/widget/?m=beating_heart&camera=-6.765,142.185,-16.592,-1.583,135.565,4.037,0.072,0.955,0.288&background=black&dk=e2465d038906e07d4f36cf1bcd4bd7448479db8e&ui-all=false"></iframe>
@@ -350,8 +360,6 @@
         var logoBlock = document.getElementById("logo-block");
 
         var wind = document.getElementById("wind");
-        wind.volume = 0.5;
-        wind.play();
 
         var SCENES = [
             "../../experiments/remains/remains.html",
@@ -361,8 +369,7 @@
             "./quotes.html",
             "./pixel-spirit.html",
             "./pixel-spirit.html",
-            "./states.html",
-            "biodigital"
+            "./states.html"
         ];
 
         var currentScene = null;
@@ -889,22 +896,30 @@
             requestAnimationFrame(draw);
         }
 
-        setTimeout(function() {
+        function start() {
+            document.removeEventListener("click", start);
+            document.body.style.cursor = "ew-resize";
             biodigital.style.display = "none";
             biodigital.style.zIndex = "0";
+            title.style.display = "none";
 
-            setTimeout(function() {
-                title.style.display = "none";
-                
-                canvas.addEventListener("mousemove", function(event) {
-                    targetX = Math.abs((event.clientX / canvas.width) * 2 - 1);
-                });
-                
-                requestAnimationFrame(draw);
+            wind.volume = 0.5;
+            wind.play();
+            
+            canvas.addEventListener("mousemove", function(event) {
+                targetX = Math.abs((event.clientX / canvas.width) * 2 - 1);
+            });
+            
+            requestAnimationFrame(draw);
 
-                setTimeout(changeScene, 200);
-            }, 300);
-        }, 2700);
+            setTimeout(changeScene, 200);
+        }
+
+        document.addEventListener("click", start);
+
+        setTimeout(function() {
+            SCENES.push("biodigital");
+        }, 3000)
 
         function changeScene() {
             var url = SCENES[Math.floor(Math.random() * SCENES.length)];
