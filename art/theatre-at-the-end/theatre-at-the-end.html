@@ -87,9 +87,8 @@
             border: none;
         }
 
-        #screen, #biodigital {
-            top: 25%;
-            left: 25%;
+        #screen {
+            display: none;
         }
 
         #biodigital {
@@ -422,7 +421,6 @@
         ////////////////////
 
         // Store results of force update
-
         var updateForceFramebuffer = app.createFramebuffer();
 
         // Results of constraint satisfaction passes
@@ -897,13 +895,14 @@
 
             setTimeout(function() {
                 title.style.display = "none";
-                changeScene();
                 
                 canvas.addEventListener("mousemove", function(event) {
                     targetX = Math.abs((event.clientX / canvas.width) * 2 - 1);
                 });
                 
                 requestAnimationFrame(draw);
+
+                setTimeout(changeScene, 200);
             }, 300);
         }, 2700);
 
