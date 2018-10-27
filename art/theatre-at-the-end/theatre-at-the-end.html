@@ -23,10 +23,6 @@
     - Cloth Simulation on the GPU by Cyril Zeller
         http://http.download.nvidia.com/developer/presentations/2005/SIGGRAPH/ClothSimulationOnTheGPU.pdf
  
-    Heart model from:
-    - BioDigital Human
-        https://www.biodigital.com/
-
     States of Exception drawing
     - From States of Exception by Sahar Kubba
         http://atelierjamad.ca/
@@ -51,6 +47,7 @@
 <html>
 <head>
     <title>A Theatre at the End</title>
+    <meta charset="utf-8">
     <script src="../../experiments/js/gl-matrix-min.js"></script>
     <script src="../../experiments/js/picogl.min.js"></script>
     <script src="../../experiments/js/pico-utils.js"></script>
@@ -73,42 +70,26 @@
         #title {
             color: lightgray;
             position: absolute;
-            top: 32%;
-            left: 27%;
+            text-align: center;
+            top: 37%;
+            margin: 0;
+            width: 100%;
             z-index: 999;
             font-size: 6em;
         }
 
         #click-to-start {
             margin-top: 0.5em;
-            text-align: center;
             font-size: 0.3em;
         }
 
-        #screen, #biodigital {
+        #screen {
             position: absolute;
             top: 25%;
             left: 25%;
             height: 50%;
             width: 50%;
             border: none;
-        }
-
-        #screen {
-            display: none;
-        }
-
-        #biodigital {
-            z-index: -1;
-        }
-
-        #logo-block {
-            position: absolute;
-            background-color: black;
-            top: 70%;
-            left: 25%;
-            width: 10%;
-            height: 10%;
             display: none;
         }
 
@@ -121,12 +102,10 @@
     <h1 id="title">
         A Theatre at the End
         <div id="click-to-start">
-            Click to Start
+            Click to Take Your Seat
         </div>
     </h1>
     <iframe id="screen"></iframe>
-    <iframe id="biodigital" src="https://human.biodigital.com/widget/?m=beating_heart&camera=-6.765,142.185,-16.592,-1.583,135.565,4.037,0.072,0.955,0.288&background=black&dk=e2465d038906e07d4f36cf1bcd4bd7448479db8e&ui-all=false"></iframe>
-    <div id="logo-block"></div>
     <canvas id="gl-canvas"></canvas>
     <audio id="wind" loop>
         <source type="audio/ogg codecs='vorbis'" src="sound/wind.ogg">
@@ -356,8 +335,6 @@
 
         var title = document.getElementById("title");
         var screen = document.getElementById("screen");
-        var biodigital = document.getElementById("biodigital");
-        var logoBlock = document.getElementById("logo-block");
 
         var wind = document.getElementById("wind");
 
@@ -899,8 +876,6 @@
         function start() {
             document.removeEventListener("click", start);
             document.body.style.cursor = "ew-resize";
-            biodigital.style.display = "none";
-            biodigital.style.zIndex = "0";
             title.style.display = "none";
 
             wind.volume = 0.5;
@@ -917,10 +892,6 @@
 
         document.addEventListener("click", start);
 
-        setTimeout(function() {
-            SCENES.push("biodigital");
-        }, 3000)
-
         function changeScene() {
             var url = SCENES[Math.floor(Math.random() * SCENES.length)];
             
@@ -928,16 +899,8 @@
                 url = SCENES[Math.floor(Math.random() * SCENES.length)];
             }
 
-            if (url === "biodigital") {
-                biodigital.style.display = "block";
-                logoBlock.style.display = "block";
-                screen.style.display = "none";
-            } else {
-                screen.src = url;
-                biodigital.style.display = "none";
-                logoBlock.style.display = "none";
-                screen.style.display = "block";
-            }
+            screen.src = url;
+            screen.style.display = "block";
             
             sceneChanged = true;
             currentScene = url;
