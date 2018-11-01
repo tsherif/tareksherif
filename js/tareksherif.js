@@ -339,7 +339,7 @@ $(function () {
   });
 
   yoffset += 310;
-  ScrollEm.forward(500);
+  ScrollEm.forward(720);
   ScrollEm.addBookmark("art", yoffset - 21, {
     before: document.getElementById("art-intro"),
     offset: -66
@@ -383,6 +383,46 @@ $(function () {
 
   yoffset += 170;
   ScrollEm.forward(100);
+
+  ScrollEm.add(document.getElementById("theatre-end"), {
+    css: [
+      {
+        property: "top",
+        start: yoffset
+      },
+      {
+        property: "left",
+        start: "WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH + 25"
+      }
+    ]
+  });
+
+  yoffset += 160;
+
+  ScrollEm.add(document.getElementById("space-music"), {
+    css: [
+      {
+        property: "top",
+        start: yoffset
+      },
+      {
+        property: "left",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH + 25"
+      }
+    ]
+  });
+
+  yoffset += 160;
 
   ScrollEm.add(document.getElementById("in-gaza"), {
     css: [
@@ -443,7 +483,7 @@ $(function () {
   });
 
   yoffset += 310;
-  ScrollEm.forward(680);
+  ScrollEm.forward(1000);
   ScrollEm.addBookmark("experiments", yoffset - 16, {
     before: document.getElementById("experiments-intro"),
     offset: -76
@@ -788,7 +828,7 @@ $(function () {
 
 
   yoffset += 410;
-  ScrollEm.forward(1000);
+  ScrollEm.forward(900);
   ScrollEm.addBookmark("glitches", yoffset - 16, {
     before: document.getElementById("glitches-intro"),
     offset: -76
