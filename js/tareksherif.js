@@ -156,6 +156,26 @@ $(function () {
   yoffset += 170;
   ScrollEm.forward(100);
 
+  ScrollEm.add(document.getElementById("visgl"), {
+    css: [
+      {
+        property: "top",
+        start: yoffset
+      },
+      {
+        property: "left",
+        start: "WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH + 50"
+      }
+    ]
+  });
+
+  yoffset += 160;
+
   ScrollEm.add(document.getElementById("biodigital"), {
     css: [
       {
@@ -300,7 +320,7 @@ $(function () {
 
   yoffset += 150;
 
-  ScrollEm.add(document.getElementById("nano-server"), {
+  ScrollEm.add(document.getElementById("glcheck"), {
     css: [
       {
         property: "top",
@@ -320,7 +340,7 @@ $(function () {
 
   yoffset += 150;
 
-  ScrollEm.add(document.getElementById("scroll-em"), {
+  ScrollEm.add(document.getElementById("mercatorgl"), {
     css: [
       {
         property: "top",
@@ -383,6 +403,26 @@ $(function () {
 
   yoffset += 170;
   ScrollEm.forward(100);
+
+  ScrollEm.add(document.getElementById("tesseract"), {
+    css: [
+      {
+        property: "top",
+        start: yoffset
+      },
+      {
+        property: "left",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH + 25"
+      }
+    ]
+  });
+
+  yoffset += 160;
 
   ScrollEm.add(document.getElementById("theatre-end"), {
     css: [
