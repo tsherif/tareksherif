@@ -235,7 +235,7 @@ $(function () {
   });
 
   yoffset += 310;
-  ScrollEm.forward(730);
+  ScrollEm.forward(800);
   ScrollEm.addBookmark("code", yoffset - 21, {
     before: document.getElementById("code-intro"),
     offset: -56
@@ -399,7 +399,7 @@ $(function () {
   });
 
   yoffset += 310;
-  ScrollEm.forward(720);
+  ScrollEm.forward(1100);
   ScrollEm.addBookmark("art", yoffset - 21, {
     before: document.getElementById("art-intro"),
     offset: -66
