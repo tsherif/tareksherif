@@ -562,6 +562,26 @@ $(function () {
     ]
   });
 
+  yoffset += 160;
+
+  ScrollEm.add(document.getElementById("sketches"), {
+    css: [
+      {
+        property: "top",
+        start: yoffset
+      },
+      {
+        property: "left",
+        start: "-WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "WINDOW_WIDTH + 25"
+      }
+    ]
+  });
+
   yoffset += 700;
   ScrollEm.forward(1480);
 
