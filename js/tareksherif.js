@@ -444,6 +444,26 @@ $(function () {
   yoffset += 170;
   ScrollEm.forward(100);
 
+  ScrollEm.add(document.getElementById("space-shooter"), {
+    css: [
+      {
+        property: "top",
+        start: yoffset
+      },
+      {
+        property: "left",
+        start: "WINDOW_WIDTH"
+      },
+      {
+        property: "translateX",
+        start: 0,
+        end: "-WINDOW_WIDTH + 25"
+      }
+    ]
+  });
+
+  yoffset += 160;
+
   ScrollEm.add(document.getElementById("tesseract"), {
     css: [
       {
